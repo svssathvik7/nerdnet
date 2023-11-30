@@ -5,16 +5,26 @@ import loginAnimation from "../assets/loginAnimation.json";
 import { LuEye } from "react-icons/lu";
 import { LuEyeOff } from "react-icons/lu";
 import "./Login.css";
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export default function Login() {
     const [formData, setFormData] = useState({
         userEmail: '',
         password: '',
         showPassword: false,
       });
-    
+      const [errorMail,setErrorMail] = useState("");
       const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
+        if(name==="userEmail"){
+            if(!emailPattern.test(value))
+            {
+                setErrorMail("!Enter proper email address");
+            }
+            else{
+                setErrorMail("");
+            }
+        }
       };
     
       const togglePasswordVisibility = () => {
@@ -47,6 +57,7 @@ export default function Login() {
                     placeholder='Enter your Email'
                     className={`bg-slate-500 outline-none w-56 p-1 text-white rounded-sm`}
                     />
+                    <p className='text-red-600 font-light text-xs text-left'>{errorMail}</p>
                 </div>
                 <div>
                     <input
