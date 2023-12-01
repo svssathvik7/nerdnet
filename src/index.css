@@ -13,6 +13,6 @@ body{
 }
 @layer components{
     .trans500{
-        @apply transition duration-500;
+        @apply transition-all duration-500;
     }
 }

@@ -5,7 +5,7 @@ export default function Landing() {
   return (
     <div>
       <img src={IntroBg} alt='Introbg'
-        className='absolute -z-10'
+        className='absolute -z-10 opacity-50'
       />
       <Login/>
     </div>

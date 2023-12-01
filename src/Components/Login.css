@@ -2,3 +2,31 @@ input::selection{
     background-color: rgb(250,204,21);
     color: black;
 }
+#login-container{
+    width: 60dvw;
+}
+#login-div{
+    width: 60dvw;
+}
+#login{
+    width: 25dvw;
+}
+input{
+    width: 20dvw;
+}
+input{
+    padding-bottom: 0;
+    transition: padding-bottom 0.3s ease;
+}
+input:hover{
+    border-bottom: thin solid #000;
+    padding-bottom: 2%;
+}
+input:focus{
+    border-bottom: thin solid #000;
+    padding-bottom: 2%;
+}
+input:valid{
+    border-bottom: thin solid #000;
+    padding-bottom: 2%;
+}
