@@ -30,3 +30,31 @@ input:valid{
     border-bottom: thin solid #000;
     padding-bottom: 2%;
 }
+
+/* Media query for mobile widths */
+@media (max-width: 768px) {
+    #login-container{
+        width: 90dvw;
+    }
+    #login-div{
+        width: 90dvw;
+    }
+    #login{
+        width: 70dvw;
+    }
+    input{
+        width: 65dvw;
+    }
+    #register-note p{
+        font-size: small;
+    }
+    #register-note a{
+        font-size: small;
+    }
+    #login-submit{
+        padding: 2% 4%;
+    }
+    #semi-footer a{
+        text-decoration: underline;
+    }
+}

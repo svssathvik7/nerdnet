@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
 import Lottie from 'lottie-react'
 import loginAnimation from "../assets/loginAnimation.json";
@@ -7,6 +7,21 @@ import loginAnimation from "../assets/loginAnimation.json";
 import "./Login.css";
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export default function Login() {
+    const [isMobile,setIsMobile] = useState(window.innerWidth <= 768);
+    useEffect(
+      ()=>{
+        const handleResize = () => {
+          setIsMobile(window.innerWidth < 768);
+        };
+    
+        window.addEventListener('resize', handleResize);
+    
+        // Clean up the event listener when the component unmounts
+        return () => {
+          window.removeEventListener('resize', handleResize);
+        };
+      }
+    ,[]);
     const [formData, setFormData] = useState({
         userEmail: '',
         password: '',
@@ -74,13 +89,13 @@ export default function Login() {
                     {formData.showPassword ? <LuEye className='w-fit inline ml-1'/> : <LuEyeOff className='w-fit inline ml-1'/>}
                     </span> */}
                 </div>
-                <button className={`bg-yellow-400 p-1 m-2 border-2 border-black rounded-lg select-none`} type="submit" onClick={handleSubmit}>Login</button>
+                <button id='login-submit' className={`bg-yellow-400 p-1 m-2 border-2 border-black rounded-lg select-none`} type="submit" onClick={handleSubmit}>Login</button>
             </form>
         </div>
-        <div id='v-line' className='bg-slate-400 w-1 h-20 rounded-full mx-2'></div>
-        <div id='login-lottie' className='w-52'>
+        {isMobile ? <></> : <div id='v-line' className='bg-slate-400 w-1 h-20 rounded-full mx-2'></div>}
+        {isMobile ? <></> : <div id='login-lottie' className='w-52'>
             <Lottie animationData={loginAnimation} loop={true}/>
-        </div>
+        </div>}
       </div>
       <div id='register-note' className='flex items-center justify-center'>
             <p>Do not have an account?</p>
