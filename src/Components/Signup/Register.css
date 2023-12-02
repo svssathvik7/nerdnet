@@ -25,3 +25,16 @@
     border-bottom: thin solid #000;
     padding-bottom: 2%;
 }
+
+/* mobile viewport */
+@media (max-width:768px) {
+    #registration-div{
+        width: 90dvw;
+        height: 60dvh;
+    }
+    .register-inputs{
+        width: 80dvw;
+        border: none;
+        transition: padding-bottom 0.3s ease;
+    }
+}
