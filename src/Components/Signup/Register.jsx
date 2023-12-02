@@ -3,6 +3,9 @@ import "./Register.css";
 import SignUpAnimation from "../../assets/signUp.json";
 import Lottie from 'lottie-react';
 import { useState,useEffect } from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export default function Register() {
   const [formData,setFormData] = useState({
@@ -19,7 +22,44 @@ export default function Register() {
   }
   const submitForm = (e)=>{
     e.preventDefault();
-
+    if(!emailPattern.test(formData.email))
+    {
+      toast.error('Enter valid Email!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+    else if(formData.password !== formData.repassword)
+    {
+      toast.error("Re-entered password didn't match!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+    else{
+      axios.post("/api/auth/createUser/",{
+        username : formData.username,
+        email : formData.email,
+        password : formData.password,
+        dob : formData.dob
+      }).then((response)=>{
+        console.log(response);
+      }).catch((error)=>{
+        console.log("error "+error);
+      });
+    }
   }
   const [formFilled,setFormFilled] = useState(0);
   useEffect(
