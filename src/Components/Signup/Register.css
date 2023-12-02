@@ -1,0 +1,27 @@
+#registration-div{
+    width: 65dvw;
+    height: 60dvh;
+}
+.register-inputs{
+    width: 20dvw;
+    border: none;
+    transition: padding-bottom 0.3s ease;
+}
+#register-info{
+    width: 100%;
+}
+#register-form{
+    height: 35dvh;
+}
+.register-inputs:hover{
+    border-bottom: thin solid #000;
+    padding-bottom: 2%;
+}
+.register-inputs:focus{
+    border-bottom: thin solid #000;
+    padding-bottom: 2%;
+}
+.register-inputs:valid{
+    border-bottom: thin solid #000;
+    padding-bottom: 2%;
+}

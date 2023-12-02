@@ -11,22 +11,20 @@ input::selection{
 #login{
     width: 25dvw;
 }
-input{
+.login-inputs{
     width: 20dvw;
-}
-input{
     padding-bottom: 0;
     transition: padding-bottom 0.3s ease;
 }
-input:hover{
+.login-inputs:hover{
     border-bottom: thin solid #000;
     padding-bottom: 2%;
 }
-input:focus{
+.login-inputs:focus{
     border-bottom: thin solid #000;
     padding-bottom: 2%;
 }
-input:valid{
+.login-inputs:valid{
     border-bottom: thin solid #000;
     padding-bottom: 2%;
 }
@@ -42,7 +40,7 @@ input:valid{
     #login{
         width: 70dvw;
     }
-    input{
+    .login-inputs{
         width: 65dvw;
     }
     #register-note p{

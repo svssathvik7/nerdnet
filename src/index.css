@@ -15,4 +15,10 @@ body{
     .trans500{
         @apply transition-all duration-500;
     }
+    .trans300{
+        @apply transition-all duration-300;
+    }
+    .trans100{
+        @apply transition-all duration-100;
+    }
 }

@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
 import Lottie from 'lottie-react'
-import loginAnimation from "../assets/loginAnimation.json";
-// import { LuEye } from "react-icons/lu";
-// import { LuEyeOff } from "react-icons/lu";
+import loginAnimation from "../../assets/loginAnimation.json";
+import { Link } from 'react-router-dom';
 import "./Login.css";
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export default function Login() {
@@ -42,10 +41,6 @@ export default function Login() {
         }
       };
     
-      // const togglePasswordVisibility = () => {
-      //   setFormData({ ...formData, showPassword: !formData.showPassword });
-      // };
-    
       const handleSubmit = (e) => {
         e.preventDefault();
         // Add your form submission logic here
@@ -70,7 +65,7 @@ export default function Login() {
                     onChange={handleChange}
                     required
                     placeholder='Enter your Email'
-                    className={`outline-none p-2 pb-0 text-black rounded-sm`}
+                    className={`outline-none p-2 pb-0 text-black rounded-sm login-inputs`}
                     />
                     <p className='text-red-600 font-light text-xs text-left'>{errorMail}</p>
                 </div>
@@ -83,13 +78,10 @@ export default function Login() {
                     onChange={handleChange}
                     required
                     placeholder='Enter your password'
-                    className={`outline-none text-black p-2 pb-0 rounded-sm`}
+                    className={`outline-none text-black p-2 pb-0 rounded-sm login-inputs`}
                     />
-                    {/* <span onClick={togglePasswordVisibility}>
-                    {formData.showPassword ? <LuEye className='w-fit inline ml-1'/> : <LuEyeOff className='w-fit inline ml-1'/>}
-                    </span> */}
                 </div>
-                <button id='login-submit' className={`bg-yellow-400 p-1 m-2 border-2 border-black rounded-lg select-none`} type="submit" onClick={handleSubmit}>Login</button>
+                <button id='login-submit' className={`bg-yellow-400 p-1 m-2 border-2 border-black rounded-lg select-none hover:bg-black hover:text-yellow-400 trans100`} type="submit" onClick={handleSubmit}>Login</button>
             </form>
         </div>
         {isMobile ? <></> : <div id='v-line' className='bg-slate-400 w-1 h-20 rounded-full mx-2'></div>}
@@ -99,12 +91,12 @@ export default function Login() {
       </div>
       <div id='register-note' className='flex items-center justify-center'>
             <p>Do not have an account?</p>
-            <a href='/' className='bg-yellow-400 p-1 rounded-lg mx-2'>Register Here.</a>
+            <Link to='/newUser' className='bg-yellow-400 p-1 rounded-lg mx-2 hover:scale-105 trans100'>Register Here.</Link>
       </div>
       <div id='semi-footer' className='flex w-[100%] items-center justify-around mt-4'>
-        <a href='/' className='font-light text-gray-500 text-xs'>About</a>
-        <a href='/' className='font-light text-gray-500 text-xs'>Privacy & Policy</a>
-        <a href='/' className='font-light text-gray-500 text-xs'>Revenue</a>
+        <a href='/' className='font-light text-gray-500 text-xs hover:underline'>About</a>
+        <a href='/' className='font-light text-gray-500 text-xs hover:underline'>Privacy & Policy</a>
+        <a href='/' className='font-light text-gray-500 text-xs hover:underline'>Revenue</a>
         <p className='font-light text-gray-500 text-xs'>&copy; Nerd.net {new Date().getFullYear()}</p>
       </div>
     </div>
