@@ -1,26 +1,12 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react';
+import React from 'react'
 import Lottie from 'lottie-react'
 import loginAnimation from "../../assets/loginAnimation.json";
 import { Link } from 'react-router-dom';
 import "./Login.css";
+import { useState } from 'react';
+import { connect } from 'react-redux';
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-export default function Login() {
-    const [isMobile,setIsMobile] = useState(window.innerWidth <= 768);
-    useEffect(
-      ()=>{
-        const handleResize = () => {
-          setIsMobile(window.innerWidth < 768);
-        };
-    
-        window.addEventListener('resize', handleResize);
-    
-        // Clean up the event listener when the component unmounts
-        return () => {
-          window.removeEventListener('resize', handleResize);
-        };
-      }
-    ,[]);
+function Login({data}) {
     const [formData, setFormData] = useState({
         userEmail: '',
         password: '',
@@ -84,8 +70,8 @@ export default function Login() {
                 <button id='login-submit' className={`bg-yellow-400 p-1 m-2 border-2 border-black rounded-lg select-none hover:bg-black hover:text-yellow-400 trans100`} type="submit" onClick={handleSubmit}>Login</button>
             </form>
         </div>
-        {isMobile ? <></> : <div id='v-line' className='bg-slate-400 w-1 h-20 rounded-full mx-2'></div>}
-        {isMobile ? <></> : <div id='login-lottie' className='w-52'>
+        {data.isMobile ? <></> : <div id='v-line' className='bg-slate-400 w-1 h-20 rounded-full mx-2'></div>}
+        {data.isMobile ? <></> : <div id='login-lottie' className='w-52'>
             <Lottie animationData={loginAnimation} loop={true}/>
         </div>}
       </div>
@@ -102,3 +88,11 @@ export default function Login() {
     </div>
   )
 }
+const mapStateToProps = (state)=>{
+  return {
+    data : {
+      isMobile : state.isMobile,
+    }
+  }
+}
+export default connect(mapStateToProps)(Login);

@@ -5,21 +5,10 @@ import Lottie from 'lottie-react';
 import { useState,useEffect } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { connect } from 'react-redux';
 import axios from 'axios';
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-export default function Register() {
-  const [isMobile,setIsMobile] = useState(window.innerWidth <= 768);
-  useEffect(
-    ()=>{
-      const handleResize = ()=>{
-        setIsMobile(window.innerWidth <= 768);
-      }
-      window.addEventListener("resize",handleResize);
-      return ()=>{
-        window.removeEventListener("resize",handleResize);
-      }
-    }
-  ,[]);
+function Register({data}) {
   const [formData,setFormData] = useState({
     username : '',
     email : "",
@@ -94,8 +83,8 @@ export default function Register() {
             <input className='register-inputs outline-none trans300 p-2 pb-0' type='date' placeholder='Enter DOB' required name='dob' value={formData.dob} onChange={handleFormChange}/>
             <button onClick={submitForm} disabled={!formFilled} type='submit' className={`text-black bg-yellow-400 p-1 rounded-lg w-24 border-2 border-black hover:bg-black hover:text-yellow-400 trans300 mt-2 ${formFilled ? 'cursor-pointer' : 'opacity-40 cursor-not-allowed'}`}>SignUp</button>
           </form>
-          {isMobile ? <></> : <div className='bg-slate-400 w-1 h-16 rounded-full' id='v-line'></div>}
-          {isMobile?<></>:<div className='w-72'>
+          {data.isMobile ? <></> : <div className='bg-slate-400 w-1 h-16 rounded-full' id='v-line'></div>}
+          {data.isMobile?<></>:<div className='w-72'>
             <Lottie animationData={SignUpAnimation} loop={true}/>
           </div>}
       </div>
@@ -109,3 +98,11 @@ export default function Register() {
     </div>
   )
 }
+const mapStateToProps = (state)=>{
+  return {
+    data : {
+      isMobile : state.isMobile,
+    }
+  }
+}
+export default connect(mapStateToProps)(Register);
