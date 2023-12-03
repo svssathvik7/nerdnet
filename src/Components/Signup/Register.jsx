@@ -50,15 +50,56 @@ function Register({data}) {
       });
     }
     else{
-      axios.post("/api/auth/createUser/",{
+      axios.post("http://localhost:3500/api/auth/newUser/",{
         username : formData.username,
         email : formData.email,
         password : formData.password,
         dob : formData.dob
       }).then((response)=>{
         console.log(response);
+        toast.success('User registered successfully!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
+          setFormData({
+            username : '',
+            email : "",
+            password : "",
+            repassword : "",
+            dob : ""
+          })
       }).catch((error)=>{
-        console.log("error "+error);
+        if(error.response.status === 400)
+        {
+          toast.error('User with the email already exists!', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            });
+        }
+        else{
+          toast.error('Error saving the user!', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            });
+        }
       });
     }
   }
