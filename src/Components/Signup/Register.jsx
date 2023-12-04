@@ -3,12 +3,16 @@ import "./Register.css";
 import SignUpAnimation from "../../assets/signUp.json";
 import Lottie from 'lottie-react';
 import { useState,useEffect } from 'react';
+import {useNavigate} from "react-router-dom";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { connect } from 'react-redux';
+import { PulseLoader } from 'react-spinners';
 import axios from 'axios';
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 function Register({data}) {
+  const [loading,setLoading] = useState(false);
+  var history = useNavigate();
   const [formData,setFormData] = useState({
     username : '',
     email : "",
@@ -23,6 +27,7 @@ function Register({data}) {
   }
   const submitForm = (e)=>{
     e.preventDefault();
+    setLoading(true);
     if(!emailPattern.test(formData.email))
     {
       toast.error('Enter valid Email!', {
@@ -35,6 +40,7 @@ function Register({data}) {
         progress: undefined,
         theme: "dark",
       });
+      setLoading(false);
     }
     else if(formData.password !== formData.repassword)
     {
@@ -48,6 +54,7 @@ function Register({data}) {
         progress: undefined,
         theme: "dark",
       });
+      setLoading(false);
     }
     else{
       axios.post("http://localhost:3500/api/auth/newUser/",{
@@ -56,7 +63,6 @@ function Register({data}) {
         password : formData.password,
         dob : formData.dob
       }).then((response)=>{
-        console.log(response);
         toast.success('User registered successfully!', {
           position: "top-right",
           autoClose: 5000,
@@ -74,6 +80,8 @@ function Register({data}) {
             repassword : "",
             dob : ""
           })
+          setLoading(false);
+          history("/");
       }).catch((error)=>{
         if(error.response.status === 400)
         {
@@ -100,6 +108,7 @@ function Register({data}) {
             theme: "dark",
             });
         }
+        setLoading(false);
       });
     }
   }
@@ -122,7 +131,7 @@ function Register({data}) {
             <input className='register-inputs outline-none trans300 p-2 pb-0' type='password' placeholder='Enter password' required name='password' value={formData.password} onChange={handleFormChange}/>
             <input className='register-inputs outline-none trans300 p-2 pb-0' type='password' placeholder='Re-enter password' required name='repassword' value={formData.repassword} onChange={handleFormChange}/>
             <input className='register-inputs outline-none trans300 p-2 pb-0' type='date' placeholder='Enter DOB' required name='dob' value={formData.dob} onChange={handleFormChange}/>
-            <button onClick={submitForm} disabled={!formFilled} type='submit' className={`text-black bg-yellow-400 p-1 rounded-lg w-24 border-2 border-black hover:bg-black hover:text-yellow-400 trans300 mt-2 ${formFilled ? 'cursor-pointer' : 'opacity-40 cursor-not-allowed'}`}>SignUp</button>
+            <button onClick={submitForm} disabled={!formFilled} type='submit' className={`flex items-center justify-center text-black bg-yellow-400 p-1 rounded-lg w-24 border-2 border-black hover:bg-black hover:text-yellow-400 trans300 mt-2 ${formFilled ? 'cursor-pointer' : 'opacity-40 cursor-not-allowed'}`}>{loading ? <PulseLoader color='white'/> :'SignUp'}</button>
           </form>
           {data.isMobile ? <></> : <div className='bg-slate-400 w-1 h-16 rounded-full' id='v-line'></div>}
           {data.isMobile?<></>:<div className='w-72'>
