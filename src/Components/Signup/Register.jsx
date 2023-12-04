@@ -63,6 +63,7 @@ function Register({data}) {
         password : formData.password,
         dob : formData.dob
       }).then((response)=>{
+        console.log("response");
         toast.success('User registered successfully!', {
           position: "top-right",
           autoClose: 5000,
@@ -83,6 +84,7 @@ function Register({data}) {
           setLoading(false);
           history("/");
       }).catch((error)=>{
+        console.log("error "+error);
         if(error.response.status === 400)
         {
           toast.error('User with the email already exists!', {

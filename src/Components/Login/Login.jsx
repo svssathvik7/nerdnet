@@ -5,8 +5,15 @@ import { Link } from 'react-router-dom';
 import "./Login.css";
 import { useState } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { PulseLoader } from 'react-spinners';
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 function Login({data}) {
+    const history = useNavigate();
+    const [loading,setLoading] = useState(false);
+    const [validForm,setValidForm] = useState(false);
     const [formData, setFormData] = useState({
         userEmail: '',
         password: '',
@@ -17,20 +24,47 @@ function Login({data}) {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
         if(name==="userEmail"){
-            if(emailPattern.test(value) || value==="")
+            if(value==="")
             {
               setErrorMail("");
+              setValidForm(false);
+            }
+            else if(emailPattern.test(value))
+            {
+              setErrorMail("");
+              setValidForm(true);
             }
             else{
               setErrorMail("!Enter proper email address");
+              setValidForm(false);
             }
         }
       };
     
-      const handleSubmit = (e) => {
+      const handleSubmit = async(e) => {
         e.preventDefault();
-        // Add your form submission logic here
-        console.log('Form submitted:', formData);
+        setLoading(true);
+        axios.post("http://localhost:3500/api/auth/login/",{
+          useremail : formData.userEmail,
+          password : formData.password
+        }).then((response)=>{
+          console.log("Successful login");
+          setLoading(false);
+          history("/home");
+        }).catch((error)=>{
+          setLoading(false);
+          console.log(error.response.data.loginResponse);
+          toast.error(error.response.data.loginResponse, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            });
+        })
       };
   return (
     <div id='login-container' className={`h-fit bg-white flex flex-col items-center justify-around p-8 pb-4 absolute top-0 bottom-0 left-0 right-0 m-auto rounded-lg`}>
@@ -67,7 +101,7 @@ function Login({data}) {
                     className={`outline-none text-black p-2 pb-0 rounded-sm login-inputs`}
                     />
                 </div>
-                <button id='login-submit' className={`bg-yellow-400 p-1 m-2 border-2 border-black rounded-lg select-none hover:bg-black hover:text-yellow-400 trans100`} type="submit" onClick={handleSubmit}>Login</button>
+                <button id='login-submit' className={`flex items-center justify-center bg-yellow-400 p-1 m-2 border-2 border-black rounded-lg select-none hover:bg-black hover:text-yellow-400 trans100 ${validForm ? "cursor-pointer" : "cursor-not-allowed opacity-40"}`} type="submit" onClick={handleSubmit} disabled={!validForm}>{loading ? <PulseLoader color='white'/> : "Login"}</button>
             </form>
         </div>
         {data.isMobile ? <></> : <div id='v-line' className='bg-slate-400 w-1 h-20 rounded-full mx-2'></div>}
