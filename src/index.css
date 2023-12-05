@@ -12,6 +12,9 @@ body{
     overflow-x: hidden;
     background-color: rgb(193, 190, 190);
 }
+body::-webkit-scrollbar{
+    display: none
+}
 @layer components{
     .trans500{
         @apply transition-all duration-500;
