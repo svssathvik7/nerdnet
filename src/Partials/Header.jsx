@@ -4,6 +4,8 @@ import { CgProfile } from "react-icons/cg";
 import "./Header.css";
 import { useState,useEffect } from 'react';
 import MaxiNavBar from '../Components/Navbar/MaxiNavBar';
+import Profile from '../Pages/Profile';
+import { Link } from 'react-router-dom';
 export default function Header() {
   const [isMobile,setIsMobile] = useState(window.innerWidth <= 768);
   useEffect(
@@ -24,9 +26,9 @@ export default function Header() {
         <img alt='nerd-logo' src={NerdLogo} className='w-8 m-2 cursor-wait'/>
       </div>
       {isMobile ? <></> : <MaxiNavBar/>}
-      <div id='profile' className='text-3xl cursor-pointer m-2'>
+      <Link to="/profile" id='profile' className='text-3xl cursor-pointer m-2'>
         <CgProfile color='white'/>
-      </div>
+      </Link>
     </div>
   )
 }

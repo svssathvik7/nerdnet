@@ -23,7 +23,6 @@ const postConstants = [
         post : require("../assets/image.png"),
         caption : "Ghantasala's blending of classical improvisations to the art of light music combined with his virtuosity and sensitivity puts him a class apart, above all others in the field of playback singing"
     },
-    ,
     {
         id : 4,
         isMultiMedia : true,

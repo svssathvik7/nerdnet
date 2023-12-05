@@ -3,6 +3,7 @@ import Landing from './Pages/Landing';
 import Register from './Pages/RegisterPage';
 import { Routes,Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import Profile from './Pages/Profile';
 import Home from './Pages/Home';
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route path='/' element={<Landing/>}/>
         <Route path='/newUser' element={<Register/>}/>
         <Route path='/home' element={<Home/>}/>
+        <Route path='/profile' element={<Profile/>}/>
       </Routes>
       <ToastContainer
         position="top-right"
