@@ -48,13 +48,11 @@ function Login({data}) {
           useremail : formData.userEmail,
           password : formData.password
         }).then((response)=>{
-          console.log("Successful login");
           setLoading(false);
           history("/home");
         }).catch((error)=>{
           setLoading(false);
-          console.log(error.response.data.loginResponse);
-          toast.error(error.response.data.loginResponse, {
+          toast.error(error.response.data.loginResponse ? error.response.data.loginResponse : "An error occurred!", {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
