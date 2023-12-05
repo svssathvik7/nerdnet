@@ -7,6 +7,10 @@
     height: fit-content;
     overflow: hidden;
 }
+#post-data img{
+    height: fit-content;
+    max-height: 40dvh;
+}
 #image-post{
     width: 40dvw;
 }

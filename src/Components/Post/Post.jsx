@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState,useRef } from 'react';
 import "./Post.css";
 import { IoClose } from "react-icons/io5";
 import { FaAngleDoubleUp } from "react-icons/fa";
@@ -7,13 +7,26 @@ import { MdDescription } from "react-icons/md";
 import { FaAngleDoubleDown } from "react-icons/fa";
 import { RiMessage3Fill } from "react-icons/ri";
 import { IoShareSocialSharp } from "react-icons/io5";
+import { motion,useInView } from 'framer-motion';
 function ImagePost(props)
 {
+  const ref = useRef(null);
   const [showCaption,setShowCaption] = useState(false);
   const [showPost,setShowPost] = useState(true);
   const [upVotes,setUpVotes] = useState(0);
+  const isInView = useInView(ref,{
+    once : false
+  });
   return (
-    showPost && <div id='image-post' className={`bg-white rounded-lg flex flex-col items-center justify-center`}>
+    showPost && 
+    <motion.div 
+    ref={ref}
+    style={{
+        opacity: isInView ? 1 : 0.7,
+        transform: isInView ? 'translateY(0px)' : 'translateY(-30px)',
+        scale: isInView ? 1 : 0.8,
+    }}
+    id='image-post' className={`bg-white rounded-lg flex flex-col items-center justify-center trans300`}>
       <div id='post-meta-data' className='flex items-center justify-between'>
         <div className='flex items-center justify-center p-2 mx-2'>
           <img alt='dp' src={props.dp} className='w-8 mx-2 cursor-pointer select-none'/>
@@ -45,7 +58,7 @@ function ImagePost(props)
         <p className='font-medium text-base w-fit h-fit inline-block selection:bg-yellow-400'>Word by Nerd :&nbsp;</p>
         <p className='text-base w-fit h-fit inline-block selection:bg-yellow-400'>{props.caption}</p>
       </div> : <></>}
-    </div>
+    </motion.div>
   )
 }
 function TextPost(props)
