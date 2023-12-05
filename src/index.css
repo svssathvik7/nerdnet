@@ -10,6 +10,7 @@
 }
 body{
     overflow-x: hidden;
+    background-color: rgb(193, 190, 190);
 }
 @layer components{
     .trans500{
