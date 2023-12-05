@@ -17,7 +17,7 @@ function ImagePost(props)
       <div id='post-meta-data' className='flex items-center justify-between'>
         <div className='flex items-center justify-center p-2 mx-2'>
           <img alt='dp' src={props.dp} className='w-8 mx-2 cursor-pointer select-none'/>
-          <div>
+          <div className='select-none'>
             <p className='font-medium text-sm cursor-pointer'>{props.username}</p>
             <p className='text-xs font-light text-slate-600'>{props.education ? props.education : "Enthusiast at Nerd.net"}</p>
           </div>
@@ -34,7 +34,7 @@ function ImagePost(props)
           <div className='text-lg cursor-pointer mx-1'><FaAngleDoubleUp onClick={()=>{setUpVotes(upVotes+1)}}/></div>
           <p className='select-none'>{upVotes}</p>
           <div className='text-lg cursor-pointer mx-1'><MdDescription onClick={()=>{setShowCaption(!showCaption)}}/></div>
-          <div className='text-lg cursor-pointer mx-1'><FaAngleDoubleDown/></div>
+          <div className='text-lg cursor-pointer mx-1'><FaAngleDoubleDown onClick={()=>{setUpVotes(upVotes-1)}}/></div>
         </div>
         <div id='reach-btn' className='flex items-center justify-around'>
           <div className='text-xl cursor-pointer mx-1'><RiMessage3Fill/></div>
@@ -51,12 +51,13 @@ function ImagePost(props)
 function TextPost(props)
 {
   const [showPost,setShowPost] = useState(true);
+  const [upVotes,setUpVotes] = useState(0);
   return (
     showPost && <div id='text-post' className={`bg-white rounded-lg flex flex-col items-center justify-center`}>
       <div id='post-meta-data' className='flex items-center justify-between'>
         <div className='flex items-center justify-center p-2 mx-2'>
           <img alt='dp' src={props.dp} className='w-8 mx-2 cursor-pointer select-none'/>
-          <div>
+          <div className='select-none'>
             <p className='font-medium text-sm cursor-pointer'>{props.username}</p>
             <p className='text-xs font-light text-slate-600'>{props.education ? props.education : "Enthusiast at Nerd.net"}</p>
           </div>
@@ -70,8 +71,9 @@ function TextPost(props)
       </div>
       <div id='post-metrics' className='flex items-center justify-start p-2 mt-0 pt-0'>
       <div id='metric-btn' className='flex items-center justify-around p-2 rounded-full'>
-        <div className='text-lg cursor-pointer mx-1'><FaAngleDoubleUp/></div>
-        <div className='text-lg cursor-pointer mx-1'><FaAngleDoubleDown/></div>
+        <div className='text-lg cursor-pointer mx-1'><FaAngleDoubleUp onClick={()=>{setUpVotes(upVotes+1)}}/></div>
+        <p className='select-none'>{upVotes}</p>
+        <div className='text-lg cursor-pointer mx-1'><FaAngleDoubleDown onClick={()=>setUpVotes(upVotes-1)}/></div>
         </div>
         <div id='reach-btn' className='flex items-center justify-around'>
           <div className='text-xl cursor-pointer mx-1'><RiMessage3Fill/></div>

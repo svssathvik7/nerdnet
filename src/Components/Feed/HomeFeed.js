@@ -1,6 +1,7 @@
 import React from 'react'
 import Post from '../Post/Post'
 import postConstants from '../../constants/postConstants'
+import "./HomeFeed.css";
 export default function HomeFeed() {
   return (
     <div id='home-feed' className='flex flex-col items-center justify-center'>

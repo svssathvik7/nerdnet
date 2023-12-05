@@ -23,3 +23,21 @@
     width: 40dvw;
     height: fit-content;
 }
+@media (max-width:768px) {
+    #image-post{
+        width: 90dvw;
+        height: fit-content;
+    }
+    #post-data{
+        width: 90dvw;
+        height: fit-content;
+        overflow: hidden;
+    }
+    #image-post{
+        width: 90dvw;
+    }
+    #text-post{
+        width: 90dvw;
+        height: fit-content;
+    }
+}
