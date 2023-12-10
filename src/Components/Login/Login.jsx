@@ -47,21 +47,37 @@ function Login({data}) {
         axios.post("http://localhost:3500/api/auth/login/",{
           useremail : formData.userEmail,
           password : formData.password
-        }).then((response)=>{
+        }).then(async (response)=>{
           setLoading(false);
+          const data = await response.data;
+          localStorage.setItem("token",data.userToken);
           history("/home");
         }).catch((error)=>{
           setLoading(false);
-          toast.error(error.response.data.loginResponse ? error.response.data.loginResponse : "An error occurred!", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-            });
+          try{
+            toast.error(error.response.data.loginResponse, {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+              });
+          }
+          catch(error){
+            toast.error("An error occurred!", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+              });
+          }
         })
       };
   return (
@@ -99,7 +115,7 @@ function Login({data}) {
                     className={`outline-none text-black p-2 pb-0 rounded-sm login-inputs`}
                     />
                 </div>
-                <button id='login-submit' className={`flex items-center justify-center bg-yellow-400 p-1 m-2 border-2 border-black rounded-lg select-none hover:bg-black hover:text-yellow-400 trans100 ${validForm ? "cursor-pointer" : "cursor-not-allowed opacity-40"}`} type="submit" onClick={handleSubmit} disabled={!validForm}>{loading ? <PulseLoader color='white'/> : "Login"}</button>
+                <button id='login-submit' className={`flex items-center justify-center bg-yellow-400 p-1 m-2 border-2 border-black rounded-lg select-none hover:bg-black hover:text-yellow-400 trans100 ${validForm ? "cursor-pointer" : "cursor-not-allowed opacity-40"}`} type="submit" onClick={handleSubmit} disabled={!validForm}>{loading ? <PulseLoader className='scale-75' color='white'/> : "Login"}</button>
             </form>
         </div>
         {data.isMobile ? <></> : <div id='v-line' className='bg-slate-400 w-1 h-20 rounded-full mx-2'></div>}
@@ -112,9 +128,9 @@ function Login({data}) {
             <Link to='/newUser' className='bg-yellow-400 p-1 rounded-lg mx-2 hover:scale-105 trans100'>Register Here.</Link>
       </div>
       <div id='semi-footer' className='flex w-[100%] items-center justify-around mt-4'>
-        <a href='/' className='font-light text-gray-500 text-xs hover:underline'>About</a>
-        <a href='/' className='font-light text-gray-500 text-xs hover:underline'>Privacy & Policy</a>
-        <a href='/' className='font-light text-gray-500 text-xs hover:underline'>Revenue</a>
+        <Link to="/about" className='font-light text-gray-500 text-xs hover:underline'>About</Link>
+        <Link to="/about" className='font-light text-gray-500 text-xs hover:underline'>Privacy & Policy</Link>
+        <Link to="/about" className='font-light text-gray-500 text-xs hover:underline'>Revenue</Link>
         <p className='font-light text-gray-500 text-xs'>&copy; Nerd.net {new Date().getFullYear()}</p>
       </div>
     </div>

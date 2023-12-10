@@ -7,11 +7,11 @@ import AddPostBtn from '../Components/AddPost/AddPostBtn'
 function Home({data}) {
   return (
     <div id='home-page' className=''>
-      <Header/>
-      {data.isMobile ? <MiniNavBar/> : <></>}
-      <HomeFeed/>
-      <AddPostBtn/>
-    </div>
+          <Header/>
+          {data.isMobile ? <MiniNavBar/> : <></>}
+          <HomeFeed/>
+          <AddPostBtn/>
+      </div>
   )
 }
 const mapStateToProps = (state)=>{
