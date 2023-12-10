@@ -15,7 +15,7 @@ function ImagePost(props)
   const [showPost,setShowPost] = useState(true);
   const [upVotes,setUpVotes] = useState(0);
   const isInView = useInView(ref,{
-    once : false
+    once : true
   });
   return (
     showPost && 
