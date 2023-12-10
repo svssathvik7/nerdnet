@@ -11,8 +11,7 @@ export default function MaxiNavBar() {
   useEffect(
     ()=>{
       TokenValidity().then((res)=>{
-        console.log(res);
-        if(res!==true){
+        if(!res){
           navigate("/");
         }
       })

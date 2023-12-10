@@ -19,6 +19,7 @@ export default function MiniNavBar() {
           navigate("/");
         }
       })
+      setPath(location.pathname);
     }
   ,[]);
   return (
