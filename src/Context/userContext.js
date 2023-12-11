@@ -8,6 +8,7 @@ const UserContext = ({children}) => {
         if(user===null){
             const token = localStorage.getItem('token');
             const response = (await axios.post("http://localhost:3500/api/auth/currUser/",{token})).data;
+            console.log(response.userData);
             setUser(response.userData);
         }
     }

@@ -9,14 +9,9 @@ import { useContext } from 'react';
 import { userContextProvider } from '../Context/userContext';
 export default function Header() {
   const [isMobile,setIsMobile] = useState(window.innerWidth <= 768);
-  const {getUserDetails} = useContext(userContextProvider);
   const {user} = useContext(userContextProvider);
   useEffect(
     ()=>{
-      const userDetailsExtraction = async ()=>{
-        await getUserDetails();
-      }
-      userDetailsExtraction();
       const handleResize = ()=>{
         setIsMobile(window.innerWidth <= 768);
       }
@@ -34,7 +29,7 @@ export default function Header() {
       </div>
       {isMobile ? <></> : <MaxiNavBar/>}
       <Link to="/profile" id='profile' className='text-3xl cursor-pointer m-2'>
-        {user ? <img src={user.dp} alt='dp' className='w-10 border-white border-2'/> : <CgProfile color='black'/>}
+        {user ? <img src={user.dp} alt='dp' className='w-10 border-white border-2'/> : <CgProfile color='white'/>}
       </Link>
     </div>
   )

@@ -4,7 +4,10 @@ import TokenValidity from '../../Utilities/TokenValidity';
 import { useNavigate } from 'react-router-dom';
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { useLocation } from 'react-router-dom';
+import { userContextProvider } from '../../Context/userContext';
+import { useContext } from 'react';
 export default function MaxiNavBar() {
+  const {user,getUserDetails} = useContext(userContextProvider);
   const navigate = useNavigate();
   const location = useLocation();
   const [path,setPath] = useState(location.pathname);
@@ -16,6 +19,7 @@ export default function MaxiNavBar() {
         }
       })
       setPath(location.pathname);
+      getUserDetails();
     }
   ,[]);
   return (

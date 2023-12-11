@@ -110,10 +110,10 @@ export default function AddPostForm() {
       <form id='add-post-form' className={`bg-white h-fit p-2 absolute left-0 right-0 top-0 bottom-0 m-auto rounded-lg`}>
         <div id='post-meta-data' className='flex items-center justify-between'>
             <div className='flex items-center justify-center p-2 mx-2'>
-            <img alt='dp' src={user.dp ? user.dp : <CgProfile/>} className='w-8 mx-2 cursor-pointer select-none'/>
+            <img alt='dp' src={user ? user.dp : <CgProfile/>} className='w-8 mx-2 cursor-pointer select-none'/>
             <div className='select-none'>
-                <p className='font-medium text-sm cursor-pointer'>{user.username}</p>
-                <p className='text-xs font-light text-slate-600'>{user.education ? user.education : "Enthusiast at Nerd.net"}</p>
+                <p className='font-medium text-sm cursor-pointer'>{user ? user.username : "Nerd"}</p>
+                <p className='text-xs font-light text-slate-600'>{user ? user.education : "Enthusiast at Nerd.net"}</p>
             </div>
             </div>
         </div>

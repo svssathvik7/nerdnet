@@ -9,8 +9,11 @@ import { FaQuestion } from "react-icons/fa";
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TokenValidity from '../../Utilities/TokenValidity';
+import { useContext } from 'react';
+import { userContextProvider } from '../../Context/userContext';
 import "./Navbar.css";
 export default function MiniNavBar() {
+  const {user,getUserDetails} = useContext(userContextProvider);
   const navigate = useNavigate();
   const location = useLocation();
   const [path,setPath] = useState(location.pathname);
@@ -22,6 +25,7 @@ export default function MiniNavBar() {
         }
       })
       setPath(location.pathname);
+      getUserDetails();
     }
   ,[]);
   return (

@@ -97,7 +97,6 @@ function TextPost(props)
   )
 }
 export default function Post(props) {
-  console.log(props);
   return (
     <div id='post'>
       {props.isMultimedia ? 
