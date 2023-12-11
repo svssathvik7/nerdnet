@@ -1,15 +1,22 @@
 import React from 'react';
 import NerdLogo from "../assets/nerd-logo-2.svg";
-import { CgProfile } from "react-icons/cg";
 import "./Header.css";
 import { useState,useEffect } from 'react';
 import MaxiNavBar from '../Components/Navbar/MaxiNavBar';
-import Profile from '../Pages/Profile';
+import { CgProfile } from "react-icons/cg";
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { userContextProvider } from '../Context/userContext';
 export default function Header() {
   const [isMobile,setIsMobile] = useState(window.innerWidth <= 768);
+  const {getUserDetails} = useContext(userContextProvider);
+  const {user} = useContext(userContextProvider);
   useEffect(
     ()=>{
+      const userDetailsExtraction = async ()=>{
+        await getUserDetails();
+      }
+      userDetailsExtraction();
       const handleResize = ()=>{
         setIsMobile(window.innerWidth <= 768);
       }
@@ -27,7 +34,7 @@ export default function Header() {
       </div>
       {isMobile ? <></> : <MaxiNavBar/>}
       <Link to="/profile" id='profile' className='text-3xl cursor-pointer m-2'>
-        <CgProfile color='white'/>
+        {user ? <img src={user.dp} alt='dp' className='w-10 border-white border-2'/> : <CgProfile color='black'/>}
       </Link>
     </div>
   )

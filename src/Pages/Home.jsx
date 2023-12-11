@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Header from '../Partials/Header'
 import MiniNavBar from '../Components/Navbar/MiniNavBar'
 import { connect } from 'react-redux'

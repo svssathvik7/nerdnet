@@ -6,6 +6,7 @@ import { ToastContainer } from 'react-toastify';
 import Profile from './Pages/Profile';
 import AboutLanding from './DescriptorPage/AboutLanding';
 import Home from './Pages/Home';
+import AddPostForm from './Components/AddPost/AddPostForm';
 function App() {
   return (
     <div className="App">
@@ -15,6 +16,7 @@ function App() {
         <Route path='/home' element={<Home/>}/>
         <Route path='/profile' element={<Profile/>}/>
         <Route path='/about' exact Component={AboutLanding}/>
+        <Route path='/postForm' exact Component={AddPostForm}/>
       </Routes>
       <ToastContainer
         position="top-right"
