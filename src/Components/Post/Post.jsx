@@ -29,10 +29,10 @@ function ImagePost(props)
     id='image-post' className={`bg-white rounded-lg flex flex-col items-center justify-center trans300`}>
       <div id='post-meta-data' className='flex items-center justify-between'>
         <div className='flex items-center justify-center p-2 mx-2'>
-          <img alt='dp' src={props.dp} className='w-8 mx-2 cursor-pointer select-none'/>
+          <img alt='dp' src={props.userPosted.dp} className='w-8 mx-2 cursor-pointer select-none'/>
           <div className='select-none'>
-            <p className='font-medium text-sm cursor-pointer'>{props.username}</p>
-            <p className='text-xs font-light text-slate-600'>{props.education ? props.education : "Enthusiast at Nerd.net"}</p>
+            <p className='font-medium text-sm cursor-pointer'>{props.userPosted.username}</p>
+            <p className='text-xs font-light text-slate-600'>{props.userPosted.education ? props.userPosted.education : "Enthusiast at Nerd.net"}</p>
           </div>
         </div>
         <div id='post-close' className='text-2xl mx-2 cursor-pointer'>
@@ -40,7 +40,7 @@ function ImagePost(props)
         </div>
       </div>
       <div id='post-data' className='p-2 pt-0 overflow-hidden'>
-        <img alt='post' src={props.post} className='post-images w-full h-full object-contain object-center select-none'/>
+        <img alt='post' src={props.postData} className='post-images w-full h-full object-contain object-center select-none'/>
       </div>
       <div id='post-metrics' className='flex items-center justify-start p-2 mt-0 pt-0'>
         <div id='metric-btn' className='flex items-center justify-around p-2 rounded-full'>
@@ -69,10 +69,10 @@ function TextPost(props)
     showPost && <div id='text-post' className={`bg-white rounded-lg flex flex-col items-center justify-center`}>
       <div id='post-meta-data' className='flex items-center justify-between'>
         <div className='flex items-center justify-center p-2 mx-2'>
-          <img alt='dp' src={props.dp} className='w-8 mx-2 cursor-pointer select-none'/>
+          <img alt='dp' src={props.userPosted.dp} className='w-8 mx-2 cursor-pointer select-none'/>
           <div className='select-none'>
-            <p className='font-medium text-sm cursor-pointer'>{props.username}</p>
-            <p className='text-xs font-light text-slate-600'>{props.education ? props.education : "Enthusiast at Nerd.net"}</p>
+            <p className='font-medium text-sm cursor-pointer'>{props.userPosted.username}</p>
+            <p className='text-xs font-light text-slate-600'>{props.userPosted.education ? props.userPosted.education : "Enthusiast at Nerd.net"}</p>
           </div>
         </div>
         <div id='post-close' className='text-2xl mx-2 cursor-pointer'>
@@ -80,7 +80,7 @@ function TextPost(props)
         </div>
       </div>
       <div id='post'>
-        <h6 className='font-normal m-2'>{props.post}</h6>
+        <h6 className='font-normal m-2'>{props.postData}</h6>
       </div>
       <div id='post-metrics' className='flex items-center justify-start p-2 mt-0 pt-0'>
       <div id='metric-btn' className='flex items-center justify-around p-2 rounded-full'>
@@ -100,7 +100,7 @@ export default function Post(props) {
   console.log(props);
   return (
     <div id='post'>
-      {props.isMultiMedia ? 
+      {props.isMultimedia ? 
         <ImagePost {...props}/>
       :
         <TextPost {...props}/>

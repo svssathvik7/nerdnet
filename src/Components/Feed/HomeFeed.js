@@ -12,6 +12,7 @@ export default function HomeFeed() {
         setPosts(allPosts);
       }
       getPosts();
+      console.log(posts);
     }
   ,[]);
   return (
