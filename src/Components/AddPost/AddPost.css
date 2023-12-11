@@ -1,0 +1,46 @@
+#add-post-form{
+    width: 45dvw;
+}
+#post-input-container{
+    width: 100%;
+}
+#text-input{
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 1%;
+    padding-bottom: 0;
+    transition: padding-bottom 0.3s ease; 
+}
+#text-input:hover{
+    padding-bottom: 1%;
+    border-bottom: thin solid #000;
+}
+#text-input:focus{
+    padding-bottom: 1%;
+    border-bottom: thin solid #000;
+}
+#text-input:valid{
+    padding-bottom: 2%;
+    border-bottom: thin solid #000;
+}
+#image-input-subform input{
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 1%;
+    padding-bottom: 0;
+    transition: padding-bottom 0.3s ease;
+}
+#image-input-subform input:hover{
+    padding-bottom: 1%;
+    border-bottom: thin solid #000;
+}
+#image-input-subform input:focus{
+    padding-bottom: 1%;
+    border-bottom: thin solid #000;
+}
+#image-input-subform input:valid{
+    padding-bottom: 2%;
+    border-bottom: thin solid #000;
+}
