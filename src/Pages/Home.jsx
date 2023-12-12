@@ -10,11 +10,11 @@ function Home({data}) {
     <div id='home-page' className=''>
           <Header/>
           {data.isMobile ? <MiniNavBar/> : <></>}
-          <div className='flex items-center justify-start'>
-            <AsideBar/>
+          <div className={`flex items-center ${data.isMobile ? " justify-center " : " justify-start "}`}>
+            {data.isMobile ? <></> : <AsideBar/>}
             <HomeFeed/>
           </div>
-          <AddPostBtn/>
+          {data.isMobile ? <></> : <AddPostBtn/>}
       </div>
   )
 }

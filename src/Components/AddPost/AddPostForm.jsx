@@ -6,7 +6,9 @@ import { CgProfile } from 'react-icons/cg'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import "./AddPost.css";
-export default function AddPostForm() {
+import { connect } from 'react-redux'
+import MiniNavBar from '../Navbar/MiniNavBar'
+function AddPostForm({data}) {
     const {user} = useContext(userContextProvider);
     const [textInput,setInputType] = useState(true);
     const [disabled,setDisabled] = useState(true);
@@ -139,6 +141,15 @@ export default function AddPostForm() {
             </div>
         </div>
       </form>
+      {data.isMobile ? <MiniNavBar/> : <></>}
     </div>
   )
 }
+const mapStateToProps = (state)=>{
+    return {
+        data : {
+          isMobile : state.isMobile,
+        }
+      }
+}
+export default connect(mapStateToProps)(AddPostForm);

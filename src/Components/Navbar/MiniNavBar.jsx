@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import Home from '../../Pages/Home'
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { FaHome } from "react-icons/fa";
-import { MdExplore } from "react-icons/md";
+import { FaArrowUp } from "react-icons/fa";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { FaQuestion } from "react-icons/fa";
 import { useEffect } from 'react';
@@ -30,10 +30,10 @@ export default function MiniNavBar() {
   ,[]);
   return (
     <div id='header-nav-links-mini' className='fixed bottom-0 left-0 right-0 h-fit mx-auto mb-2 flex items-center justify-around bg-black p-2 rounded-full'>
-        <Link className={`${path === "/home" ? "bg-[#1eb81e]" : ""} text-3xl rounded-lg text-white p-1`}to={Home}><FaHome/></Link>
+        <Link className={`${path === "/home" ? "bg-[#1eb81e]" : ""} text-3xl rounded-lg text-white p-1`}to="/home"><FaHome/></Link>
         <Link className={`text-white mx-2 my-1 text-2xl p-1 ${path === "/explore" ? "bg-[#1eb81e]" : ""}`} to={Home}><FaMagnifyingGlass color='white'/></Link>
         {/* look into it */}
-        <Link className={`text-white mx-2 my-1 text-2xl p-1 ${path === "/search" ? "bg-[#1eb81e]" : ""}`} to={Home}><MdExplore /></Link>
+        <Link className={`text-white mx-2 my-1 text-2xl p-1 ${path === "/postForm" ? " bg-[#1eb81e] rounded-lg " : ""}`} to="/postForm"><FaArrowUp /></Link>
         <Link className='text-white mx-2 my-1 text-2xl p-1' to={Home}><FaPeopleGroup /></Link>
         <Link className='text-white mx-2 my-1 text-2xl p-1' to={Home}><FaQuestion /></Link>
     </div>

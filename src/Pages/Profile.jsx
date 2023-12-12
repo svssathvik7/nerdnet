@@ -3,6 +3,7 @@ import Header from '../Partials/Header'
 import AddPostBtn from '../Components/AddPost/AddPostBtn'
 import ProfileSidebar from '../Components/ProfileComponents/ProfileSidebar'
 import UserPosts from '../Components/ProfileComponents/UserPosts'
+import MiniNavBar from '../Components/Navbar/MiniNavBar'
 import { connect } from 'react-redux'
 function Profile({data}) {
   return (
@@ -12,7 +13,8 @@ function Profile({data}) {
         <ProfileSidebar/>
         <UserPosts/>
       </div>
-      <AddPostBtn/>
+      {data.isMobile ? <MiniNavBar/> : <></>}
+      {data.isMobile ? <></> : <AddPostBtn/>}
     </div>
   )
 }
