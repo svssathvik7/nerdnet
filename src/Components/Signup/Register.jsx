@@ -18,7 +18,7 @@ function Register({data}) {
     email : "",
     password : "",
     repassword : "",
-    dob : ""
+    dp : ""
   });
   const handleFormChange = (e)=>{
     const {name,value} = e.target;
@@ -61,7 +61,7 @@ function Register({data}) {
         username : formData.username,
         email : formData.email,
         password : formData.password,
-        dob : formData.dob
+        dp : formData.dp
       }).then((response)=>{
         console.log("response");
         toast.success('User registered successfully!', {
@@ -79,7 +79,7 @@ function Register({data}) {
             email : "",
             password : "",
             repassword : "",
-            dob : ""
+            dp : ""
           })
           setLoading(false);
           history("/");
@@ -118,7 +118,7 @@ function Register({data}) {
   useEffect(
     ()=>{
       const formDataChanged = ()=>{
-        setFormFilled(((formData.username.length)&&(formData.email.length)&&(formData.password.length)&&(formData.repassword.length)&&(formData.dob.length)));
+        setFormFilled(((formData.username.length)&&(formData.email.length)&&(formData.password.length)&&(formData.repassword.length)));
       }
       formDataChanged();
     }
@@ -132,7 +132,7 @@ function Register({data}) {
             <input className='register-inputs outline-none trans300 p-2 pb-0' type='email' placeholder='Enter your Email' required name='email' value={formData.email} onChange={handleFormChange}/>
             <input className='register-inputs outline-none trans300 p-2 pb-0' type='password' placeholder='Enter password' required name='password' value={formData.password} onChange={handleFormChange}/>
             <input className='register-inputs outline-none trans300 p-2 pb-0' type='password' placeholder='Re-enter password' required name='repassword' value={formData.repassword} onChange={handleFormChange}/>
-            <input className='register-inputs outline-none trans300 p-2 pb-0' type='date' placeholder='Enter DOB' required name='dob' value={formData.dob} onChange={handleFormChange}/>
+            <input className='register-inputs outline-none trans300 p-2 pb-0' type='url' placeholder='Enter Dp Url (optional)' required name='dp' value={formData.dp} onChange={handleFormChange}/>
             <button onClick={submitForm} disabled={!formFilled} type='submit' className={`flex items-center justify-center text-black bg-yellow-400 p-1 rounded-lg w-24 border-2 border-black hover:bg-black hover:text-yellow-400 trans300 mt-2 ${formFilled ? 'cursor-pointer' : 'opacity-40 cursor-not-allowed'}`}>{loading ? <PulseLoader color='white'/> :'SignUp'}</button>
           </form>
           {data.isMobile ? <></> : <div className='bg-slate-400 w-1 h-16 rounded-full' id='v-line'></div>}
