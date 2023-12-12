@@ -1,0 +1,5 @@
+#user-posts-scroller{
+    height: 90dvh;
+    width: fit-content;
+    overflow-y: scroll;
+}

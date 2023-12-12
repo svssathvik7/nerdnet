@@ -1,0 +1,8 @@
+#profile-info-container{
+    height: 100%;
+}
+#profile-sidebar{
+    height: 90dvh;
+    width: 60dvw;
+    flex-wrap: wrap;
+}
