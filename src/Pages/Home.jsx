@@ -4,12 +4,16 @@ import MiniNavBar from '../Components/Navbar/MiniNavBar'
 import { connect } from 'react-redux'
 import HomeFeed from '../Components/Feed/HomeFeed'
 import AddPostBtn from '../Components/AddPost/AddPostBtn'
+import AsideBar from '../Partials/AsideBar'
 function Home({data}) {
   return (
     <div id='home-page' className=''>
           <Header/>
           {data.isMobile ? <MiniNavBar/> : <></>}
-          <HomeFeed/>
+          <div className='flex items-center justify-start'>
+            <AsideBar/>
+            <HomeFeed/>
+          </div>
           <AddPostBtn/>
       </div>
   )

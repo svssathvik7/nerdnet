@@ -24,9 +24,9 @@ export default function Header() {
   ,[]);
   return (
     <div id='header' className={`bg-black p-2 flex items-center ${isMobile ? 'justify-between' : 'justify-around'}`}>
-      <div id='nerd-logo'>
-        <img alt='nerd-logo' src={NerdLogo} className='w-8 m-2 cursor-wait'/>
-      </div>
+      <a href='/home' id='nerd-logo'>
+        <img alt='nerd-logo' src={NerdLogo} className='w-8 m-2 cursor-pointer'/>
+      </a>
       {isMobile ? <></> : <MaxiNavBar/>}
       <Link to="/profile" id='profile' className='text-3xl cursor-pointer m-2'>
         {user ? <img src={user.dp} alt='dp' className='w-10 border-white border-2'/> : <CgProfile color='white'/>}
