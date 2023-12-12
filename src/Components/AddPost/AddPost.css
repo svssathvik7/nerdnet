@@ -44,3 +44,11 @@
     padding-bottom: 2%;
     border-bottom: thin solid #000;
 }
+
+
+
+@media (max-width:768px) {
+    #add-post-form{
+        width: 90dvw;
+    }
+}
