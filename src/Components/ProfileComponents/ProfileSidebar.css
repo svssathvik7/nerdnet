@@ -6,3 +6,17 @@
     width: 60dvw;
     flex-wrap: wrap;
 }
+
+@media (max-width:768px) {
+    #profile-dp-container{
+        width: 100%;
+    }
+    #profile-sidebar{
+        height: 40dvh;
+        width: 100%;
+        flex-wrap: wrap;
+    }
+    #profile-dp-container img{
+        width: 25dvw;
+    }
+}
