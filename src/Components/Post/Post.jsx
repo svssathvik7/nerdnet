@@ -69,7 +69,7 @@ function TextPost(props)
     showPost && <div id='text-post' className={`bg-white rounded-lg flex flex-col items-center justify-center`}>
       <div id='post-meta-data' className='flex items-center justify-between'>
         <div className='flex items-center justify-center p-2 mx-2'>
-          <img alt='dp' src={props.userPosted&&props.userPosted.dp ? props.userPosted.dp : "#"} className='w-8 mx-2 cursor-pointer select-none'/>
+          <a href='#'><img alt='dp' src={props.userPosted&&props.userPosted.dp ? props.userPosted.dp : "#"} className='w-8 mx-2 cursor-pointer select-none'/></a>
           <div className='select-none'>
             <p className='font-medium text-sm cursor-pointer'>{props.userPosted ? props.userPosted.username : "Nerd"}</p>
             <p className='text-xs font-light text-slate-600'>{props.userPosted&&props.userPosted.education ? props.userPosted.education : "Enthusiast at Nerd.net"}</p>
