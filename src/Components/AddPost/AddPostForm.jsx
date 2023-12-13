@@ -11,25 +11,32 @@ import MiniNavBar from '../Navbar/MiniNavBar'
 function AddPostForm({data}) {
     const {user} = useContext(userContextProvider);
     const [textInput,setInputType] = useState(true);
+    // use for limiting tags len
+    const [errText,setErrText] = useState("");
+    const [textTags,setTextTags] = useState([]);
+    const [imgTags,setImgTags] = useState([]);
     const [disabled,setDisabled] = useState(true);
     const [formData,setFormData] = useState({
         isMultimedia : false,
         textPostData : "",
         imgPostData : "",
         caption : "",
+        textTagsData : "",
+        imgTagsData : ""
     })
     const handleFormChange = (e) => {
         const { name, value } = e.target;
-    
         setFormData((prevData) => ({
           ...prevData,
           [name]: value,
         }));
-        if(e.target.name === "textPostData"){
+        if(name === "textPostData" || name === "textTagsData"){
             textActivate();
+            setTextTags(formData.textTagsData.split(" ") ? formData.textTagsData.split(" ") : []);
         }
         else{
             imgActivate();
+            setImgTags(formData.imgTagsData.split(" ") ? formData.imgTagsData.split(" ") : []);
         }
       };
     const textActivate = ()=>{
@@ -57,7 +64,8 @@ function AddPostForm({data}) {
                 isMultimedia : !textInput,
                 email : user.email,
                 postData : textInput ? formData.textPostData : formData.imgPostData,
-                caption : !textInput ? formData.caption : ""
+                caption : !textInput ? formData.caption : "",
+                tags : textInput ? textTags : imgTags
             }
             const response = await axios.post("http://localhost:3500/api/posts/newPost",{backendData});
             if(response.data.status){
@@ -127,17 +135,36 @@ function AddPostForm({data}) {
                 </div>
                 <div id='post-input-container' className='w-full'>
                     {textInput ? 
-                        <div id='text-input-subform' className='flex items-center justify-center w-full p-2'>
-                            <input name='textPostData' id='text-input' required placeholder='Enter your tweet!' type='text' className='m-2' value={formData.textPostData} onChange={handleFormChange}/>
+                        <div id='text-input-subform' className='flex items-center justify-center w-full p-2 flex-col'>
+                            <input name='textPostData' required placeholder='Enter your tweet!' type='text' className='m-2 text-input' value={formData.textPostData} onChange={handleFormChange} autoComplete='off'/>
+                            <input name='textTagsData' className='text-input m-2' placeholder='Enter tags...' value={formData.textTagsData} onChange={handleFormChange} autoComplete='off'/>
                         </div>
                         :
                         <div id='image-input-subform' className='m-2'>
-                            <input name='imgPostData' id='image-input' required placeholder='Enter image url' type='url' className='' value={formData.imgPostData} onChange={handleFormChange}/>
-                            <input name='caption' id='image-input-caption' placeholder='Enter image caption(optional)' type='text' className='' value={formData.caption} onChange={handleFormChange}/>
+                            <input name='imgPostData' id='image-input' required placeholder='Enter image url' type='url' className='' value={formData.imgPostData} onChange={handleFormChange} autoComplete='off'/>
+                            <input name='caption' id='image-input-caption' placeholder='Enter image caption(optional)' type='text' className='' value={formData.caption} onChange={handleFormChange} autoComplete='off'/>
+                            <input type='text' name='imgTagsData' placeholder='Enter post tags...' className='' value={formData.imgTagsData} onChange={handleFormChange} autoComplete='off'/>
                         </div>
                     }
                 </div>
                 <button type='submit' id='post-submit' className={`bg-yellow-400 p-2 m-2 text-md flex items-center justify-center rounded-full px-8 ${disabled ? " opacity-50 bg-slate-400 " : " "}`} onClick={handlePostSubmit} disabled={disabled}>Post</button>
+                <div id='tags' className='flex items-center justify-start flex-wrap'>
+                    <p>Tags:</p>
+                    {textInput ?
+                        textTags.map((tag)=>(
+                            <div key={tag.index} className='bg-slate-400 text-white rounded-3xl p-2 m-2'>
+                                <h6 className='font-medium text-xs'>#{tag}</h6>
+                            </div>
+                        ))
+                    :
+                        imgTags.map((tag)=>(
+                            <div key={tag.index} className='bg-slate-400 text-white rounded-3xl p-2 m-2'>
+                                <h6 className='font-medium text-xs'>#{tag}</h6>
+                            </div>
+                        ))
+                    }
+                    <h6 className='text-red-600 w-full text-center'>{errText}</h6>
+                </div>
             </div>
         </div>
       </form>

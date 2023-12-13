@@ -4,7 +4,7 @@
 #post-input-container{
     width: 100%;
 }
-#text-input{
+.text-input{
     width: 100%;
     border: none;
     outline: none;
@@ -12,15 +12,15 @@
     padding-bottom: 0;
     transition: padding-bottom 0.3s ease; 
 }
-#text-input:hover{
+.text-input:hover{
     padding-bottom: 1%;
     border-bottom: thin solid #000;
 }
-#text-input:focus{
+.text-input:focus{
     padding-bottom: 1%;
     border-bottom: thin solid #000;
 }
-#text-input:valid{
+.text-input:valid{
     padding-bottom: 2%;
     border-bottom: thin solid #000;
 }
@@ -44,8 +44,11 @@
     padding-bottom: 2%;
     border-bottom: thin solid #000;
 }
-
-
+#tags{
+    height: fit-content;
+    max-height: 20dvh;
+    overflow: scroll;
+}
 
 @media (max-width:768px) {
     #add-post-form{
