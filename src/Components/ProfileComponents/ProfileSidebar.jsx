@@ -81,34 +81,34 @@ export default function ProfileSidebar() {
                 {editable ? 
                 <form>
                     <div className='flex items-center justify-start w-fit'>
-                        <SiNamebase className='text-2xl' color='black'/>
-                        <input className={`text-3xl font-bold mx-2 text-slate-500 inline-block outline-none w-fit`} placeholder={`${user ? user.username : "Nerd"}`} onChange={handleFormChange} value={formData.username} name='username'/>
+                        <SiNamebase className='text-2xl' color='black' title='username'/>
+                        <input className={`text-lg font-bold mx-2 text-slate-500 inline-block outline-none w-fit`} placeholder={`${user ? user.username : "Nerd"}`} onChange={handleFormChange} value={formData.username} name='username'/>
                     </div>
                     <div className='flex items-center justify-start w-fit'>
-                        <MdMarkEmailRead className='text-2xl' color='black'/>
+                        <MdMarkEmailRead className='text-2xl' color='black' title='email'/>
                         <h6 className='text-lg font-bold mx-2 text-slate-500 inline-block w-fit'>{user ? user.email : "user@gmail.com"}</h6>
                     </div>
                     <div className='flex items-center justify-start w-fit'>
-                        <IoIosSchool className='text-2xl' color='black'/>
+                        <IoIosSchool className='text-2xl' color='black' title='education'/>
                         <input className='text-lg font-bold mx-2 text-slate-500 inline-block outline-none w-fit' placeholder={`${user && user.education ? user.education : "Enthusiast at Nerd.net"}`} maxLength={23} onChange={handleFormChange} value={formData.education} name='education'/>
                     </div>
                     <div className='flex items-center justify-start flex-wrap w-fit'>
-                        <FaImages className='text-2xl' color='black'/>
+                        <FaImages className='text-2xl' color='black' title='dp'/>
                         <input className='text-lg font-bold mx-2 text-slate-500 inline-block outline-none w-fit' placeholder={`${user && user.dp ? user.dp : "#"}`} onChange={handleFormChange} value={formData.dp} name='dp'/>
                     </div>
                 </form>
                 :
                 <div>
                     <div className='flex items-center justify-start'>
-                        <SiNamebase className='text-2xl' color='black'/>
-                        <h5 className={`text-3xl font-bold mx-2 text-slate-500 inline-block`}>{user ? user.username : "Nerd"}</h5>
+                        <SiNamebase className='text-2xl' color='black' title='username'/>
+                        <h5 className={`text-lg font-bold mx-2 text-slate-500 inline-block`}>{user ? user.username : "Nerd"}</h5>
                     </div>
                     <div className='flex items-center justify-start'>
-                        <MdMarkEmailRead className='text-2xl' color='black'/>
+                        <MdMarkEmailRead className='text-2xl' color='black' title='email'/>
                         <h5 className='text-lg font-bold mx-2 text-slate-500 inline-block'>{user ? user.email : "user@gmail.com"}</h5>
                     </div>
                     <div className='flex items-center justify-start'>
-                        <IoIosSchool className='text-2xl' color='black'/>
+                        <IoIosSchool className='text-2xl' color='black' title='education'/>
                         <h5 className='text-lg font-bold mx-2 text-slate-500 inline-block'>{user && user.education ? user.education : "Enthusiast at Nerd.net"}</h5>
                     </div>
                 </div>
