@@ -27,8 +27,6 @@ export default function MaxiNavBar() {
         <Link className={`${path === "/home" ? "bg-[#1eb81e]" : ""} p-1 rounded-lg text-white font-medium`} to="/home">Home</Link>
         <Link className={`text-white font-medium ${path === "/explore" ? "bg-[#1eb81e]" : ""} `} to="/home">Explore</Link>
         <Link className={`text-white font-medium ${path === "/communities" ? "bg-[#1eb81e]" : ""} `} to="/home">Communitites</Link>
-        <Link className={`text-white font-medium ${path === "/notifications" ? "bg-[#1eb81e]" : ""} `} to="/home">Notifications</Link>
-        <Link className={`text-white font-medium ${path === "/ask" ? "bg-[#1eb81e]" : ""} `} to="/home">Ask</Link>
         <Link className='text-white font-medium' to="/home"><FaMagnifyingGlass color='white'/></Link>
     </div>
   )

@@ -5,28 +5,116 @@ import { CgProfile } from 'react-icons/cg';
 import { SiNamebase } from "react-icons/si";
 import { MdMarkEmailRead } from "react-icons/md";
 import { IoIosSchool } from "react-icons/io";
+import { FaImages } from "react-icons/fa6";
+import { useState } from 'react';
 import "./ProfileSidebar.css";
 import ProfileGraphVisualiser from './ProfileGraphVisualiser';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 export default function ProfileSidebar() {
-    const {user} = useContext(userContextProvider);
+    const {user,getUserDetails} = useContext(userContextProvider);
+    const [editable,setEditable] = useState(false);
+    const handledEditButton = async (e)=>{
+        e.preventDefault();
+        console.log(formData);
+        try{
+            if(editable===true){
+                if(formData.username!==user.username || formData.education !== user.education || formData.dp !== user.dp){
+                    const response = await axios.post("http://localhost:3500/api/auth/updateProfile",{
+                        email : user.email,
+                        username : formData.username.length ? formData.username : user.username,
+                        education : formData.education.length ? formData.education : (user&&user.education ? user.education : "Enthusiast at Nerd.net"),
+                        dp : formData.dp.length ? formData.dp : user.dp
+                    });
+                    if(response.data.status){
+                        toast.success('User details Updated successfully!', {
+                            position: "top-right",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "dark",
+                        });
+                        getUserDetails();
+                    }
+                    else{
+                        toast.error('Problem updating. Try later!', {
+                            position: "top-right",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "dark",
+                        });
+                    }
+                }
+                else{
+                    setEditable(false);
+                }
+            }
+        }
+        catch(error){
+            
+        }
+        setEditable(!editable);
+    }
+    const [formData,setFormData] = useState({
+        username : "",
+        education : "",
+        dp : ""
+    })
+    const handleFormChange = (e)=>{
+        const {name,value} = e.target;
+        setFormData({...formData,[name]:value});
+        console.log(formData);
+    }
   return (
     <div id='profile-sidebar' className='flex flex-col items-center justify-start p-2 bg-white'>
       <div id='profile-info-container' className='flex flex-col items-center justify-start w-full'>
         <div id='profile-dp-container' className='p-2 m-2 flex items-center justify-around w-full'>
             <img className='object-contain object-center rounded-full w-52' alt='dp' src={user ? user.dp : <CgProfile color='white'/>}/>
             <div>
-                <div className='flex items-center justify-start'>
-                    <SiNamebase className='text-2xl' color='black'/>
-                    <h5 className='text-3xl font-bold mx-2 text-slate-500 inline-block'>{user ? user.username : "Nerd"}</h5>
+                {editable ? 
+                <form>
+                    <div className='flex items-center justify-start w-fit'>
+                        <SiNamebase className='text-2xl' color='black'/>
+                        <input className={`text-3xl font-bold mx-2 text-slate-500 inline-block outline-none w-fit`} placeholder={`${user ? user.username : "Nerd"}`} onChange={handleFormChange} value={formData.username} name='username'/>
+                    </div>
+                    <div className='flex items-center justify-start w-fit'>
+                        <MdMarkEmailRead className='text-2xl' color='black'/>
+                        <h6 className='text-lg font-bold mx-2 text-slate-500 inline-block w-fit'>{user ? user.email : "user@gmail.com"}</h6>
+                    </div>
+                    <div className='flex items-center justify-start w-fit'>
+                        <IoIosSchool className='text-2xl' color='black'/>
+                        <input className='text-lg font-bold mx-2 text-slate-500 inline-block outline-none w-fit' placeholder={`${user && user.education ? user.education : "Enthusiast at Nerd.net"}`} maxLength={23} onChange={handleFormChange} value={formData.education} name='education'/>
+                    </div>
+                    <div className='flex items-center justify-start flex-wrap w-fit'>
+                        <FaImages className='text-2xl' color='black'/>
+                        <input className='text-lg font-bold mx-2 text-slate-500 inline-block outline-none w-fit' placeholder={`${user && user.dp ? user.dp : "#"}`} onChange={handleFormChange} value={formData.dp} name='dp'/>
+                    </div>
+                </form>
+                :
+                <div>
+                    <div className='flex items-center justify-start'>
+                        <SiNamebase className='text-2xl' color='black'/>
+                        <h5 className={`text-3xl font-bold mx-2 text-slate-500 inline-block`}>{user ? user.username : "Nerd"}</h5>
+                    </div>
+                    <div className='flex items-center justify-start'>
+                        <MdMarkEmailRead className='text-2xl' color='black'/>
+                        <h5 className='text-lg font-bold mx-2 text-slate-500 inline-block'>{user ? user.email : "user@gmail.com"}</h5>
+                    </div>
+                    <div className='flex items-center justify-start'>
+                        <IoIosSchool className='text-2xl' color='black'/>
+                        <h5 className='text-lg font-bold mx-2 text-slate-500 inline-block'>{user && user.education ? user.education : "Enthusiast at Nerd.net"}</h5>
+                    </div>
                 </div>
-                <div className='flex items-center justify-start'>
-                    <MdMarkEmailRead className='text-2xl' color='black'/>
-                    <h5 className='text-lg font-bold mx-2 text-slate-500 inline-block'>{user ? user.email : "user@gmail.com"}</h5>
-                </div>
-                <div className='flex items-center justify-start'>
-                    <IoIosSchool className='text-2xl' color='black'/>
-                    <h5 className='text-lg font-bold mx-2 text-slate-500 inline-block'>{user && user.education ? user.education : "Enthusiast at Nerd.net"}</h5>
-                </div>
+                }
+                <button type='button' className='px-2 bg-sky-400 text-white rounded-lg m-2' onClick={handledEditButton}>{editable ? "Save" : "Edit"}</button>
+                {editable && <button onClick={()=>{setEditable(false)}}>Back</button>}
             </div>
         </div>
         <div id='profile-counts' className='flex items-center justify-around w-full m-2'>
