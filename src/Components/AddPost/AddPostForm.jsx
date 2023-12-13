@@ -137,13 +137,13 @@ function AddPostForm({data}) {
                     {textInput ? 
                         <div id='text-input-subform' className='flex items-center justify-center w-full p-2 flex-col'>
                             <input name='textPostData' required placeholder='Enter your tweet!' type='text' className='m-2 text-input' value={formData.textPostData} onChange={handleFormChange} autoComplete='off'/>
-                            <input name='textTagsData' className='text-input m-2' placeholder='Enter tags...' value={formData.textTagsData} onChange={handleFormChange} autoComplete='off'/>
+                            <input name='textTagsData' className='text-input m-2' placeholder='Enter tags...' value={formData.textTagsData} onChange={handleFormChange} autoComplete='off' maxLength={50}/>
                         </div>
                         :
                         <div id='image-input-subform' className='m-2'>
                             <input name='imgPostData' id='image-input' required placeholder='Enter image url' type='url' className='' value={formData.imgPostData} onChange={handleFormChange} autoComplete='off'/>
                             <input name='caption' id='image-input-caption' placeholder='Enter image caption(optional)' type='text' className='' value={formData.caption} onChange={handleFormChange} autoComplete='off'/>
-                            <input type='text' name='imgTagsData' placeholder='Enter post tags...' className='' value={formData.imgTagsData} onChange={handleFormChange} autoComplete='off'/>
+                            <input type='text' name='imgTagsData' placeholder='Enter post tags...' className='' value={formData.imgTagsData} onChange={handleFormChange} autoComplete='off' maxLength={50}/>
                         </div>
                     }
                 </div>

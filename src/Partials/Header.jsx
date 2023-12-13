@@ -51,10 +51,11 @@ export default function Header() {
           {user ? <img src={user.dp} alt='dp' className='w-10 border-white border-2' /> : <CgProfile color='white' />}
         </div>
         {expand && (
-          <div className='absolute bg-white p-2 rounded-md shadow-md right-0'>
+          <div className='absolute bg-white p-2 top-0 rounded-md shadow-md right-0'>
             <Link to="/profile" className='block text-gray-800 hover:bg-gray-200 py-1 px-2 rounded-md' onClick={()=>{setExpand(!expand)}}>
               Profile
             </Link>
+            <Link to="/profile" className='block text-gray-800 hover:bg-gray-200 py-1 px-2 rounded-md' onClick={()=>{setExpand(!expand)}}>Notifications</Link>
             <button className='block text-gray-800 hover:bg-gray-200 py-1 px-2 rounded-md' onClick={handleLogout}>
               Logout
             </button>
