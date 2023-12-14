@@ -32,11 +32,11 @@ function AddPostForm({data}) {
         }));
         if(name === "textPostData" || name === "textTagsData"){
             textActivate();
-            setTextTags(formData.textTagsData.split(" ") ? formData.textTagsData.split(" ") : []);
+            setTextTags(formData.textTagsData ? formData.textTagsData.split(" ") : []);
         }
         else{
             imgActivate();
-            setImgTags(formData.imgTagsData.split(" ") ? formData.imgTagsData.split(" ") : []);
+            setImgTags(formData.imgTagsData ? formData.imgTagsData.split(" ") : []);
         }
       };
     const textActivate = ()=>{
