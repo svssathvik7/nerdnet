@@ -1,0 +1,16 @@
+#about-hero{
+    width: 65dvw;
+    height: fit-content;
+}
+#shadow{
+    width: 65dvw;
+    height: fit-content;
+    filter: blur(2px);
+}
+#about-landing{
+    height: fit-content;
+}
+#hero-container{
+    width: 100dvw;
+    height: 90dvh;
+}

@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import {createStore} from "redux";
+import { ParallaxProvider } from 'react-scroll-parallax';
 import { Provider } from 'react-redux';
 import rootReducer from './Redux/Reducers/rootReducer';
 import UserContext from './Context/userContext';
@@ -13,9 +14,11 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <UserContext>
-        <Provider store={store}>
-          <App />
-        </Provider>
+        <ParallaxProvider>
+          <Provider store={store}>
+            <App />
+          </Provider>
+        </ParallaxProvider>
       </UserContext>
     </BrowserRouter>
   </React.StrictMode>
