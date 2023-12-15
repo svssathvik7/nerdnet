@@ -6,7 +6,7 @@ import "./Revenue.css";
 export default function Revenue() {
   const ref = useRef(null);
   const isInView = useInView(ref,{
-    once: true,
+    once: false,
   });
 
   const animationVariants = {

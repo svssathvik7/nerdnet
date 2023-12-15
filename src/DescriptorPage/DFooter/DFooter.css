@@ -23,3 +23,9 @@
     color: #007bff; /* Change color on hover (blue, you can customize) */
   }
   
+  @media (max-width:768px) {
+    #footer-img{
+        width: 35dvw;
+        margin: 2%;
+    }
+  }

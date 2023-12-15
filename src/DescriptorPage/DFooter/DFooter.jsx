@@ -9,7 +9,7 @@ const DFooter = () => {
         <div className="copyright">
           <p>&copy; 2023 Your Company. All rights reserved.</p>
         </div>
-        <img alt='footer-img' src={FooterImg} className='w-56 rounded-full'/>
+        <img id='footer-img' alt='footer-img' src={FooterImg} className='w-56 rounded-full'/>
         <div className="social-media">
           <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
             <FaFacebook />
