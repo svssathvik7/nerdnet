@@ -1,0 +1,25 @@
+.footer-container {
+    color: #fff; /* White text */
+    padding: 20px;
+    text-align: center;
+    width: 100dvw;
+    height: fit-content;
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .social-media a {
+    color: #fff; /* White color for social media icons */
+    font-size: 20px;
+    margin-right: 10px;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .social-media a:hover {
+    color: #007bff; /* Change color on hover (blue, you can customize) */
+  }
+  

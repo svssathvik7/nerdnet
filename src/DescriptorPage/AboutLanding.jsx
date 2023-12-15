@@ -10,6 +10,7 @@ import { useRef } from 'react';
 import { useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import Separator from '../Components/Separator';
+import DFooter from './DFooter/DFooter';
 export default function AboutLanding() {
   const ref = useRef(null);
   const isInView = useInView(ref,{
@@ -45,6 +46,7 @@ export default function AboutLanding() {
       <Privacy/>
       <Separator className="m-2"/>
       <Revenue/>
+      <DFooter/>
       <div className={`scale-50 absolute left-24 top-28 -rotate-6 z-30`} id="sample-post1">
         <Post {...postConstants[0]}/>
       </div>
