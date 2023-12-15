@@ -1,14 +1,11 @@
 import React from 'react';
 import "./AboutLanding.css";
 import Logo from "../assets/nerd-logo-2.svg";
-import HeroBg from "../assets/HeroBG.json";
-import HeroImage2 from "../assets/hero-image-2.svg";
 import Post from '../Components/Post/Post';
 import postConstants from '../constants/postConstants';
+import Revenue from './Revenue/Revenue';
 import Privacy from "./PrivacyPolicy/Privacy";
 import { motion } from 'framer-motion';
-import { Parallax } from 'react-scroll-parallax';
-import Lottie from 'lottie-react';
 import { useRef } from 'react';
 import { useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -18,8 +15,9 @@ export default function AboutLanding() {
   const isInView = useInView(ref,{
     once:false
   })
+  console.log(postConstants[0]);
   return (
-    <div id='about-landing' className='bg-black w-screen h-screen'>
+    <div id='about-landing' className='bg-black w-screen h-fit flex flex-col items-center justify-start'>
       <div id='about-header' className='flex items-center justify-center p-2'>
         <img className='w-8' alt='logo' src={Logo}/>
       </div>
@@ -33,9 +31,9 @@ export default function AboutLanding() {
                 scale: isInView ? 1 : 0.8,
               }
             }
-            id='about-hero' className='absolute top-0 bottom-0 left-0 right-0 m-auto flex items-center justify-around z-20'>
+            id='about-hero' className='flex items-center justify-around z-20'>
           <div className='flex flex-col items-start justify-center'>
-            <h1 className='text-white font-extrabold text-5xl'>
+            <h1 id="landing-quote" className='text-white font-extrabold md:text-5xl lg:text-5xl'>
               Discover.Discuss.Delve
             </h1>
             <p className='text-white'>Nerd.net - Your hub for intellectual exploration</p>
@@ -43,11 +41,19 @@ export default function AboutLanding() {
           </div>
         </motion.div>
       </div>
-      <Parallax speed={10} id='shadow' className='absolute top-0 bottom-0 left-0 right-0 m-auto filter flex items-center justify-center z-10'>
-        <Lottie loop={true} animationData={HeroBg} className='w-96'/>
-      </Parallax>
-      <Separator/>
+      <Separator className="m-2"/>
       <Privacy/>
+      <Separator className="m-2"/>
+      <Revenue/>
+      <div className={`scale-50 absolute left-24 top-28 -rotate-6 z-30`} id="sample-post1">
+        <Post {...postConstants[0]}/>
+      </div>
+      <div className={`scale-50 absolute right-24 top-28 rotate-6 z-30`} id="sample-post2">
+        <Post {...postConstants[1]}/>
+      </div>
+      <div className={`scale-50 absolute right-24 top-80 rotate-6 z-30`} id="sample-post3">
+        <Post {...postConstants[2]}/>
+      </div>
     </div>
   )
 }

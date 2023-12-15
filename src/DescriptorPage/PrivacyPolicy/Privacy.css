@@ -1,9 +1,21 @@
 #privacy {
-    height: 90vh;
+    height: fit-content;
     width: 100vw;
-    background-image: url(../../assets/security.svg);
-    background-size: contain; /* You can use 'cover', 'contain', or specific dimensions */
-    background-repeat: no-repeat; /* Ensures the image doesn't repeat */
-    background-position: center; /* Centers the image horizontally and vertically */
-    filter: blur(2px);
+}
+#policy-container{
+    width: 70dvw;
+}
+.privacy-card{
+    height: fit-content;
+    padding: 2%;
+    border: thin solid #c0c0c0;
+    margin: 1%;
+}
+@media (max-width:768px) {
+    #policy-container{
+        flex-direction: column;
+    }
+    #policy-container div{
+        width: 80dvw;
+    }
 }

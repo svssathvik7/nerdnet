@@ -1,3 +1,7 @@
+#about-landing{
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
 #about-hero{
     width: 65dvw;
     height: fit-content;
@@ -7,10 +11,32 @@
     height: fit-content;
     filter: blur(2px);
 }
-#about-landing{
-    height: fit-content;
-}
 #hero-container{
     width: 100dvw;
     height: 90dvh;
+}
+
+@media (max-width:768px) {
+    #landing-quote{
+        font-size: 1.5em;
+    }
+    #hero-container{
+        height: 90dvh;
+    }
+    #about-hero{
+        width: 90dvw;
+        height: 90dvh;
+    }
+    #sample-post1{
+        top: 3dvh;
+        z-index: 31;
+    }
+    #sample-post2{
+        top: 5dvh;
+    }
+    #sample-post3{
+        top: 55dvh;
+        right: 0;
+        transform: rotate(0) scale(0.5);
+    }
 }

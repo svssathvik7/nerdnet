@@ -15,7 +15,7 @@ function ImagePost(props)
   const [showPost,setShowPost] = useState(true);
   const [upVotes,setUpVotes] = useState(0);
   const isInView = useInView(ref,{
-    once : true
+    once : false
   });
   return (
     showPost && 
@@ -63,10 +63,22 @@ function ImagePost(props)
 }
 function TextPost(props)
 {
+  const ref = useRef(null);
   const [showPost,setShowPost] = useState(true);
   const [upVotes,setUpVotes] = useState(0);
+  const isTextInView = useInView(ref,{
+    once : false
+  });
   return (
-    showPost && <div id='text-post' className={`bg-white rounded-lg flex flex-col items-center justify-center`}>
+    showPost && <motion.div
+    ref={ref}
+    initial="hidden"
+    style={{
+        opacity: isTextInView ? 1 : 0.7,
+        transform: isTextInView ? 'translateY(0px)' : 'translateY(-30px)',
+        scale: isTextInView ? 1 : 0.8,
+    }}
+     id='text-post' className={`bg-white rounded-lg flex flex-col items-center justify-center trans300`}>
       <div id='post-meta-data' className='flex items-center justify-between'>
         <div className='flex items-center justify-center p-2 mx-2'>
           <a href='#'><img alt='dp' src={props.userPosted&&props.userPosted.dp ? props.userPosted.dp : "#"} className='w-8 mx-2 cursor-pointer select-none'/></a>
@@ -93,7 +105,7 @@ function TextPost(props)
           <div className='text-xl cursor-pointer mx-1'><IoShareSocialSharp/></div>
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }
 export default function Post(props) {
