@@ -20,6 +20,9 @@ export default function ProfileSidebar() {
     const {user,getUserDetails} = useContext(userContextProvider);
     const {userProfile,getUserProfile} = useContext(friendContextProvider);
     const [isSameUser,setIsSameUser] = useState(false);
+    const [followers,setFollowers] = useState(userProfile?.followers?.length ?? 0);
+    const [following,setFollowing] = useState(userProfile?.following?.length ?? 0);
+    const [communities,setCommunities] = useState(userProfile?.communities?.length ?? 0);
     const [isFollowing,setIsFollowing] = useState(userProfile?.isfollowing ?? false);
     const {profileemail} = useParams();
     const location = useLocation();
@@ -31,6 +34,9 @@ export default function ProfileSidebar() {
                     setIsSameUser(userType);
                     getUserProfile(profileemail ? profileemail : user.email);
                     setIsFollowing(userProfile?.isfollowing??false);
+                    setFollowers(userProfile?.followers?.length ?? 0);
+                    setFollowing(userProfile?.following?.length ?? 0);
+                    setCommunities(userProfile?.communities?.length ?? 0);
                 }
             }
             miniUtilities();
@@ -195,17 +201,17 @@ export default function ProfileSidebar() {
         </div>
         <div id='profile-counts' className='flex items-center justify-around w-full m-2'>
             <div className='flex flex-col items-center justify-center'>
-                <p>{userProfile && userProfile.followers ? userProfile.followers.length : 0}</p>
+                <p>{followers}</p>
                 <p className='text-xs'>Followers</p>
             </div>
             <div className='w-1 h-6 rounded-2xl bg-black'></div>
             <div className='flex flex-col items-center justify-center'>
-                <p>{userProfile && userProfile.following ? userProfile.following.length : 0}</p>
+                <p>{following}</p>
                 <p className='text-xs'>Following</p>
             </div>
             <div className='w-1 h-6 rounded-2xl bg-black'></div>
             <div className='flex flex-col items-center justify-center'>
-                <p>{userProfile && userProfile.communities ? userProfile.communities : 0}</p>
+                <p>{communities}</p>
                 <p className='text-xs'>Communities</p>
             </div>
         </div>

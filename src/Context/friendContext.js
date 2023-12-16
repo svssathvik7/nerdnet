@@ -14,8 +14,6 @@ export default function FriendContext({children}) {
         else{
             const response = (await axios.post("http://localhost:3500/api/auth/profileDetails",{profileEmail:profileemail,requestEmail:user.email})).data;
             setUserProfile(response.userProfile);
-            console.log(userProfile);
-            console.log(user);
         }
     }
   return (
