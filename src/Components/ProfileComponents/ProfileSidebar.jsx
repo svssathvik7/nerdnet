@@ -23,17 +23,18 @@ export default function ProfileSidebar() {
     useEffect(
         ()=>{
             const miniUtilities = async()=>{
-                const userType = await user.email === profileemail;
-                setIsSameUser(userType);
-                getUserProfile(profileemail ? profileemail : user.email);
+                if(user?.email){
+                    const userType = await user.email === profileemail;
+                    setIsSameUser(userType);
+                    getUserProfile(profileemail ? profileemail : user.email);
+                }
             }
             miniUtilities();
         }
-    ,[location.pathname]);
+    ,[location.pathname,user?.email,userProfile]);
     const [editable,setEditable] = useState(false);
     const handledEditButton = async (e)=>{
         e.preventDefault();
-        console.log(formData);
         try{
             if(editable===true){
                 if(formData.username!==user.username || formData.education !== user.education || formData.dp !== user.dp){
