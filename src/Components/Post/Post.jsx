@@ -8,6 +8,7 @@ import { FaAngleDoubleDown } from "react-icons/fa";
 import { RiMessage3Fill } from "react-icons/ri";
 import { IoShareSocialSharp } from "react-icons/io5";
 import { motion,useInView } from 'framer-motion';
+import { Link } from 'react-router-dom';
 function ImagePost(props)
 {
   const ref = useRef(null);
@@ -29,9 +30,9 @@ function ImagePost(props)
     id='image-post' className={`bg-white rounded-lg flex flex-col items-center justify-center trans300`}>
       <div id='post-meta-data' className='flex items-center justify-between'>
         <div className='flex items-center justify-center p-2 mx-2'>
-          <img alt='dp' src={props.userPosted ? props.userPosted.dp : "#"} className='w-8 mx-2 cursor-pointer select-none'/>
+          <Link to={"/profile/"+props.userPosted.email} className='cursor-pointer'><img alt='dp' src={props.userPosted ? props.userPosted.dp : "#"} className='w-8 mx-2 cursor-pointer select-none'/></Link>
           <div className='select-none'>
-            <p className='font-medium text-sm cursor-pointer'>{props.userPosted ? props.userPosted.username : "Nerd"}</p>
+            <Link to={"/profile/"+props.userPosted.email} className='font-medium text-sm cursor-pointer'>{props.userPosted ? props.userPosted.username : "Nerd"}</Link>
             <p className='text-xs font-light text-slate-600'>{props.userPosted&&props.userPosted.education ? props.userPosted.education : "Enthusiast at Nerd.net"}</p>
           </div>
         </div>
@@ -81,9 +82,9 @@ function TextPost(props)
      id='text-post' className={`bg-white rounded-lg flex flex-col items-center justify-center trans300`}>
       <div id='post-meta-data' className='flex items-center justify-between'>
         <div className='flex items-center justify-center p-2 mx-2'>
-          <a href='#'><img alt='dp' src={props.userPosted&&props.userPosted.dp ? props.userPosted.dp : "#"} className='w-8 mx-2 cursor-pointer select-none'/></a>
+          <Link to={"/profile/"+props.userPosted.email} className='cursor-pointer'><img alt='dp' src={props.userPosted ? props.userPosted.dp : "#"} className='w-8 mx-2 cursor-pointer select-none'/></Link>
           <div className='select-none'>
-            <p className='font-medium text-sm cursor-pointer'>{props.userPosted ? props.userPosted.username : "Nerd"}</p>
+            <Link to={"/profile/"+props.userPosted.email} className='font-medium text-sm cursor-pointer'>{props.userPosted ? props.userPosted.username : "Nerd"}</Link>
             <p className='text-xs font-light text-slate-600'>{props.userPosted&&props.userPosted.education ? props.userPosted.education : "Enthusiast at Nerd.net"}</p>
           </div>
         </div>

@@ -1,17 +1,17 @@
 import React from 'react'
 import { useContext } from 'react'
-import { userContextProvider } from '../../Context/userContext'
 import "./UserPosts.css";
 import Post from '../Post/Post';
+import { friendContextProvider } from '../../Context/friendContext';
 export default function UserPosts() {
-  const {user} = useContext(userContextProvider);
+  const {userProfile} = useContext(friendContextProvider);
   return (
     <div id='user-posts-scroller' className='flex flex-col items-center justify-start p-2'>
       <h1 className='font-bold text-2xl m-2'>Your Posts</h1>
-      {user && user.posts ? 
-        user.posts.map(post=>(
-          <div className='single-feed m-2' key={post.id}>
-            <Post {...post} className="m-2"/>
+      {userProfile && userProfile.posts ? 
+        userProfile.posts.map((post,i)=>(
+          <div className='single-feed m-2' key={i}>
+            <Post {...post} userPosted={{dp:userProfile.dp,username:userProfile.username,education:userProfile.education}} className="m-2"/>
           </div>
         ))
       :

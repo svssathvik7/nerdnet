@@ -18,7 +18,7 @@ function App() {
 
       const timeoutId = setTimeout(() => {
         setLoading(false);
-      }, 2000);
+      }, 1000);
       return () => clearTimeout(timeoutId);
     }
   ,[]);
@@ -33,7 +33,7 @@ function App() {
         <Route path='/' element={<Landing/>}/>
         <Route path='/newUser' element={<Register/>}/>
         <Route path='/home' element={<Home/>}/>
-        <Route path='/profile' element={<Profile/>}/>
+        <Route path='/profile/:profileemail' element={<Profile/>}/>
         <Route path='/about' exact Component={AboutLanding}/>
         <Route path='/postForm' exact Component={AddPostForm}/>
       </Routes>

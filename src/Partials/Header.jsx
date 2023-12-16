@@ -52,10 +52,10 @@ export default function Header() {
         </div>
         {expand && (
           <div className='absolute bg-white p-2 top-0 rounded-md shadow-md right-0'>
-            <Link to="/profile" className='block text-gray-800 hover:bg-gray-200 py-1 px-2 rounded-md' onClick={()=>{setExpand(!expand)}}>
+            <Link to={"/profile/"+user.email} className='block text-gray-800 hover:bg-gray-200 py-1 px-2 rounded-md' onClick={()=>{setExpand(!expand)}}>
               Profile
             </Link>
-            <Link to="/profile" className='block text-gray-800 hover:bg-gray-200 py-1 px-2 rounded-md' onClick={()=>{setExpand(!expand)}}>Notifications</Link>
+            <Link to={"/profile/"+user.email} className='block text-gray-800 hover:bg-gray-200 py-1 px-2 rounded-md' onClick={()=>{setExpand(!expand)}}>Notifications</Link>
             <button className='block text-gray-800 hover:bg-gray-200 py-1 px-2 rounded-md' onClick={handleLogout}>
               Logout
             </button>

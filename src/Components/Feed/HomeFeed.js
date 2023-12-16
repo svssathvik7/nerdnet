@@ -12,14 +12,13 @@ export default function HomeFeed() {
         setPosts(allPosts);
       }
       getPosts();
-      console.log(posts);
     }
   ,[]);
   return (
     <div id='home-feed' className='flex flex-col items-center justify-center'>
         {posts.length > 0 ? <div id='home-feed-scroller' className='flex flex-col items-center justify-start'>
-            {posts.map(post => (
-                <div className='single-feed m-2' key={post.id}>
+            {posts.map((post,i) => (
+                <div className='single-feed m-2' key={i}>
                     <Post {...post}/>
                 </div>
             ))}
