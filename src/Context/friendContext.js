@@ -12,8 +12,10 @@ export default function FriendContext({children}) {
             setUserProfile(user);
         }
         else{
-            const response = (await axios.post("http://localhost:3500/api/auth/profileDetails",{profileEmail:profileemail})).data;
+            const response = (await axios.post("http://localhost:3500/api/auth/profileDetails",{profileEmail:profileemail,requestEmail:user.email})).data;
             setUserProfile(response.userProfile);
+            console.log(userProfile);
+            console.log(user);
         }
     }
   return (

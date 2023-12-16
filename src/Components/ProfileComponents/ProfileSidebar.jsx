@@ -10,15 +10,18 @@ import { useState } from 'react';
 import "./ProfileSidebar.css";
 import { useLocation } from 'react-router-dom';
 import {friendContextProvider} from "../../Context/friendContext";
+import { PulseLoader } from 'react-spinners';
 import ProfileGraphVisualiser from './ProfileGraphVisualiser';
 import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 export default function ProfileSidebar() {
-    const {profileemail} = useParams();
+    const [loading,setIsLoading] = useState(false);
     const {user,getUserDetails} = useContext(userContextProvider);
     const {userProfile,getUserProfile} = useContext(friendContextProvider);
     const [isSameUser,setIsSameUser] = useState(false);
+    const [isFollowing,setIsFollowing] = useState(userProfile?.isfollowing ?? false);
+    const {profileemail} = useParams();
     const location = useLocation();
     useEffect(
         ()=>{
@@ -27,14 +30,58 @@ export default function ProfileSidebar() {
                     const userType = await user.email === profileemail;
                     setIsSameUser(userType);
                     getUserProfile(profileemail ? profileemail : user.email);
+                    setIsFollowing(userProfile?.isfollowing??false);
                 }
             }
             miniUtilities();
         }
-    ,[location.pathname,user?.email,userProfile]);
+    ,[location.pathname,user?.email,userProfile,isFollowing,profileemail]);
     const [editable,setEditable] = useState(false);
+    const handleFollowBtn = async (e) =>{
+        e.preventDefault();
+        setIsLoading(true);
+        try{
+            const response =  (await axios.post("http://localhost:3500/api/auth/updateFollowers",{
+                masterAcc : userProfile.email,
+                followerAcc : user.email
+            })).data;
+            console.log(response);
+            if(response.status){
+                setIsFollowing(true);
+                setIsLoading(false);
+                getUserDetails();
+            }
+            else{
+                toast.error('Try again later!', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                });
+                setIsLoading(false);
+            }
+        }
+        catch(error){
+            toast.error('Try again later!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
+            setIsLoading(false);
+        }
+    }
     const handledEditButton = async (e)=>{
         e.preventDefault();
+        setIsLoading(true);
         try{
             if(editable===true){
                 if(formData.username!==user.username || formData.education !== user.education || formData.dp !== user.dp){
@@ -55,7 +102,7 @@ export default function ProfileSidebar() {
                             progress: undefined,
                             theme: "dark",
                         });
-                        getUserDetails();
+                        
                     }
                     else{
                         toast.error('Problem updating. Try later!', {
@@ -73,10 +120,21 @@ export default function ProfileSidebar() {
                 else{
                     setEditable(false);
                 }
+                setIsLoading(false);
             }
         }
         catch(error){
-            
+            toast.error('Error updating profile!', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            });
+            setIsLoading(false);
         }
         setEditable(!editable);
     }
@@ -131,18 +189,18 @@ export default function ProfileSidebar() {
                     </div>
                 </div>
                 }
-                {isSameUser ? <button type='button' className='px-2 bg-sky-400 text-white rounded-lg m-2' onClick={handledEditButton}>{editable ? "Save" : "Edit"}</button> : <></>}
+                {isSameUser ? <button type='button' className='px-2 bg-sky-400 text-white rounded-lg m-2 flex items-center justify-center' onClick={handledEditButton}>{loading ? <PulseLoader className='scale-50'/> : editable ? "Save" : "Edit"}</button> : <button type='button' className={`flex items-center justify-center px-2 bg-sky-400 text-white rounded-lg m-2 hover:bg-black hover:text-sky-400 trans300 ${isFollowing ? " bg-slate-400 text-white opacity-60 cursor-not-allowed " : " "}`} onClick={handleFollowBtn} disabled={isFollowing}>{loading ? <PulseLoader className='scale-50'/> : isFollowing ? "Following" : "Follow"}</button>}
                 {isSameUser && editable && <button onClick={()=>{setEditable(false)}}>Back</button>}
             </div>
         </div>
         <div id='profile-counts' className='flex items-center justify-around w-full m-2'>
             <div className='flex flex-col items-center justify-center'>
-                <p>{userProfile && userProfile.followers ? userProfile.followers : 0}</p>
+                <p>{userProfile && userProfile.followers ? userProfile.followers.length : 0}</p>
                 <p className='text-xs'>Followers</p>
             </div>
             <div className='w-1 h-6 rounded-2xl bg-black'></div>
             <div className='flex flex-col items-center justify-center'>
-                <p>{userProfile && userProfile.following ? userProfile.following : 0}</p>
+                <p>{userProfile && userProfile.following ? userProfile.following.length : 0}</p>
                 <p className='text-xs'>Following</p>
             </div>
             <div className='w-1 h-6 rounded-2xl bg-black'></div>
