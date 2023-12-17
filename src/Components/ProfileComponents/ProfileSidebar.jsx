@@ -23,7 +23,7 @@ export default function ProfileSidebar() {
     const [followers,setFollowers] = useState(userProfile?.followers?.length ?? 0);
     const [following,setFollowing] = useState(userProfile?.following?.length ?? 0);
     const [communities,setCommunities] = useState(userProfile?.communities?.length ?? 0);
-    const [isFollowing,setIsFollowing] = useState(userProfile?.isfollowing ?? false);
+    const [isFollowing,setIsFollowing] = useState(userProfile?userProfile.isfollowing : false);
     const {profileemail} = useParams();
     const location = useLocation();
     useEffect(
@@ -35,7 +35,7 @@ export default function ProfileSidebar() {
                     getUserProfile(profileemail ? profileemail : user.email);
                     setIsFollowing(userProfile?.isfollowing??false);
                     setFollowers(userProfile?.followers?.length ?? 0);
-                    setFollowing(userProfile?.following?.length ?? 0);
+                    setFollowing(userProfile?userProfile.isfollowing : false);
                     setCommunities(userProfile?.communities?.length ?? 0);
                 }
             }
@@ -55,7 +55,6 @@ export default function ProfileSidebar() {
             if(response.status){
                 setIsFollowing(true);
                 setIsLoading(false);
-                getUserDetails();
             }
             else{
                 toast.error('Try again later!', {
@@ -87,9 +86,9 @@ export default function ProfileSidebar() {
     }
     const handledEditButton = async (e)=>{
         e.preventDefault();
-        setIsLoading(true);
         try{
             if(editable===true){
+                setIsLoading(true);
                 if(formData.username!==user.username || formData.education !== user.education || formData.dp !== user.dp){
                     const response = await axios.post("http://localhost:3500/api/auth/updateProfile",{
                         email : user.email,
@@ -195,8 +194,10 @@ export default function ProfileSidebar() {
                     </div>
                 </div>
                 }
+                <div className='flex items-center justify-around'>
                 {isSameUser ? <button type='button' className='px-2 bg-sky-400 text-white rounded-lg m-2 flex items-center justify-center' onClick={handledEditButton}>{loading ? <PulseLoader className='scale-50'/> : editable ? "Save" : "Edit"}</button> : <button type='button' className={`flex items-center justify-center px-2 bg-sky-400 text-white rounded-lg m-2 hover:bg-black hover:text-sky-400 trans300 ${isFollowing ? " bg-slate-400 text-white opacity-60 cursor-not-allowed " : " "}`} onClick={handleFollowBtn} disabled={isFollowing}>{loading ? <PulseLoader className='scale-50'/> : isFollowing ? "Following" : "Follow"}</button>}
-                {isSameUser && editable && <button onClick={()=>{setEditable(false)}}>Back</button>}
+                {isSameUser && editable && <button className='bg-black text-white rounded-lg m-2 hover:border-white trans300 hover:border-2 px-2' onClick={()=>{setEditable(false)}}>Back</button>}
+                </div>
             </div>
         </div>
         <div id='profile-counts' className='flex items-center justify-around w-full m-2'>

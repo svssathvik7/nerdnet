@@ -16,20 +16,32 @@ export default function ProfileGraphVisualiser() {
         id: follower?._id ?? i + 2, // Ensure unique IDs for followers
         label: follower?.username ?? 'Nerd',
       }));
-
+  
+      const followingNodes = userProfile.following.map((following, i) => ({
+        id: following?._id ?? i + 2, // Ensure unique IDs for following
+        label: following?.username ?? 'Nerd',
+      }));
+  
       const newGraph = {
         nodes: [
           { id: userProfile._id ?? 1, label: userProfile.username ?? 'Nerd' },
           ...followerNodes,
+          ...followingNodes,
         ],
-        edges: followerNodes.map((follower) => ({
-          from: userProfile._id ?? 1,
-          to: follower.id,
-        })),
+        edges: [
+          ...followerNodes.map((follower) => ({
+            from: follower.id,
+            to: userProfile._id ?? 1,
+          })),
+          ...followingNodes.map((following) => ({
+            from: userProfile._id ?? 1,
+            to: following.id,
+          })),
+        ],
       };
-
+  
       setGraph(newGraph);
-
+  
       const newOptions = {
         height: '100%',
         edges: {
@@ -39,10 +51,11 @@ export default function ProfileGraphVisualiser() {
           zoomView: false,
         },
       };
-
+  
       setOptions(newOptions);
     }
   }, [userProfile]);
+  
 
   return (
     <div id='graph-component' className='flex flex-col items-center justify-center m-2 p-2'>
