@@ -56,9 +56,9 @@ export default function Header() {
               Profile
             </Link>
             <Link to={"/profile/"+user.email} className='block text-gray-800 hover:bg-gray-200 py-1 px-2 rounded-md' onClick={()=>{setExpand(!expand)}}>Notifications</Link>
-            <button className='block text-gray-800 hover:bg-gray-200 py-1 px-2 rounded-md' onClick={handleLogout}>
+            <a href='/' className='block text-gray-800 hover:bg-gray-200 py-1 px-2 rounded-md' onClick={handleLogout}>
               Logout
-            </button>
+            </a>
           </div>
         )}
       </div>

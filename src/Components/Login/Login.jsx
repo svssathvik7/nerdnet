@@ -9,8 +9,11 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { PulseLoader } from 'react-spinners';
+import { useContext } from 'react';
+import { userContextProvider } from '../../Context/userContext';
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 function Login({data}) {
+  const {getUserDetails} = useContext(userContextProvider);
     const history = useNavigate();
     const [loading,setLoading] = useState(false);
     const [validForm,setValidForm] = useState(false);
@@ -51,6 +54,7 @@ function Login({data}) {
           setLoading(false);
           const data = await response.data;
           localStorage.setItem("token",data.userToken);
+          getUserDetails();
           history("/home");
         }).catch((error)=>{
           setLoading(false);

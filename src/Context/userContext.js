@@ -1,11 +1,14 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 export const userContextProvider = React.createContext(null);
 const UserContext = ({children}) => {
+    const location = useLocation();
     const [user,setUser] = useState(null);
     const getUserDetails = async ()=>{
         if(user===null){
+            
             try{
                 const token = localStorage.getItem('token');
                 const response = (await axios.post("http://localhost:3500/api/auth/currUser/",{token})).data;
@@ -19,6 +22,7 @@ const UserContext = ({children}) => {
             catch(error){
                 setUser(null);
             }
+
         }
     }
     return (

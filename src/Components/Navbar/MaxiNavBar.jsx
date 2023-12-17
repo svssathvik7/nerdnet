@@ -21,7 +21,7 @@ export default function MaxiNavBar() {
       setPath(location.pathname);
       getUserDetails();
     }
-  ,[]);
+  ,[user,location.pathname]);
   return (
     <div id='header-nav-links' className='flex items-center justify-around'>
         <Link className={`${path === "/home" ? "bg-[#1eb81e]" : ""} p-1 rounded-lg text-white font-medium`} to="/home">Home</Link>
