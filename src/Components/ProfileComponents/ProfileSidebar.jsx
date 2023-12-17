@@ -35,7 +35,7 @@ export default function ProfileSidebar() {
                     getUserProfile(profileemail ? profileemail : user.email);
                     setIsFollowing(userProfile?.isfollowing??false);
                     setFollowers(userProfile?.followers?.length ?? 0);
-                    setFollowing(userProfile?userProfile.isfollowing : false);
+                    setFollowing(userProfile?.userProfile?.following.length??0);
                     setCommunities(userProfile?.communities?.length ?? 0);
                 }
             }
@@ -55,6 +55,16 @@ export default function ProfileSidebar() {
             if(response.status){
                 setIsFollowing(true);
                 setIsLoading(false);
+                toast.success('Refresh to update changes!', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                });
             }
             else{
                 toast.error('Try again later!', {
