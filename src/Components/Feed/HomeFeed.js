@@ -10,10 +10,11 @@ export default function HomeFeed() {
       const getPosts = async ()=>{
         const allPosts = (await axios.get("http://localhost:3500/api/posts/getAllPosts")).data;
         setPosts(allPosts);
+        console.log(allPosts);
       }
       getPosts();
     }
-  ,[]);
+  ,[posts]);
   return (
     <div id='home-feed' className='flex flex-col items-center justify-center'>
         {posts.length > 0 ? <div id='home-feed-scroller' className='flex flex-col items-center justify-start'>

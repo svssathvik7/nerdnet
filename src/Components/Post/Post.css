@@ -20,6 +20,11 @@
 #metric-btn{
     background-color: rgb(193, 190, 190);
 }
+#comment-input{
+    background-color: rgba(193, 190, 190, 0.8);
+    width: 50%;
+    height: fit-content;
+}
 #post-metrics{
     width: 100%;
 }

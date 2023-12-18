@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Graph from 'react-vis-network-graph';
 import { useContext } from 'react';
 import { friendContextProvider } from '../../Context/friendContext';
-import 'vis-network/styles/vis-network.css';
 import './ProfileGraphVisualiser.css';
 
 export default function ProfileGraphVisualiser() {
@@ -24,7 +23,7 @@ export default function ProfileGraphVisualiser() {
   
       const newGraph = {
         nodes: [
-          { id: userProfile._id ?? 1, label: userProfile.username ?? 'Nerd' },
+          { id: userProfile._id ?? 1, label: userProfile.username ?? 'Nerd',fixed : {x:true,y:true} },
           ...followerNodes,
           ...followingNodes,
         ],

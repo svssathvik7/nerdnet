@@ -8,13 +8,71 @@ import { FaAngleDoubleDown } from "react-icons/fa";
 import { RiMessage3Fill } from "react-icons/ri";
 import { IoShareSocialSharp } from "react-icons/io5";
 import { motion,useInView } from 'framer-motion';
+import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import Comment from '../Comments/Comment';
+import { userContextProvider } from '../../Context/userContext';
+import axios from 'axios';
 function ImagePost(props)
 {
   const ref = useRef(null);
+  const {user} = useContext(userContextProvider);
   const [showCaption,setShowCaption] = useState(false);
+  const [showComments,setShowComments] = useState(false);
+  const [validComment,setValidComment] = useState(false);
+  const [commentData,setCommentData] = useState('');
   const [showPost,setShowPost] = useState(true);
   const [upVotes,setUpVotes] = useState(0);
+  const handleCommentChange = (e) => {
+    const value = e.target.value;
+    setCommentData(value);
+    if (value.length) {
+      setValidComment(true);
+    } else {
+      setValidComment(false);
+    }
+    console.log(commentData);
+  };
+  
+  const handleCommentSubmit = async (e)=>{
+    e.preventDefault();
+    try{
+      const commentPostData = {
+        postId : props._id,
+        comment : commentData,
+        user : user.email
+      }
+      const response = (await axios.post("http://localhost:3500/api/posts/addComment",commentPostData)).data;
+      if(response.status){
+        setCommentData('');
+      }
+      else{
+        toast.error('Error posting Comment!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      }
+    }
+    catch(error){
+      toast.error('Error posting Comment!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
+    }
+  }
   const isInView = useInView(ref,{
     once : false
   });
@@ -28,7 +86,7 @@ function ImagePost(props)
         scale: isInView ? 1 : 0.8,
     }}
     id='image-post' className={`bg-white rounded-lg flex flex-col items-center justify-center trans300`}>
-      <div id='post-meta-data' className='flex items-center justify-between'>
+      <div id='post-meta-data' className='flex items-center justify-between bg-yellow-400 rounded-lg border-b-2 border-black'>
         <div className='flex items-center justify-center p-2 mx-2'>
           <Link to={"/profile/"+props.userPosted.email} className='cursor-pointer'><img alt='dp' src={props.userPosted ? props.userPosted.dp : "#"} className='w-8 mx-2 cursor-pointer select-none'/></Link>
           <div className='select-none'>
@@ -40,7 +98,7 @@ function ImagePost(props)
           <IoClose color='red' onClick={()=>{setShowPost(!showPost)}}/>
         </div>
       </div>
-      <div id='post-data' className='p-2 pt-0 overflow-hidden'>
+      <div id='post-data' className='p-2 pt-0 overflow-hidden m-2'>
         <img alt='post' src={props.postData} className='post-images w-full h-full object-contain object-center select-none'/>
       </div>
       <div id='post-metrics' className='flex items-center justify-start p-2 mt-0 pt-0'>
@@ -51,22 +109,92 @@ function ImagePost(props)
           <div className='text-lg cursor-pointer mx-1'><FaAngleDoubleDown onClick={()=>{setUpVotes(upVotes-1)}}/></div>
         </div>
         <div id='reach-btn' className='flex items-center justify-around'>
-          <div className='text-xl cursor-pointer mx-1'><RiMessage3Fill/></div>
+          <div className='text-xl cursor-pointer mx-1' onClick={()=>{setShowComments(!showComments)}}><RiMessage3Fill/></div>
           <div className='text-xl cursor-pointer mx-1'><IoShareSocialSharp/></div>
         </div>
+        <input id='comment-input' className='trans300 p-2 outline-none mx-2 placeholder:text-black placeholder:font-medium placeholder:opacity-70' type='text' placeholder='Comment your words!' value={commentData} onChange={handleCommentChange} name='commentData'/>
+        <button className={`text-white font-medium p-1 bg-black rounded-md trans300 hover:scale-105 ${validComment ? " cursor-pointer " : " opacity-70 cursor-not-allowed "}`} disabled={!validComment} onClick={handleCommentSubmit} type='submit'>Post</button>
       </div>
       {showCaption ? <div id='post-caption' className='w-full p-2 h-fit trans300'>
         <p className='font-medium text-base w-fit h-fit inline-block selection:bg-yellow-400'>Word by Nerd :&nbsp;</p>
         <p className='text-base w-fit h-fit inline-block selection:bg-yellow-400'>{props.caption}</p>
       </div> : <></>}
+      {
+        showComments ?
+        <div className='w-full'>
+          {props?.comments.map((comment,i)=>(
+            <div key={i} className='w-full px-2 flex items-center justify-end'>
+              <Comment {...comment}/>
+            </div>
+          ))}
+        </div>
+        :
+        <></>
+      }
     </motion.div>
   )
 }
 function TextPost(props)
 {
+  const [validComment,setValidComment] = useState(false);
+  const [commentData,setCommentData] = useState('');
+  const {user} = useContext(userContextProvider);
+  const [showComments,setShowComments] = useState(false);
   const ref = useRef(null);
   const [showPost,setShowPost] = useState(true);
   const [upVotes,setUpVotes] = useState(0);
+  const handleCommentChange = (e) => {
+    const value = e.target.value;
+    setCommentData(value);
+    if (value.trim().length) {
+      setValidComment(true);
+    } else {
+      setValidComment(false);
+    }
+    console.log(commentData);
+  };
+  
+  const handleCommentSubmit = async (e)=>{
+    e.preventDefault();
+    console.log("submitted");
+    try{
+      const commentPostData = {
+        postId : props._id,
+        comment : commentData,
+        user : user.email
+      }
+      const response = (await axios.post("http://localhost:3500/api/posts/addComment",commentPostData)).data;
+      console.log(response);
+      if(response.status){
+        setCommentData('');
+      }
+      else{
+        toast.error('Error posting Comment!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      }
+    }
+    catch(error){
+      console.log(error);
+      toast.error('Error posting Comment!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
+    }
+  }
   const isTextInView = useInView(ref,{
     once : false
   });
@@ -80,7 +208,7 @@ function TextPost(props)
         scale: isTextInView ? 1 : 0.8,
     }}
      id='text-post' className={`bg-white rounded-lg flex flex-col items-center justify-center trans300`}>
-      <div id='post-meta-data' className='flex items-center justify-between'>
+      <div id='post-meta-data' className='flex items-center justify-between bg-yellow-400 rounded-lg border-b-2 border-black'>
         <div className='flex items-center justify-center p-2 mx-2'>
           <Link to={"/profile/"+props.userPosted.email} className='cursor-pointer'><img alt='dp' src={props.userPosted ? props.userPosted.dp : "#"} className='w-8 mx-2 cursor-pointer select-none'/></Link>
           <div className='select-none'>
@@ -102,14 +230,29 @@ function TextPost(props)
         <div className='text-lg cursor-pointer mx-1'><FaAngleDoubleDown onClick={()=>setUpVotes(upVotes-1)}/></div>
         </div>
         <div id='reach-btn' className='flex items-center justify-around'>
-          <div className='text-xl cursor-pointer mx-1'><RiMessage3Fill/></div>
+          <div onClick={()=>{setShowComments(!showComments)}} className='text-xl cursor-pointer mx-1'><RiMessage3Fill/></div>
           <div className='text-xl cursor-pointer mx-1'><IoShareSocialSharp/></div>
         </div>
+        <input id='comment-input' className='trans300 p-2 outline-none mx-2 placeholder:text-black placeholder:font-medium placeholder:opacity-70' type='text' placeholder='Comment your words!' value={commentData} onChange={handleCommentChange} name='commentData'/>
+        <button className={`text-white font-medium p-1 bg-black rounded-md trans300 hover:scale-105 ${validComment ? " cursor-pointer " : " opacity-70 cursor-not-allowed "}`} disabled={!validComment} onClick={handleCommentSubmit} type='submit'>Post</button>
       </div>
+      {
+        showComments ?
+        <div className='w-full'>
+          {props?.comments.map((comment,i)=>(
+            <div key={i} className='w-full px-2 flex items-center justify-end'>
+              <Comment {...comment}/>
+            </div>
+          ))}
+        </div>
+        :
+        <></>
+      }
     </motion.div>
   )
 }
 export default function Post(props) {
+
   return (
     <div id='post'>
       {props.isMultimedia ? 

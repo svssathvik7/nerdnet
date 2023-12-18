@@ -1,0 +1,10 @@
+.post-time-stamp{
+    font-size: 0.3em;
+}
+.comment-box{
+    min-width: 10dvw;
+}
+.comment-box-dp{
+    min-height: 2dvw;
+    min-width: 2dvw;
+}
