@@ -43,8 +43,8 @@ export default function Comment(props) {
   return (
     <div className='comment-box m-1 flex items-center justify-start p-1 rounded-l-lg rounded-bl-lg bg-slate-400'>
         <div>
-            <Link to={"/profile/"+props.commentedUser.email}>
-                <img className='w-8 rounded-full comment-box-dp' alt='user-dp' src={props?.commentedUser?.dp??"#"} title={props.commentedUser.username}/>
+            <Link to={"/profile/"+props?.commentedUser?.email??"user@gmail.com"}>
+                <img className='w-8 rounded-full comment-box-dp' alt='user-dp' src={props?.commentedUser?.dp??"#"} title={props?.commentedUser?.username??"Nerd"}/>
             </Link>
         </div>
         <div className='flex flex-col items-center justify-center'>

@@ -23,7 +23,7 @@ function ImagePost(props)
   const [validComment,setValidComment] = useState(false);
   const [commentData,setCommentData] = useState('');
   const [showPost,setShowPost] = useState(true);
-  const [upVotes,setUpVotes] = useState(0);
+  const [upVotes,setUpVotes] = useState(false);
   const handleCommentChange = (e) => {
     const value = e.target.value;
     setCommentData(value);
@@ -120,13 +120,17 @@ function ImagePost(props)
         <p className='text-base w-fit h-fit inline-block selection:bg-yellow-400'>{props.caption}</p>
       </div> : <></>}
       {
-        showComments ?
+        showComments ? props?.comments.length ?
         <div className='w-full'>
           {props?.comments.map((comment,i)=>(
             <div key={i} className='w-full px-2 flex items-center justify-end'>
               <Comment {...comment}/>
             </div>
           ))}
+        </div>
+        :
+        <div className='w-full'>
+          <p>No Comments!</p>
         </div>
         :
         <></>
