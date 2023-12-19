@@ -10,7 +10,7 @@ export default function HomeFeed() {
       const getPosts = async ()=>{
         const allPosts = (await axios.get("http://localhost:3500/api/posts/getAllPosts")).data;
         setPosts(allPosts);
-        console.log(allPosts);
+        // console.log(allPosts);
       }
       getPosts();
     }
