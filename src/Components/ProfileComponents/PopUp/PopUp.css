@@ -1,0 +1,9 @@
+#pop-up{
+    width: fit-content;
+    max-width: 35dvw;
+    height: fit-content;
+    max-height: 45dvh;
+    background-color: #6f8695;
+    border-radius: 1rem;
+    padding: 1%;
+}

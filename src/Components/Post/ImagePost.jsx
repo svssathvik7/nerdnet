@@ -141,10 +141,10 @@ export default function ImagePost(props)
       </div>
       <div id='post-metrics' className='flex items-center justify-start p-2 mt-0 pt-0'>
         <div id='metric-btn' className='flex items-center justify-around p-2 rounded-full'>
-            <button onClick={handleUpVote} className='text-lg cursor-pointer mx-1' disabled={liked}><FaAngleDoubleUp/></button>
+            <button onClick={handleUpVote} className={`text-lg cursor-pointer mx-1 ${liked ? " opacity-50 " : " "}`} disabled={liked}><FaAngleDoubleUp/></button>
           <p className='select-none'>{upVotes}</p>
           <div className='text-lg cursor-pointer mx-1'><MdDescription onClick={()=>{setShowCaption(!showCaption)}}/></div>
-          <button onClick={handleDownVote} className='text-lg cursor-pointer mx-1' disabled={!liked}><FaAngleDoubleDown/></button>
+          <button onClick={handleDownVote} className={`text-lg cursor-pointer mx-1 ${!liked? " opacity-50 " : "  "}`} disabled={!liked}><FaAngleDoubleDown/></button>
         </div>
         <div id='reach-btn' className='flex items-center justify-around'>
           <div className='text-xl cursor-pointer mx-1' onClick={()=>{setShowComments(!showComments)}}><RiMessage3Fill/></div>

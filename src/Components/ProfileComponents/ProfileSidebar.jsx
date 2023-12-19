@@ -7,6 +7,7 @@ import { MdMarkEmailRead } from "react-icons/md";
 import { IoIosSchool } from "react-icons/io";
 import { FaImages } from "react-icons/fa6";
 import { useState } from 'react';
+import PopUp from './PopUp/PopUp';
 import "./ProfileSidebar.css";
 import { useLocation } from 'react-router-dom';
 import {friendContextProvider} from "../../Context/friendContext";
@@ -17,7 +18,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 export default function ProfileSidebar() {
     const [loading,setIsLoading] = useState(false);
-    const {user,getUserDetails} = useContext(userContextProvider);
+    const {user} = useContext(userContextProvider);
     const {userProfile,getUserProfile} = useContext(friendContextProvider);
     const [isSameUser,setIsSameUser] = useState(false);
     const [followers,setFollowers] = useState(userProfile?.followers?.length ?? 0);
@@ -26,6 +27,8 @@ export default function ProfileSidebar() {
     const [isFollowing,setIsFollowing] = useState(userProfile?userProfile.isfollowing : false);
     const {profileemail} = useParams();
     const location = useLocation();
+    const [showFollowers,setShowFollowers] = useState(false);
+    const [showFollowing,setShowFollowing] = useState(false);
     useEffect(
         ()=>{
             const miniUtilities = async()=>{
@@ -35,7 +38,7 @@ export default function ProfileSidebar() {
                     getUserProfile(profileemail ? profileemail : user.email);
                     setIsFollowing(userProfile?.isfollowing??false);
                     setFollowers(userProfile?.followers?.length ?? 0);
-                    setFollowing(userProfile?.userProfile?.following.length??0);
+                    setFollowing(userProfile?.following.length??0);
                     setCommunities(userProfile?.communities?.length ?? 0);
                 }
             }
@@ -211,12 +214,12 @@ export default function ProfileSidebar() {
             </div>
         </div>
         <div id='profile-counts' className='flex items-center justify-around w-full m-2'>
-            <div className='flex flex-col items-center justify-center'>
+            <div className='flex flex-col items-center justify-center cursor-pointer' onClick={()=>{setShowFollowers(!showFollowers)}}>
                 <p>{followers}</p>
                 <p className='text-xs'>Followers</p>
             </div>
-            <div className='w-1 h-6 rounded-2xl bg-black'></div>
-            <div className='flex flex-col items-center justify-center'>
+            <div className='w-1 h-6 rounded-2xl bg-black cursor-pointer' onClick={()=>{}}></div>
+            <div className='flex flex-col items-center justify-center cursor-pointer' onClick={()=>{setShowFollowing(!showFollowing)}}>
                 <p>{following}</p>
                 <p className='text-xs'>Following</p>
             </div>
@@ -225,6 +228,8 @@ export default function ProfileSidebar() {
                 <p>{communities}</p>
                 <p className='text-xs'>Communities</p>
             </div>
+            {showFollowers ? <PopUp {...userProfile?.followers??[]}/> : <></>}
+            {showFollowing ? <PopUp {...userProfile?.following??[]}/> : <></>}
         </div>
         <ProfileGraphVisualiser/>
       </div>

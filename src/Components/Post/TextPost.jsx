@@ -26,8 +26,6 @@ export default function TextPost(props)
   const [liked, setLiked] = useState(props.likes.some(like => like._id === user._id));
   useEffect(
     ()=>{
-        console.log(props.likes);
-        console.log(user._id);
         setUpVotes(props?.likes?.length??0-props?.dislikes?.length??0);
     }
   ,[]);
@@ -145,9 +143,9 @@ export default function TextPost(props)
       </div>
       <div id='post-metrics' className='flex items-center justify-start p-2 mt-0 pt-0'>
       <div id='metric-btn' className='flex items-center justify-around p-2 rounded-full'>
-        <button onClick={handleUpVote} className='text-lg cursor-pointer mx-1' disabled={liked}><FaAngleDoubleUp/></button>
+        <button onClick={handleUpVote} className={`text-lg cursor-pointer mx-1 ${liked ? " opacity-50 " : " "}`} disabled={liked}><FaAngleDoubleUp/></button>
         <p className='select-none'>{upVotes}</p>
-        <button onClick={handleDownVote} className='text-lg cursor-pointer mx-1' disabled={!liked}><FaAngleDoubleDown/></button>
+        <button onClick={handleDownVote} className={`text-lg cursor-pointer mx-1 ${!liked? " opacity-50 " : "  "}`} disabled={!liked}><FaAngleDoubleDown/></button>
         </div>
         <div id='reach-btn' className='flex items-center justify-around'>
           <div onClick={()=>{setShowComments(!showComments)}} className='text-xl cursor-pointer mx-1'><RiMessage3Fill/></div>
@@ -157,7 +155,7 @@ export default function TextPost(props)
         <button className={`text-white font-medium p-1 bg-black rounded-md trans300 hover:scale-105 ${validComment ? " cursor-pointer " : " opacity-70 cursor-not-allowed "}`} disabled={!validComment} onClick={handleCommentSubmit} type='submit'>Post</button>
       </div>
       {
-        showComments ?
+        showComments ? props.comments.length ?
         <div className='w-full'>
           {props?.comments.map((comment,i)=>(
             <div key={i} className='w-full px-2 flex items-center justify-end'>
@@ -165,6 +163,7 @@ export default function TextPost(props)
             </div>
           ))}
         </div>
+        : <h1 className='font-base'>Nothing to show!</h1>
         :
         <></>
       }
