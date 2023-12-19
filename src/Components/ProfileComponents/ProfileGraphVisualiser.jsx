@@ -15,18 +15,30 @@ export default function ProfileGraphVisualiser() {
         id: follower?._id ?? i + 2, // Ensure unique IDs for followers
         label: follower?.username ?? 'Nerd',
       }));
-  
+
       const followingNodes = userProfile.following.map((following, i) => ({
         id: following?._id ?? i + 2, // Ensure unique IDs for following
         label: following?.username ?? 'Nerd',
       }));
-  
+
+      const allNodes = [
+        { id: userProfile._id ?? 1, label: userProfile.username ?? 'Nerd', fixed: { x: true, y: true } },
+        ...followerNodes,
+        ...followingNodes,
+      ];
+
+      // Remove duplicates based on id
+      const uniqueNodes = allNodes.reduce((acc, current) => {
+        const x = acc.find(item => item.id === current.id);
+        if (!x) {
+          return acc.concat([current]);
+        } else {
+          return acc;
+        }
+      }, []);
+
       const newGraph = {
-        nodes: [
-          { id: userProfile._id ?? 1, label: userProfile.username ?? 'Nerd',fixed : {x:true,y:true} },
-          ...followerNodes,
-          ...followingNodes,
-        ],
+        nodes: uniqueNodes,
         edges: [
           ...followerNodes.map((follower) => ({
             from: follower.id,
@@ -38,9 +50,9 @@ export default function ProfileGraphVisualiser() {
           })),
         ],
       };
-  
+
       setGraph(newGraph);
-  
+
       const newOptions = {
         height: '100%',
         edges: {
@@ -50,11 +62,10 @@ export default function ProfileGraphVisualiser() {
           zoomView: false,
         },
       };
-  
+
       setOptions(newOptions);
     }
   }, [userProfile]);
-  
 
   return (
     <div id='graph-component' className='flex flex-col items-center justify-center m-2 p-2'>
