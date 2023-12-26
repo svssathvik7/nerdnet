@@ -10,6 +10,7 @@ import rootReducer from './Redux/Reducers/rootReducer';
 import UserContext from './Context/userContext';
 import FriendContext from "./Context/friendContext";
 import StatContext from './Context/statContext';
+import HomeFeedContext from './Context/homeFeedContext';
 const store = createStore(rootReducer);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,11 +18,13 @@ root.render(
       <UserContext>
         <StatContext>
         <FriendContext>
+          <HomeFeedContext>
           <ParallaxProvider>
             <Provider store={store}>
               <App />
             </Provider>
           </ParallaxProvider>
+          </HomeFeedContext>
         </FriendContext>
         </StatContext>
       </UserContext>
