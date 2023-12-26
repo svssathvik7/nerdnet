@@ -3,7 +3,9 @@ import Post from '../Post/Post'
 import "./HomeFeed.css";
 import { useState } from 'react';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 export default function HomeFeed() {
+  const location = useLocation();
   const [posts,setPosts] = useState([]);
   useEffect(
     ()=>{
@@ -14,7 +16,7 @@ export default function HomeFeed() {
       }
       getPosts();
     }
-  ,[posts]);
+  ,[posts,location.pathname]);
   return (
     <div id='home-feed' className='flex flex-col items-center justify-center'>
         {posts.length > 0 ? <div id='home-feed-scroller' className='flex flex-col items-center justify-start'>

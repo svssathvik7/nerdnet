@@ -14,8 +14,10 @@ import { useContext } from 'react';
 import Comment from '../Comments/Comment';
 import { userContextProvider } from '../../Context/userContext';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 export default function ImagePost(props)
 {
+  const location = useLocation();
   const ref = useRef(null);
   const {user} = useContext(userContextProvider);
   const [showCaption,setShowCaption] = useState(false);
@@ -24,44 +26,51 @@ export default function ImagePost(props)
   const [commentData,setCommentData] = useState('');
   const [showPost,setShowPost] = useState(true);
   const [upVotes,setUpVotes] = useState(props?.likes?.length??0-props?.dislikes?.length??0);
-  const [liked, setLiked] = useState(props.likes.some(like => like._id === user._id));
+  const [liked, setLiked] = useState(props.likes.some(like => like?._id === user?._id));
+  const handleUpVote = async ()=>{
+    try{
+      if(!liked){
+        const response = (await axios.post("http://localhost:3500/api/posts/changeLikes",{
+          postId : props._id,
+              addLike : true,
+              userLiked : user._id
+            })).data;
+            if(response.status){
+              setLiked(true);
+              setUpVotes(upVotes+1);
+            }
+            console.log(response);
+          }
+        }
+        catch(error){
+          console.log(error);
+        }
+  }
+  const handleDownVote = async ()=>{
+    try{
+      if(liked){
+        const response = (await axios.post("http://localhost:3500/api/posts/changeLikes",{
+          postId : props._id,
+          addLike : false,
+          userLiked : user._id
+        })).data;
+        if(response.status){
+          setLiked(false);
+          setUpVotes(upVotes-1);
+        }
+      }
+    }
+    catch(error){
+      console.log(error);
+    }
+  }
   useEffect(
     ()=>{
         setUpVotes(props?.likes?.length??0-props?.dislikes?.length??0);
+        setLiked(props.likes.some(like => like?._id === user?._id));
+        console.log(liked);
     }
-  ,[]);
-  const handleUpVote = async ()=>{
-    console.log("inc");
-    try{
-        const response = (await axios.post("http://localhost:3500/api/posts/changeLikes",{
-            postId : props._id,
-            addLike : true,
-            userLiked : user._id
-        })).data;
-        if(response.status){
-            setLiked(true);
-        }
-    }
-    catch(error){
-        console.log(error);
-    }
-  }
-  const handleDownVote = async ()=>{
-    console.log("dec");
-    try{
-        const response = (await axios.post("http://localhost:3500/api/posts/changeLikes",{
-            postId : props._id,
-            addLike : false,
-            userLiked : user._id
-        })).data;
-        if(response.status){
-            setLiked(false);
-        }
-    }
-    catch(error){
-        console.log(error);
-    }
-  }
+  ,[props.likes,location.pathname,handleUpVote,handleDownVote]);
   const handleCommentChange = (e) => {
     const value = e.target.value;
     setCommentData(value);
