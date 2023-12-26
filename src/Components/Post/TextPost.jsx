@@ -67,7 +67,6 @@ export default function TextPost(props)
         ()=>{
             setUpVotes(props?.likes?.length??0-props?.dislikes?.length??0);
             setLiked(props.likes.some(like => like?._id === user?._id));
-            console.log(liked);
         }
       ,[props.likes,location.pathname,handleUpVote,handleDownVote]);
       const handleCommentChange = (e) => {

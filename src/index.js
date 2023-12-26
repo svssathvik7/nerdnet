@@ -9,11 +9,13 @@ import { Provider } from 'react-redux';
 import rootReducer from './Redux/Reducers/rootReducer';
 import UserContext from './Context/userContext';
 import FriendContext from "./Context/friendContext";
+import StatContext from './Context/statContext';
 const store = createStore(rootReducer);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <BrowserRouter>
       <UserContext>
+        <StatContext>
         <FriendContext>
           <ParallaxProvider>
             <Provider store={store}>
@@ -21,6 +23,7 @@ root.render(
             </Provider>
           </ParallaxProvider>
         </FriendContext>
+        </StatContext>
       </UserContext>
     </BrowserRouter>
 );
