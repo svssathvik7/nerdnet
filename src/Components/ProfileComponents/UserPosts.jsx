@@ -11,7 +11,7 @@ export default function UserPosts() {
       {userProfile && userProfile.posts ? 
         userProfile.posts.map((post,i)=>(
           <div className='single-feed m-2' key={i}>
-            <Post {...post} userPosted={{dp:userProfile.dp,username:userProfile.username,education:userProfile.education}} className="m-2"/>
+            <Post {...post} userPosted={{dp:userProfile.dp,username:userProfile.username,education:userProfile.education,email:userProfile.email}} className="m-2"/>
           </div>
         ))
       :
