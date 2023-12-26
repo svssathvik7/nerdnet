@@ -6,10 +6,24 @@ function TrendingNerdsDiv(){
   const {trendingNerds} = useContext(statContextProvider);
   return (
     <div className='flex flex-wrap flex-col my-4'>
-        <h6 className='font-medium underline'>Trending Nerds</h6>
-        {trendingNerds.map((value,i)=>(
-            <Link to={"/profile/"+value.email} key={i} className='text-slate-500'>{value.username}</Link>
-        ))}
+    <h6 className='font-medium underline'>Trending Nerds</h6>
+    <ol className='list-decimal pl-4'>
+      {trendingNerds.map((value, i) => (
+          <li key={i}><Link to={"/profile/" + value.email} className='text-slate-500 font-medium text-lg'>{value.username}</Link>
+          <sub className='text-xs mx-2'>({value?.stature??"Beginner"})</sub>
+          </li>
+      ))}
+    </ol>
+    </div>
+  )
+}
+function RedirectFooter(){
+  return (
+    <div id='semi-footer' className='flex w-[100%] items-center justify-around mt-4'>
+      <Link to="/about" className='font-light text-gray-500 text-xs hover:underline'>About</Link>
+      <Link to="/about" className='font-light text-gray-500 text-xs hover:underline'>Privacy & Policy</Link>
+      <Link to="/about" className='font-light text-gray-500 text-xs hover:underline'>Revenue</Link>
+      <p className='font-light text-gray-500 text-xs'>&copy; Nerd.net {new Date().getFullYear()}</p>
     </div>
   )
 }
@@ -23,6 +37,7 @@ export default function AsideBar() {
   return (
     <div className='bg-white flex flex-col items-center justify-start p-2' id='aside-bar'>
         <TrendingNerdsDiv/>
+        <RedirectFooter/>
     </div>
   )
 }

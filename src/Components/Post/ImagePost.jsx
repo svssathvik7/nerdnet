@@ -26,10 +26,10 @@ export default function ImagePost(props)
   const [commentData,setCommentData] = useState('');
   const [showPost,setShowPost] = useState(true);
   const [upVotes,setUpVotes] = useState(props?.likes?.length??0-props?.dislikes?.length??0);
-  const [liked, setLiked] = useState(props.likes.some(like => like?._id === user?._id));
+  const [liked, setLiked] = useState(props.dummy ? false : props?.likes?.some(like => like?._id === user?._id));
   const handleUpVote = async ()=>{
     try{
-      if(!liked){
+      if(!liked && !props.dummy){
         const response = (await axios.post("http://localhost:3500/api/posts/changeLikes",{
           postId : props._id,
               addLike : true,
@@ -48,7 +48,7 @@ export default function ImagePost(props)
   }
   const handleDownVote = async ()=>{
     try{
-      if(liked){
+      if(liked && !props.dummy){
         const response = (await axios.post("http://localhost:3500/api/posts/changeLikes",{
           postId : props._id,
           addLike : false,
@@ -66,8 +66,8 @@ export default function ImagePost(props)
   }
   useEffect(
     ()=>{
-        setUpVotes(props?.likes?.length??0-props?.dislikes?.length??0);
-        setLiked(props.likes.some(like => like?._id === user?._id));
+        setUpVotes(props.dummy ? 0 : props?.likes?.length??0-props?.dislikes?.length??0);
+        setLiked(props.dummy ? false : props?.likes?.some(like => like?._id === user?._id));
     }
   ,[props.likes,location.pathname,handleUpVote,handleDownVote]);
   const handleCommentChange = (e) => {
