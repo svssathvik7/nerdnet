@@ -14,4 +14,7 @@
         height: 90dvh;
         padding-bottom: 15em;
     }
+    #feed-covered-message{
+        flex-direction: column-reverse;
+    }
 }
