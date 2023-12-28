@@ -43,10 +43,10 @@ export default function SearchSection() {
       <div>
         <h4 className='text-white font-medium text-2xl'>Obtaining Search results for : "{searchQuery}"</h4>
       </div>
-      <div id='search-scroller' className='flex items-start justify-start p-2'>
+      <div id='search-scroller' className='flex items-start justify-start p-2 flex-wrap'>
         {result?.length ? 
             result.map((item,i)=>(
-                <div key={i} className='bg-white rounded-lg w-fit h-fit flex flex-col items-center justify-around m-2 p-2 cursor-pointer hover:scale-105 trans300'>
+                <div key={i} className='bg-white rounded-lg w-fit h-fit flex flex-col items-center justify-around m-2 p-2 cursor-pointer hover:scale-105 trans300 flex-wrap'>
                     <Link to={`/profile/${item.email}`}><img alt='dp' src={item.dp} className='w-16 rounded-full'/></Link>
                     <Link to={`/profile/${item.email}`}><p className='text-black font-medium text-lg'>{item.username}</p></Link>
                     <p className='text-slate font-medium text-base'>{item?.age??1}y/o nerd</p>

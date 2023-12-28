@@ -13,7 +13,7 @@ function TrendingNerdsDiv(){
     </div>
     <ol className='list-decimal pl-4 flex flex-col items-center justify-start text-white'>
       {trendingNerds.map((value, i) => (
-          <li key={i}><Link to={"/profile/" + value.email} className='text-fuchsia-50 font-base text-lg'>{value.username}</Link>
+          <li key={i}><Link to={"/profile/" + value.email} className='text-fuchsia-50 font-base text-lg'>{value.username.length <= 7 ? value.username : value.username.slice(0,7)+"..."}</Link>
           <sub className='text-xs mx-2'>({value?.stature??"Beginner"})</sub>
           </li>
       ))}
