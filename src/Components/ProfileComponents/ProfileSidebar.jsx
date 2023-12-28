@@ -50,7 +50,7 @@ export default function ProfileSidebar() {
         e.preventDefault();
         setIsLoading(true);
         try{
-            const response =  (await axios.post("http://localhost:3500/api/auth/updateFollowers",{
+            const response =  (await axios.post(process.env.REACT_APP_BACKEND_URL+"/auth/updateFollowers",{
                 masterAcc : userProfile.email,
                 followerAcc : user.email
             })).data;
@@ -103,7 +103,7 @@ export default function ProfileSidebar() {
             if(editable===true){
                 setIsLoading(true);
                 if(formData.username!==user.username || formData.education !== user.education || formData.dp !== user.dp){
-                    const response = await axios.post("http://localhost:3500/api/auth/updateProfile",{
+                    const response = await axios.post(process.env.REACT_APP_BACKEND_URL+"/auth/updateProfile",{
                         email : user.email,
                         username : formData.username.length ? formData.username : user.username,
                         education : formData.education.length ? formData.education : (user&&user.education ? user.education : "Enthusiast at Nerd.net"),

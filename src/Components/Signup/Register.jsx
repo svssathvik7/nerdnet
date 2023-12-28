@@ -57,7 +57,7 @@ function Register({data}) {
       setLoading(false);
     }
     else{
-      axios.post("http://localhost:3500/api/auth/newUser/",{
+      axios.post(process.env.REACT_APP_BACKEND_URL+"/auth/newUser/",{
         username : formData.username,
         email : formData.email,
         password : formData.password,

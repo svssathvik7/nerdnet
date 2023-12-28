@@ -8,7 +8,7 @@ export default async function TokenValidity() {
                 'Authorization' : `Beared ${token}`,
                 'Content-type' : "application/json"
             }
-            const response = await axios.post("http://localhost:3500/api/auth/authorizeUser/",{},{headers});
+            const response = await axios.post(process.env.REACT_APP_BACKEND_URL+"/auth/authorizeUser/",{},{headers});
             const data = response.data;
             return data.status;
         }

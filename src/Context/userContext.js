@@ -11,7 +11,7 @@ const UserContext = ({children}) => {
             
             try{
                 const token = localStorage.getItem('token');
-                const response = (await axios.post("http://localhost:3500/api/auth/currUser/",{token})).data;
+                const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/auth/currUser/",{token})).data;
                 if(response.status){
                     setUser(response.userData);
                 }

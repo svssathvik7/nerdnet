@@ -30,7 +30,7 @@ export default function ImagePost(props)
   const handleUpVote = async ()=>{
     try{
       if(!liked && !props.dummy){
-        const response = (await axios.post("http://localhost:3500/api/posts/changeLikes",{
+        const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/posts/changeLikes",{
           postId : props._id,
               addLike : true,
               userLiked : user._id
@@ -49,7 +49,7 @@ export default function ImagePost(props)
   const handleDownVote = async ()=>{
     try{
       if(liked && !props.dummy){
-        const response = (await axios.post("http://localhost:3500/api/posts/changeLikes",{
+        const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/posts/changeLikes",{
           postId : props._id,
           addLike : false,
           userLiked : user._id
@@ -89,7 +89,7 @@ export default function ImagePost(props)
         comment : commentData,
         user : user.email
       }
-      const response = (await axios.post("http://localhost:3500/api/posts/addComment",commentPostData)).data;
+      const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/posts/addComment",commentPostData)).data;
       if(response.status){
         setCommentData('');
       }

@@ -47,7 +47,7 @@ function Login({data}) {
       const handleSubmit = async(e) => {
         e.preventDefault();
         setLoading(true);
-        axios.post("http://localhost:3500/api/auth/login/",{
+        axios.post(process.env.REACT_APP_BACKEND_URL+"/auth/login/",{
           useremail : formData.userEmail,
           password : formData.password
         }).then(async (response)=>{

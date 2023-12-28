@@ -67,7 +67,7 @@ function AddPostForm({data}) {
                 caption : !textInput ? formData.caption : "",
                 tags : textInput ? textTags : imgTags
             }
-            const response = await axios.post("http://localhost:3500/api/posts/newPost",{backendData});
+            const response = await axios.post(process.env.REACT_APP_BACKEND_URL+"/posts/newPost",{backendData});
             if(response.data.status){
                 toast.success('Post added successfully!', {
                     position: "top-right",

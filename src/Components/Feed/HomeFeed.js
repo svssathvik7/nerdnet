@@ -15,7 +15,7 @@ export default function HomeFeed() {
   useEffect(
     ()=>{
       const getPosts = async ()=>{
-        const allPosts = (await axios.get("http://localhost:3500/api/posts/getAllPosts")).data;
+        const allPosts = (await axios.get(process.env.REACT_APP_BACKEND_URL+"/posts/getAllPosts")).data;
         setPosts(allPosts);
         recommendHomeFeed();
         // console.log(allPosts);
