@@ -24,7 +24,7 @@ export default function HomeFeed() {
     }
   ,[posts,location.pathname]);
   return (
-    <div id='home-feed' className='flex flex-col items-center justify-center text-center'>
+    <div id='home-feed' className='flex flex-col items-center justify-center'>
         {homeFeed.length > 0 ? <div id='home-feed-scroller' className='flex flex-col items-center justify-start'>
             {homeFeed.map((post,i) => (
                 <div className='single-feed m-2' key={i}>
@@ -33,7 +33,7 @@ export default function HomeFeed() {
             ))}
         </div> : 
         <div id='feed-covered-message' className='flex items-center justify-center text-center'>
-          <h1 className='text-5xl font-bold'>Feed got covered!</h1>
+          <h1 className='text-5xl font-bold text-white'>Feed got covered!</h1>
           <Lottie animationData={DoneAnimation} className='w-64 h-fit p-0' loop={true}/>
         </div>
         }

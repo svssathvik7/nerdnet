@@ -41,7 +41,7 @@ export default function Header() {
   }
 
   return (
-    <div id='header' className={`bg-black p-2 flex items-center ${isMobile ? 'justify-between' : 'justify-around'}`}>
+    <div id='header' className={`bg-black p-2 flex items-center ${isMobile ? 'justify-between' : 'justify-around'} border-b-2 border-slate-50`}>
       <a href='/home' id='nerd-logo'>
         <img alt='nerd-logo' src={NerdLogo} className='w-8 m-2 cursor-pointer' />
       </a>

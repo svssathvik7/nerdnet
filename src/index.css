@@ -10,7 +10,7 @@
 }
 body{
     overflow-x: hidden;
-    background-color: #6f8695;
+    background-color: #000;
 }
 body::-webkit-scrollbar{
     display: none

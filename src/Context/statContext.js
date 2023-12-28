@@ -8,7 +8,7 @@ export default function StatContext({children}) {
         const allNerds = (await axios.get(process.env.REACT_APP_BACKEND_URL+"/stats/getAllUserDetails")).data;
         if(allNerds.status){
             const sortedNerds = allNerds.users.sort((a,b)=> b.followers.length - a.followers.length);
-            const topSortedNerds = sortedNerds.slice(0,Math.min(sortedNerds.length,30));
+            const topSortedNerds = sortedNerds.slice(0,Math.min(sortedNerds.length,5));
             console.log(topSortedNerds);
             setTrendingNerds(topSortedNerds);
         }

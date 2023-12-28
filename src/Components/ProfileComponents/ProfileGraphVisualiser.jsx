@@ -3,13 +3,16 @@ import Graph from 'react-vis-network-graph';
 import { useContext } from 'react';
 import { friendContextProvider } from '../../Context/friendContext';
 import './ProfileGraphVisualiser.css';
+import ReloadIcon from "../../assets/reload.svg";
 
 export default function ProfileGraphVisualiser() {
   const { userProfile } = useContext(friendContextProvider);
   const [graph, setGraph] = useState(null);
   const [options, setOptions] = useState(null);
+  const [refreshGraph,setRefreshGarph] = useState(false);
 
   useEffect(() => {
+    console.log("setting graph");
     if (userProfile) {
       const followerNodes = userProfile.followers.map((follower, i) => ({
         id: follower?._id ?? i + 2, // Ensure unique IDs for followers
@@ -56,7 +59,7 @@ export default function ProfileGraphVisualiser() {
       const newOptions = {
         height: '100%',
         edges: {
-          color: '#000',
+          color: '#fff',
         },
         interaction: {
           zoomView: false,
@@ -65,15 +68,16 @@ export default function ProfileGraphVisualiser() {
 
       setOptions(newOptions);
     }
-  }, [userProfile]);
+  }, [userProfile,refreshGraph]);
 
   return (
-    <div id='graph-component' className='flex flex-col items-center justify-center m-2 p-2'>
+    <div id='graph-component' className='flex flex-col items-center justify-around m-2 p-2 h-full'>
       {graph && options ? (
         <Graph graph={graph} options={options} />
       ) : (
         <h1>Follower Graph</h1>
       )}
+      <img onClick={() => {setRefreshGarph(!refreshGraph)}} className='w-8 cursor-pointer' alt='icon' src={ReloadIcon}/>
     </div>
   );
 }

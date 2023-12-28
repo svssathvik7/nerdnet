@@ -167,7 +167,7 @@ export default function ProfileSidebar() {
         console.log(formData);
     }
   return (
-    <div id='profile-sidebar' className='flex flex-col items-center justify-start p-2 bg-white'>
+    <div id='profile-sidebar' className='flex flex-col items-center justify-start p-2'>
       <div id='profile-info-container' className='flex flex-col items-center justify-start w-full'>
         <div id='profile-dp-container' className='p-2 m-2 flex items-center justify-around w-full'>
             <img className='object-contain object-center rounded-full w-52' alt='dp' src={userProfile ? userProfile.dp : <CgProfile color='white'/>}/>
@@ -179,30 +179,30 @@ export default function ProfileSidebar() {
                         <input className={`text-lg font-bold mx-2 text-slate-500 inline-block outline-none w-fit`} placeholder={`${user ? user.username : "Nerd"}`} onChange={handleFormChange} value={formData.username} name='username'/>
                     </div>
                     <div className='flex items-center justify-start w-fit'>
-                        <MdMarkEmailRead className='text-2xl' color='black' title='email'/>
+                        <MdMarkEmailRead className='text-2xl' color='#fff' title='email'/>
                         <h6 className='text-lg font-bold mx-2 text-slate-500 inline-block w-fit'>{user ? user.email : "user@gmail.com"}</h6>
                     </div>
                     <div className='flex items-center justify-start w-fit'>
-                        <IoIosSchool className='text-2xl' color='black' title='education'/>
+                        <IoIosSchool className='text-2xl' color='white' title='education'/>
                         <input className='text-lg font-bold mx-2 text-slate-500 inline-block outline-none w-fit' placeholder={`${user && user.education ? user.education : "Enthusiast at Nerd.net"}`} maxLength={23} onChange={handleFormChange} value={formData.education} name='education'/>
                     </div>
                     <div className='flex items-center justify-start flex-wrap w-fit'>
-                        <FaImages className='text-2xl' color='black' title='dp'/>
+                        <FaImages className='text-2xl' color='white' title='dp'/>
                         <input className='text-lg font-bold mx-2 text-slate-500 inline-block outline-none w-fit' placeholder={`${user && userProfile.dp ? user.dp : "#"}`} onChange={handleFormChange} value={formData.dp} name='dp'/>
                     </div>
                 </form>
                 :
                 <div>
                     <div className='flex items-center justify-start'>
-                        <SiNamebase className='text-2xl' color='black' title='username'/>
+                        <SiNamebase className='text-2xl' color='white' title='username'/>
                         <h5 className={`text-lg font-bold mx-2 text-slate-500 inline-block`}>{userProfile ? userProfile.username : "Nerd"}</h5>
                     </div>
                     <div className='flex items-center justify-start'>
-                        <MdMarkEmailRead className='text-2xl' color='black' title='email'/>
+                        <MdMarkEmailRead className='text-2xl' color='white' title='email'/>
                         <h5 className='text-lg font-bold mx-2 text-slate-500 inline-block'>{userProfile ? userProfile.email : "user@gmail.com"}</h5>
                     </div>
                     <div className='flex items-center justify-start'>
-                        <IoIosSchool className='text-2xl' color='black' title='education'/>
+                        <IoIosSchool className='text-2xl' color='white' title='education'/>
                         <h5 className='text-lg font-bold mx-2 text-slate-500 inline-block'>{userProfile && userProfile.education ? userProfile.education : "Enthusiast at Nerd.net"}</h5>
                     </div>
                 </div>
