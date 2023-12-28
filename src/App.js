@@ -5,6 +5,7 @@ import { Routes,Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import Profile from './Pages/Profile';
 import AboutLanding from './DescriptorPage/AboutLanding';
+import Search from './Pages/Search';
 import Home from './Pages/Home';
 import AddPostForm from './Components/AddPost/AddPostForm';
 import { useState,useEffect } from 'react';
@@ -34,8 +35,9 @@ function App() {
         <Route path='/newUser' element={<Register/>}/>
         <Route path='/home' element={<Home/>}/>
         <Route path='/profile/:profileemail' element={<Profile/>}/>
-        <Route path='/about' exact Component={AboutLanding}/>
-        <Route path='/postForm' exact Component={AddPostForm}/>
+        <Route path='/about' exact element={<AboutLanding/>}/>
+        <Route path='/postForm' exact element={<AddPostForm/>}/>
+        <Route path='/search/:searchQuery' exact element={<Search/>}/>
       </Routes>
       <ToastContainer
         position="top-right"
