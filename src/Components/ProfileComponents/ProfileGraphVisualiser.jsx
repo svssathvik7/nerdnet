@@ -72,7 +72,7 @@ export default function ProfileGraphVisualiser() {
   return (
     <div id='graph-component' className='flex flex-col items-center justify-around m-2 p-2 h-full'>
       {graph && options ? (
-        <Graph graph={graph} options={options} />
+        <Graph key={refreshGraph} graph={graph} options={options} />
       ) : (
         <h1>Follower Graph</h1>
       )}
