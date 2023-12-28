@@ -7,22 +7,18 @@ const UserContext = ({children}) => {
     const location = useLocation();
     const [user,setUser] = useState(null);
     const getUserDetails = async ()=>{
-        if(user===null){
-            
-            try{
-                const token = localStorage.getItem('token');
-                const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/auth/currUser/",{token})).data;
-                if(response.status){
-                    setUser(response.userData);
-                }
-                else{
-                    setUser(null);
-                }
+        try{
+            const token = localStorage.getItem('token');
+            const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/auth/currUser/",{token})).data;
+            if(response.status){
+                setUser(response.userData);
             }
-            catch(error){
+            else{
                 setUser(null);
             }
-
+        }
+        catch(error){
+            setUser(null);
         }
     }
     return (

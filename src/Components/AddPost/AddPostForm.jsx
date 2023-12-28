@@ -9,7 +9,7 @@ import "./AddPost.css";
 import { connect } from 'react-redux'
 import MiniNavBar from '../Navbar/MiniNavBar'
 function AddPostForm({data}) {
-    const {user} = useContext(userContextProvider);
+    const {user,getUserDetails} = useContext(userContextProvider);
     const [textInput,setInputType] = useState(true);
     // use for limiting tags len
     const [errText,setErrText] = useState("");
@@ -87,6 +87,7 @@ function AddPostForm({data}) {
                 });
                 setInputType(true);
                 setDisabled(true);
+                getUserDetails();
             }
             else{
                 toast.error("Error uploading Post!", {
