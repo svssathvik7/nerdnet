@@ -52,11 +52,12 @@ export default function ProfileSidebar() {
         try{
             const response =  (await axios.post(process.env.REACT_APP_BACKEND_URL+"/auth/updateFollowers",{
                 masterAcc : userProfile.email,
-                followerAcc : user.email
+                followerAcc : user.email,
+                isFollowing : isFollowing
             })).data;
             console.log(response);
             if(response.status){
-                setIsFollowing(true);
+                setIsFollowing(!isFollowing);
                 setIsLoading(false);
                 toast.success('Refresh to update changes!', {
                     position: "top-right",
@@ -208,12 +209,12 @@ export default function ProfileSidebar() {
                 </div>
                 }
                 <div className='flex items-center justify-around'>
-                {isSameUser ? <button type='button' className='px-2 bg-sky-400 text-white rounded-lg m-2 flex items-center justify-center' onClick={handledEditButton}>{loading ? <PulseLoader className='scale-50'/> : editable ? "Save" : "Edit"}</button> : <button type='button' className={`flex items-center justify-center px-2 bg-sky-400 text-white rounded-lg m-2 hover:bg-black hover:text-sky-400 trans300 ${isFollowing ? " bg-slate-400 text-white opacity-60 cursor-not-allowed " : " "}`} onClick={handleFollowBtn} disabled={isFollowing}>{loading ? <PulseLoader className='scale-50'/> : isFollowing ? "Following" : "Follow"}</button>}
+                {isSameUser ? <button type='button' className='px-2 bg-sky-400 text-white rounded-lg m-2 flex items-center justify-center' onClick={handledEditButton}>{loading ? <PulseLoader className='scale-50'/> : editable ? "Save" : "Edit"}</button> : <button type='button' className={`flex items-center justify-center px-2 bg-sky-400 text-white rounded-lg m-2 hover:bg-black hover:text-sky-400 trans300 ${isFollowing ? " bg-slate-400 text-white opacity-60 " : " "}`} onClick={handleFollowBtn}>{loading ? <PulseLoader className='scale-50'/> : isFollowing ? "UnFollow" : "Follow"}</button>}
                 {isSameUser && editable && <button className='bg-black text-white rounded-lg m-2 hover:border-white trans300 hover:border-2 px-2' onClick={()=>{setEditable(false)}}>Back</button>}
                 </div>
             </div>
         </div>
-        <div id='profile-counts' className='flex items-center justify-around w-full m-2'>
+        <div id='profile-counts' className='flex items-center justify-around w-full m-2 text-white'>
             <div className='flex flex-col items-center justify-center cursor-pointer' onClick={()=>{setShowFollowers(!showFollowers)}}>
                 <p>{followers}</p>
                 <p className='text-xs'>Followers</p>

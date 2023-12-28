@@ -12,7 +12,6 @@ export default function ProfileGraphVisualiser() {
   const [refreshGraph,setRefreshGarph] = useState(false);
 
   useEffect(() => {
-    console.log("setting graph");
     if (userProfile) {
       const followerNodes = userProfile.followers.map((follower, i) => ({
         id: follower?._id ?? i + 2, // Ensure unique IDs for followers
@@ -25,7 +24,7 @@ export default function ProfileGraphVisualiser() {
       }));
 
       const allNodes = [
-        { id: userProfile._id ?? 1, label: userProfile.username ?? 'Nerd', fixed: { x: true, y: true } },
+        { id: userProfile._id ?? 1, label: userProfile.username ?? 'Nerd'},
         ...followerNodes,
         ...followingNodes,
       ];

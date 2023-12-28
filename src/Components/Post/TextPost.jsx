@@ -43,10 +43,8 @@ export default function TextPost(props) {
           )
         ).data;
         if (response.status) {
-          console.log(upVotes);
           setLiked(true);
           setUpVotes((prevValue) => prevValue + 1);
-          console.log(upVotes);
         }
         console.log(response);
       }
