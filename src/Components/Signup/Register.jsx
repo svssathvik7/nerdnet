@@ -87,7 +87,7 @@ function Register({data}) {
         console.log("error "+error);
         if(error.response.status === 400)
         {
-          toast.error('User with the email already exists!', {
+          toast.error('User with the email/username already exists!', {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,

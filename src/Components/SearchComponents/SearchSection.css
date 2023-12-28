@@ -3,3 +3,8 @@
     height: 90dvh;
     padding: 2%;
 }
+#search-scroller{
+    height: 90dvh;
+    overflow-y: scroll;
+    width: 100%;
+}
