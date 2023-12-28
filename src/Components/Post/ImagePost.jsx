@@ -69,7 +69,7 @@ export default function ImagePost(props)
         setUpVotes(props.dummy ? 0 : props?.likes?.length??0-props?.dislikes?.length??0);
         setLiked(props.dummy ? false : props?.likes?.some(like => like?._id === user?._id));
     }
-  ,[props.likes,location.pathname,handleUpVote,handleDownVote]);
+  ,[props.likes,location.pathname]);
   const handleCommentChange = (e) => {
     const value = e.target.value;
     setCommentData(value);
