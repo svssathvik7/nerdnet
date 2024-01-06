@@ -15,16 +15,16 @@ export default function ProfileGraphVisualiser() {
     if (userProfile) {
       const followerNodes = userProfile.followers.map((follower, i) => ({
         id: follower?._id ?? i + 2, // Ensure unique IDs for followers
-        label: follower?.username ?? 'Nerd',
+        label: follower?.username.split(" ")[0] ?? 'Nerd',
       }));
 
       const followingNodes = userProfile.following.map((following, i) => ({
         id: following?._id ?? i + 2, // Ensure unique IDs for following
-        label: following?.username ?? 'Nerd',
+        label: following?.username.split(" ")[0] ?? 'Nerd',
       }));
 
       const allNodes = [
-        { id: userProfile._id ?? 1, label: userProfile.username ?? 'Nerd'},
+        { id: userProfile._id ?? 1, label: userProfile.username.split(" ")[0] ?? 'Nerd'},
         ...followerNodes,
         ...followingNodes,
       ];
