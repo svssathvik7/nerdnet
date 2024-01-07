@@ -15,7 +15,7 @@ function TrendingNerdsDiv(){
     <ol className='list-decimal pl-4 flex flex-col items-center justify-start text-white'>
       {trendingNerds.map((value, i) => (
           <li key={i}><Link to={"/profile/" + value.email} className='text-fuchsia-50 font-base text-lg'>{value.username.split(" ")[0].length <= 7 ? value.username.split(" ")[0] : value.username.slice(0,5)+"..."}</Link>
-          <sub className='text-xs mx-2'>({value?.stature??"Beginner"})</sub>
+          <sub className='text-xs mx-2'>[{value?.followersCount??"Beginner"}]</sub>
           </li>
       ))}
     </ol>
