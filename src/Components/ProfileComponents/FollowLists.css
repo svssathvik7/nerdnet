@@ -1,0 +1,12 @@
+#followers-list{
+    height: 90dvh;
+    width: fit-content;
+    overflow-y: scroll;
+    width: 45dvw;
+}
+#following-list{
+    height: 90dvh;
+    width: fit-content;
+    overflow-y: scroll;
+    width: 45dvw;
+}

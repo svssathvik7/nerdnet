@@ -11,6 +11,7 @@ import UserContext from './Context/userContext';
 import FriendContext from "./Context/friendContext";
 import StatContext from './Context/statContext';
 import HomeFeedContext from './Context/homeFeedContext';
+import ProfileNavigatorContext from './Context/profileNavigatorContext';
 const store = createStore(rootReducer);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -19,11 +20,13 @@ root.render(
         <StatContext>
         <FriendContext>
           <HomeFeedContext>
+          <ProfileNavigatorContext>
           <ParallaxProvider>
             <Provider store={store}>
               <App />
             </Provider>
           </ParallaxProvider>
+          </ProfileNavigatorContext>
           </HomeFeedContext>
         </FriendContext>
         </StatContext>
