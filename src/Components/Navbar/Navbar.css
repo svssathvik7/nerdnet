@@ -1,3 +1,19 @@
 #header-nav-links-mini{
     width: 90dvw;
 }
+/* Use more specific selectors */
+input[type="text"]:focus {
+    background-color: transparent !important;
+    outline: none;
+}
+
+/* Add !important to ensure your style takes precedence */
+input[type="text"]:valid {
+    background-color: transparent !important;
+    outline: none;
+}
+
+input[type="text"]:active {
+    background-color: transparent !important;
+    outline: none;
+}
