@@ -77,7 +77,7 @@ export default function AsideBar() {
     }
   ,[]);
   return (
-    <div className='flex flex-col items-center justify-start p-2' id='aside-bar'>
+    <div className='flex flex-col items-center justify-start p-2 border-r-2 border-slate-300' id='aside-bar'>
         <TrendingNerdsDiv/>
         <TrendingTopicsDiv/>
         <TrendingPostsDiv/>

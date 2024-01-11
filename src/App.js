@@ -5,6 +5,7 @@ import { Routes,Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import Profile from './Pages/Profile';
 import AboutLanding from './DescriptorPage/AboutLanding';
+import Explore from './Pages/Explore';
 import Search from './Pages/Search';
 import Home from './Pages/Home';
 import AddPostForm from './Components/AddPost/AddPostForm';
@@ -38,6 +39,7 @@ function App() {
         <Route path='/about' exact element={<AboutLanding/>}/>
         <Route path='/postForm' exact element={<AddPostForm/>}/>
         <Route path='/search/:searchQuery' exact element={<Search/>}/>
+        <Route path='/explore' exact element={<Explore/>}/>
       </Routes>
       <ToastContainer
         position="top-right"

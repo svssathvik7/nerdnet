@@ -1,0 +1,20 @@
+#explore-feed-scroller{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 90dvh;
+    padding-bottom: 5em;
+}
+#explore-feed-scroller::-webkit-scrollbar{
+    display: none;
+}
+@media (max-width:768px) {
+    #explore-feed-scroller{
+        overflow-y: scroll;
+        overflow-x: hidden;
+        height: 90dvh;
+        padding-bottom: 15em;
+    }
+    #feed-covered-message{
+        flex-direction: column-reverse;
+    }
+}
