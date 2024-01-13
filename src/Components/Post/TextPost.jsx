@@ -27,11 +27,11 @@ export default function TextPost(props) {
     props?.likes?.length ?? 0 - props?.dislikes?.length ?? 0
   );
   const [liked, setLiked] = useState(
-    props?.likes?.some((like) => like?._id === user?._id)
+    props.noAuth ? true : props?.likes?.some((like) => like?._id === user?._id)
   );
   const handleUpVote = async () => {
     try {
-      if (!liked && !props.dummy) {
+      if (!liked) {
         const response = (
           await axios.post(
             process.env.REACT_APP_BACKEND_URL + "/posts/changeLikes",
@@ -54,7 +54,7 @@ export default function TextPost(props) {
   };
   const handleDownVote = async () => {
     try {
-      if (liked && !props.dummy) {
+      if (liked) {
         const response = (
           await axios.post(
             process.env.REACT_APP_BACKEND_URL + "/posts/changeLikes",
@@ -76,10 +76,10 @@ export default function TextPost(props) {
   };
   useEffect(() => {
     setUpVotes(
-      props.dummy ? 0 : props?.likes?.length ?? 0 - props?.dislikes?.length ?? 0
+      props.noAuth ? 0 : props?.likes?.length ?? 0 - props?.dislikes?.length ?? 0
     );
     setLiked(
-      props.dummy ? false : props.likes.some((like) => like?._id === user?._id)
+      props.noAuth ? 0 : props?.likes?.some((like) => like?._id === user?._id)
     );
   }, [props.likes, location.pathname]);
   const handleCommentChange = (e) => {
@@ -155,11 +155,11 @@ export default function TextPost(props) {
       >
         <div
           id="post-meta-data"
-          className="flex items-center justify-between bg-yellow-400 rounded-lg border-b-2 border-black"
+          className={`${props.noAuth ? " pointer-events-none " : "  " } flex items-center justify-between rounded-lg bg-yellow-400 border-b-2 border-black`}
         >
           <div className="flex items-center justify-center p-2 mx-2">
             <Link
-              to={"/profile/" + props.userPosted.email}
+              to={"/profile/" + props?.userPosted?.email}
               className="cursor-pointer"
             >
               <img
@@ -170,7 +170,7 @@ export default function TextPost(props) {
             </Link>
             <div className="select-none">
               <Link
-                to={"/profile/" + props.userPosted.email}
+                to={"/profile/" + props?.userPosted?.email}
                 className="font-medium text-sm cursor-pointer"
               >
                 {props.userPosted ? props.userPosted.username : "Nerd"}
@@ -196,7 +196,7 @@ export default function TextPost(props) {
         </div>
         <div
           id="post-metrics"
-          className="flex items-center justify-start p-2 mt-0 pt-0"
+          className={`${props.noAuth ? " pointer-events-none blur-sm " : "  "} flex items-center justify-start p-2 mt-0 pt-0`}
         >
           <div
             id="metric-btn"

@@ -9,6 +9,7 @@ import Explore from './Pages/Explore';
 import Search from './Pages/Search';
 import Home from './Pages/Home';
 import AddPostForm from './Components/AddPost/AddPostForm';
+import PostView from './Components/PostView/PostView';
 import { useState,useEffect } from 'react';
 import Loader from "./assets/Loader.json";
 import Lottie from 'lottie-react';
@@ -40,6 +41,7 @@ function App() {
         <Route path='/postForm' exact element={<AddPostForm/>}/>
         <Route path='/search/:searchQuery' exact element={<Search/>}/>
         <Route path='/explore' exact element={<Explore/>}/>
+        <Route path='/posts/:postId' element={<PostView/>}/>
       </Routes>
       <ToastContainer
         position="top-right"

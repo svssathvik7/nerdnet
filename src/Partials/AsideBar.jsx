@@ -5,6 +5,18 @@ import TopNerdIcon from "../assets/bright-idea.svg";
 import TopTopicIcon from "../assets/test-tubes.svg";
 import TopPostIcon from "../assets/article.svg";
 import { statContextProvider } from '../Context/statContext';
+const formatToK = (val)=>{
+  if(val >= 1000)
+  {
+    return Math.round(val/1000)+"k";
+  }
+  else if(val<100){
+    return val;
+  }
+  else{
+    return (val/1000).toFixed(2)+"k";
+  }
+}
 function TrendingNerdsDiv(){
   const {trendingNerds} = useContext(statContextProvider);
   return (
@@ -16,7 +28,7 @@ function TrendingNerdsDiv(){
     <ol className='list-decimal pl-4 flex flex-col items-center justify-start text-white'>
       {trendingNerds.map((value, i) => (
           <li key={i}><Link to={"/profile/" + value.email} className='text-fuchsia-50 font-base text-lg'>{value.username.split(" ")[0].length <= 7 ? value.username.split(" ")[0] : value.username.slice(0,5)+"..."}</Link>
-          <sub className='text-xs mx-2'>[{value?.followersCount??"Beginner"}]</sub>
+          <sub className='text-xs mx-2'>[{formatToK(value.followersCount)}]</sub>
           </li>
       ))}
     </ol>
@@ -34,7 +46,7 @@ function TrendingTopicsDiv(){
     <ol className='list-decimal pl-4 flex flex-col items-center justify-start text-white'>
       {trendingTopics.map((value, i) => (
           <li key={i}>
-            <p>{value._id}<sub>({value.count})</sub></p>
+            <p>{value._id} <sub>[{formatToK(value.count)}]</sub></p>
           </li>
       ))}
     </ol>
@@ -42,7 +54,7 @@ function TrendingTopicsDiv(){
   )
 }
 function TrendingPostsDiv(){
-  const {trendingTopics} = useContext(statContextProvider);
+  const {trendingPosts} = useContext(statContextProvider);
   return (
     <div className='flex flex-wrap flex-col my-4'>
     <div className='flex items-center justify-start'>
@@ -50,9 +62,9 @@ function TrendingPostsDiv(){
       <h6 className='font-medium underline text-slate-200'>Trending Posts</h6>
     </div>
     <ol className='list-decimal pl-4 flex flex-col items-center justify-start text-white'>
-      {trendingTopics.map((value, i) => (
+      {trendingPosts.map((value, i) => (
           <li key={i}>
-            <p>{value._id}<sub>({value.count})</sub></p>
+            <Link to={"/posts/"+value._id} title={value.caption.length > 0 ? value.caption : value.postData}>{value.caption.length > 0 ? value.caption.slice(0,10)+"..." : value.postData.slice(0,10)+"..."}</Link>
           </li>
       ))}
     </ol>

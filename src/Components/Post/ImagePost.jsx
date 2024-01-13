@@ -26,10 +26,10 @@ export default function ImagePost(props)
   const [commentData,setCommentData] = useState('');
   const [showPost,setShowPost] = useState(true);
   const [upVotes,setUpVotes] = useState(props?.likes?.length??0-props?.dislikes?.length??0);
-  const [liked, setLiked] = useState(props.dummy ? false : props?.likes?.some(like => like?._id === user?._id));
+  const [liked, setLiked] = useState(props.noAuth ? true : props?.likes?.some(like => like?._id === user?._id));
   const handleUpVote = async ()=>{
     try{
-      if(!liked && !props.dummy){
+      if(!liked){
         const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/posts/changeLikes",{
           postId : props._id,
               addLike : true,
@@ -48,7 +48,7 @@ export default function ImagePost(props)
   }
   const handleDownVote = async ()=>{
     try{
-      if(liked && !props.dummy){
+      if(liked){
         const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/posts/changeLikes",{
           postId : props._id,
           addLike : false,
@@ -66,8 +66,8 @@ export default function ImagePost(props)
   }
   useEffect(
     ()=>{
-        setUpVotes(props.dummy ? 0 : props?.likes?.length??0-props?.dislikes?.length??0);
-        setLiked(props.dummy ? false : props?.likes?.some(like => like?._id === user?._id));
+        setUpVotes(props.noAuth ? 7 : props?.likes?.length??0-props?.dislikes?.length??0);
+        setLiked(props.noAuth ? true : props?.likes?.some(like => like?._id === user?._id));
     }
   ,[props.likes,location.pathname]);
   const handleCommentChange = (e) => {
@@ -132,7 +132,7 @@ export default function ImagePost(props)
         scale: isInView ? 1 : 0.8,
     }}
     id='image-post' className={`bg-white rounded-lg flex flex-col items-center justify-center trans300`}>
-      <div id='post-meta-data' className='flex items-center justify-between bg-yellow-400 rounded-lg border-b-2 border-black'>
+      <div id='post-meta-data' className={`${props.noAuth ? " pointer-events-none " : "  "} flex items-center justify-between bg-yellow-400 rounded-lg border-b-2 border-black`}>
         <div className='flex items-center justify-center p-2 mx-2'>
           <Link to={"/profile/"+props.userPosted.email} className='cursor-pointer'><img alt='dp' src={props.userPosted ? props.userPosted.dp : "#"} className='w-8 mx-2 cursor-pointer select-none'/></Link>
           <div className='select-none'>
@@ -147,14 +147,14 @@ export default function ImagePost(props)
       <div id='post-data' className='p-2 pt-0 overflow-hidden m-2'>
         <img alt='post' src={props.postData} className='post-images w-full h-full object-contain object-center select-none'/>
       </div>
-      <div id='post-metrics' className='flex items-center justify-start p-2 mt-0 pt-0'>
+      <div id='post-metrics' className={`${props.noAuth ? " pointer-events-none  " : " "} flex items-center justify-start p-2 mt-0 pt-0`}>
         <div id='metric-btn' className='flex items-center justify-around p-2 rounded-full'>
             <button onClick={handleUpVote} className={`text-lg cursor-pointer mx-1 ${liked ? " opacity-50 " : " "}`} disabled={liked}><FaAngleDoubleUp/></button>
           <p className='select-none'>{upVotes}</p>
-          <div className='text-lg cursor-pointer mx-1'><MdDescription onClick={()=>{setShowCaption(!showCaption)}}/></div>
+          <div className='text-lg cursor-pointer mx-1 pointer-events-auto'><MdDescription onClick={()=>{setShowCaption(!showCaption)}}/></div>
           <button onClick={handleDownVote} className={`text-lg cursor-pointer mx-1 ${!liked? " opacity-50 " : "  "}`} disabled={!liked}><FaAngleDoubleDown/></button>
         </div>
-        <div id='reach-btn' className='flex items-center justify-around'>
+        <div id='reach-btn' className='flex items-center justify-around pointer-events-auto'>
           <div className='text-xl cursor-pointer mx-1' onClick={()=>{setShowComments(!showComments)}}><RiMessage3Fill/></div>
           <div className='text-xl cursor-pointer mx-1'><IoShareSocialSharp/></div>
         </div>
