@@ -46,7 +46,7 @@ function TrendingTopicsDiv(){
     <ol className='list-decimal pl-4 flex flex-col items-center justify-start text-white'>
       {trendingTopics.map((value, i) => (
           <li key={i}>
-            <p>{value._id} <sub>[{formatToK(value.count)}]</sub></p>
+            <Link to={"/search/filter/"+value._id}>{value._id} <sub>[{formatToK(value.count)}]</sub></Link>
           </li>
       ))}
     </ol>

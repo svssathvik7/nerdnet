@@ -39,7 +39,7 @@ function App() {
         <Route path='/profile/:profileemail' element={<Profile/>}/>
         <Route path='/about' exact element={<AboutLanding/>}/>
         <Route path='/postForm' exact element={<AddPostForm/>}/>
-        <Route path='/search/:searchQuery' exact element={<Search/>}/>
+        <Route path='/search/:type/:searchQuery' element={<Search/>}/>
         <Route path='/explore' exact element={<Explore/>}/>
         <Route path='/posts/:postId' element={<PostView/>}/>
       </Routes>
