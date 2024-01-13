@@ -43,7 +43,7 @@ export default function Header() {
       {isMobile ? <></> : <MaxiNavBar />}
       <div className='flex items-center justify-center relative'>
         <div onClick={toggleDropdown} className='text-3xl cursor-pointer m-2 relative'>
-          {user ? <img src={user.dp} alt='dp' className='w-10 border-white border-2' /> : <CgProfile color='white' />}
+          {user ? <img src={user?.dp} alt='dp' className='w-10 border-white border-2' /> : <CgProfile color='white' />}
         </div>
         {expand && (
           <div className='absolute bg-white p-2 top-0 rounded-md shadow-md right-0'>

@@ -8,7 +8,8 @@ export default function FollowersList() {
 
     return (
         <div id='followers-list' className='flex items-center justify-evenly flex-wrap'>
-            {userProfile && userProfile.followers ? userProfile.followers.map((follower, i) => (
+            <h6 className='text-white'>Followers</h6>
+            {userProfile && userProfile.followers.length ? userProfile.followers.map((follower, i) => (
                 <div key={i} className='bg-white rounded-lg w-fit h-fit flex flex-col items-center justify-around m-2 p-2 cursor-pointer hover:scale-105 trans300 flex-wrap'>
                     <Link to={`/profile/${follower.email}`}><img alt='dp' src={follower.dp} className='w-16 rounded-full'/></Link>
                     <Link to={`/profile/${follower.email}`}><p className='text-black font-medium text-lg'>{follower.username}</p></Link>

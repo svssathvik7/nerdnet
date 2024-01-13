@@ -4,6 +4,14 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
+const formatAge = (age)=>{
+  if(age==0){
+    return "newbie";
+  }
+  else{
+    console.log(age);
+  }
+}
 export default function SearchSection() {
     const [result,setResult] = useState([]);
     const {searchQuery} = useParams();
@@ -49,7 +57,7 @@ export default function SearchSection() {
                 <div key={i} className='bg-white rounded-lg w-fit h-fit flex flex-col items-center justify-around m-2 p-2 cursor-pointer hover:scale-105 trans300 flex-wrap'>
                     <Link to={`/profile/${item.email}`}><img alt='dp' src={item.dp} className='w-16 rounded-full'/></Link>
                     <Link to={`/profile/${item.email}`}><p className='text-black font-medium text-lg'>{item.username}</p></Link>
-                    <p className='text-slate font-medium text-base'>{item?.age??1}y/o nerd</p>
+                    <p className='text-slate font-medium text-base'>{formatAge(item?.joined??0)}</p>
                     <Link to={`/profile/${item.email}`}><p className='text-slate-500 font-medium text-base'>{item.education}</p></Link>
                 </div>
             ))
