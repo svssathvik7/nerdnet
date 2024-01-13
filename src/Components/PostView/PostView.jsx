@@ -5,9 +5,14 @@ import axios from 'axios';
 import Post from '../Post/Post';
 import { Link, useParams } from 'react-router-dom';
 import "./PostView.css";
+import Header from '../../Partials/Header';
+import MiniNavBar from '../Navbar/MiniNavBar';
+import AsideBar from '../../Partials/AsideBar';
+import AddPostBtn from '../AddPost/AddPostBtn';
 export default function PostView() {
     const [isAuth,setIsAuth] = useState(false);
     const [post,setPost] = useState();
+    const [isMobile,setIsMobile] = useState(window.innerWidth <= 768);
     const {postId} = useParams();
     useEffect(
         ()=>{
@@ -50,12 +55,19 @@ export default function PostView() {
                 }
             }
             checkAuth();
+            setIsMobile(window.innerWidth <= 768);
         }
     )
   return (
     isAuth ? 
-    <div>
-      <h1 className='text-white'>post</h1>
+    <div id='post-view-page' className=''>
+      <Header />
+      {isMobile ? <MiniNavBar /> : null}
+      <div className={`flex items-center ${isMobile ? " justify-center " : " justify-start "}`}>
+        {isMobile ? null : <AsideBar />}
+        <Post {...post}/>
+      </div>
+      {isMobile ? null : <AddPostBtn />}
     </div>
     :
     <div className='w-screen flex items-center justify-start'>
