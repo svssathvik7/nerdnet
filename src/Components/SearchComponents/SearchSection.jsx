@@ -72,7 +72,7 @@ export default function SearchSection() {
       }
     };
     handleQuery();
-  }, [searchQuery]);
+  }, [searchQuery,type]);
   return (
     <div
       id="search-section"
@@ -89,17 +89,11 @@ export default function SearchSection() {
           </h4>
         )}
       </div>
-      <div
-        id="search-scroller"
-        className="flex items-start justify-start p-2 flex-wrap"
-      >
-        {result?.length ? (
-          result.map((item, i) =>
-            type === "user" ? (
-              <div
-                key={i}
-                className="bg-white rounded-lg w-fit h-fit flex flex-col items-center justify-around m-2 p-2 cursor-pointer hover:scale-105 transition-transform flex-wrap"
-              >
+      <div id="search-scroller" className="flex items-start justify-start p-2 flex-wrap">
+          {result?.length??0 ? 
+            type === "user" ?
+            result.map((item, i) => (
+              <div key={i} className="bg-white rounded-lg w-fit h-fit flex flex-col items-center justify-around m-2 p-2 cursor-pointer hover:scale-105 transition-transform flex-wrap">
                 <Link to={`/profile/${item.email}`}>
                   <img alt="dp" src={item.dp} className="w-16 rounded-full" />
                 </Link>
@@ -117,17 +111,18 @@ export default function SearchSection() {
                   </p>
                 </Link>
               </div>
-            ) : (
-              <div className="m-2">
+            ))
+            :
+            result.map((item, i)=>(
+              <div key={i} className="m-2">
                 <Post {...item}/>
               </div>
             )
-          )
-        ) : (
-          <div>
-            <p className="text-white font-extrabold text-3xl m-8">No Matching Results!</p>
-          </div>
-        )}
+          ):(
+            <div>
+              <p className="text-white font-extrabold text-3xl m-8">No Matching Results!</p>
+            </div>
+          )}
       </div>
     </div>
   );
