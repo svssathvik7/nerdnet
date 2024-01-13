@@ -140,6 +140,9 @@ export default function TextPost(props) {
   const isTextInView = useInView(ref, {
     once: false,
   });
+  const handleShareClick = ()=>{
+    navigator.clipboard.writeText(process.env.REACT_APP_FRONTEND_HOST+"/posts/"+props._id);
+  }
   return (
     showPost && (
       <motion.div
@@ -209,7 +212,7 @@ export default function TextPost(props) {
               }`}
               disabled={liked}
             >
-              <FaAngleDoubleUp />
+              <FaAngleDoubleUp className="active:scale-110 hover:scale-110"/>
             </button>
             <p className="select-none">{upVotes}</p>
             <button
@@ -219,7 +222,7 @@ export default function TextPost(props) {
               }`}
               disabled={!liked}
             >
-              <FaAngleDoubleDown />
+              <FaAngleDoubleDown className="active:scale-110 hover:scale-110"/>
             </button>
           </div>
           <div id="reach-btn" className="flex items-center justify-around">
@@ -229,10 +232,10 @@ export default function TextPost(props) {
               }}
               className="text-xl cursor-pointer mx-1"
             >
-              <RiMessage3Fill />
+              <RiMessage3Fill className="active:scale-110 hover:scale-110"/>
             </div>
             <div className="text-xl cursor-pointer mx-1">
-              <IoShareSocialSharp />
+              <IoShareSocialSharp onClick={handleShareClick} className="active:scale-110 hover:scale-110"/>
             </div>
           </div>
           <input

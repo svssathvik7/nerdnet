@@ -122,6 +122,9 @@ export default function ImagePost(props)
   const isInView = useInView(ref,{
     once : false
   });
+  const handleShareClick = ()=>{
+    navigator.clipboard.writeText(process.env.REACT_APP_FRONTEND_HOST+"/posts/"+props._id);
+  }
   return (
     showPost && 
     <motion.div 
@@ -149,14 +152,14 @@ export default function ImagePost(props)
       </div>
       <div id='post-metrics' className={`${props.noAuth ? " pointer-events-none  " : " "} flex items-center justify-start p-2 mt-0 pt-0`}>
         <div id='metric-btn' className='flex items-center justify-around p-2 rounded-full'>
-            <button onClick={handleUpVote} className={`text-lg cursor-pointer mx-1 ${liked ? " opacity-50 " : " "}`} disabled={liked}><FaAngleDoubleUp/></button>
+            <button onClick={handleUpVote} className={`text-lg cursor-pointer mx-1 ${liked ? " opacity-50 " : " "}`} disabled={liked}><FaAngleDoubleUp className='active:scale-110 hover:scale-110'/></button>
           <p className='select-none'>{upVotes}</p>
-          <div className='text-lg cursor-pointer mx-1 pointer-events-auto'><MdDescription onClick={()=>{setShowCaption(!showCaption)}}/></div>
-          <button onClick={handleDownVote} className={`text-lg cursor-pointer mx-1 ${!liked? " opacity-50 " : "  "}`} disabled={!liked}><FaAngleDoubleDown/></button>
+          <div className='text-lg cursor-pointer mx-1 pointer-events-auto'><MdDescription onClick={()=>{setShowCaption(!showCaption)}} className='active:scale-110 hover:scale-110'/></div>
+          <button onClick={handleDownVote} className={`text-lg cursor-pointer mx-1 ${!liked? " opacity-50 " : "  "}`} disabled={!liked}><FaAngleDoubleDown className={`${!liked ? "  " : " active:scale-110 hover:scale-110 "}`}/></button>
         </div>
         <div id='reach-btn' className='flex items-center justify-around pointer-events-auto'>
-          <div className='text-xl cursor-pointer mx-1' onClick={()=>{setShowComments(!showComments)}}><RiMessage3Fill/></div>
-          <div className='text-xl cursor-pointer mx-1'><IoShareSocialSharp/></div>
+          <div className='text-xl cursor-pointer mx-1' onClick={()=>{setShowComments(!showComments)}}><RiMessage3Fill className='active:scale-110 hover:scale-110'/></div>
+          <div className='text-xl cursor-pointer mx-1'><IoShareSocialSharp onClick={handleShareClick} className='active:scale-110 hover:scale-110  trans100'/></div>
         </div>
         <input id='comment-input' className='trans300 p-2 outline-none mx-2 placeholder:text-black placeholder:font-medium placeholder:opacity-70' type='text' placeholder='Comment your words!' value={commentData} onChange={handleCommentChange} name='commentData'/>
         <button className={`text-white font-medium p-1 bg-black rounded-md trans300 hover:scale-105 ${validComment ? " cursor-pointer " : " opacity-70 cursor-not-allowed "}`} disabled={!validComment} onClick={handleCommentSubmit} type='submit'>Post</button>

@@ -123,7 +123,7 @@ function Login({data}) {
             </form>
         </div>
         {data.isMobile ? <></> : <div id='v-line' className='bg-slate-400 w-1 h-20 rounded-full mx-2'></div>}
-        {data.isMobile ? <></> : <div id='login-lottie' className='w-52'>
+        {data.isMobile ? <></> : <div id='login-lottie' className='w-56'>
             <Lottie animationData={loginAnimation} loop={true}/>
         </div>}
       </div>
