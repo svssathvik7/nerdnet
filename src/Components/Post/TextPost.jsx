@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useState, useRef } from "react";
 import "./Post.css";
-import { IoClose } from "react-icons/io5";
 import { FaAngleDoubleUp } from "react-icons/fa";
 import { RiMenu3Fill } from "react-icons/ri";
 import { FaAngleDoubleDown } from "react-icons/fa";
@@ -29,6 +28,7 @@ export default function TextPost(props) {
   const [liked, setLiked] = useState(
     props.noAuth ? true : props?.likes?.some((like) => like?._id === user?._id)
   );
+  const [isSameUser,setIsSameUser] = useState((props?.userPosted?._id??0)==(user?._id??1));
   const handleUpVote = async () => {
     try {
       if (!liked) {
@@ -81,6 +81,8 @@ export default function TextPost(props) {
     setLiked(
       props.noAuth ? 0 : props?.likes?.some((like) => like?._id === user?._id)
     );
+    setIsSameUser((props?.userPosted?._id??0)==(user?._id??1));
+    console.log(isSameUser);
   }, [props.likes, location.pathname]);
   const handleCommentChange = (e) => {
     const value = e.target.value;
@@ -211,7 +213,7 @@ export default function TextPost(props) {
             {showPost ? 
             <div className="bg-white p-2 text-sm rounded-md border-black border-2 trans300">
               <p className="border-2 border-black m-1">Save</p>
-              <p onClick={handlePostDelete} className="border-2 border-black m-1">Delete</p>
+              {isSameUser ? <p onClick={handlePostDelete} className="border-2 border-black m-1">Delete</p> : <></>}
             </div> : <></>}
           </div>
         </div>

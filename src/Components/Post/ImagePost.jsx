@@ -26,6 +26,7 @@ export default function ImagePost(props)
   const [commentData,setCommentData] = useState('');
   const [showPost,setShowPost] = useState(false);
   const [upVotes,setUpVotes] = useState(props?.likes?.length??0-props?.dislikes?.length??0);
+  const [isSameUser,setIsSameUser] = useState((props?.userPosted?._id??0)==(user?._id??1));
   const [liked, setLiked] = useState(props.noAuth ? true : props?.likes?.some(like => like?._id === user?._id));
   const handleUpVote = async ()=>{
     try{
@@ -66,8 +67,9 @@ export default function ImagePost(props)
   }
   useEffect(
     ()=>{
-        setUpVotes(props.noAuth ? 7 : props?.likes?.length??0-props?.dislikes?.length??0);
-        setLiked(props.noAuth ? true : props?.likes?.some(like => like?._id === user?._id));
+      setUpVotes(props.noAuth ? 7 : props?.likes?.length??0-props?.dislikes?.length??0);
+      setLiked(props.noAuth ? true : props?.likes?.some(like => like?._id === user?._id));
+      setIsSameUser((props?.userPosted?._id??0)==(user?._id??1));
     }
   ,[props.likes,location.pathname]);
   const handleCommentChange = (e) => {
