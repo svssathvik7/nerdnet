@@ -5,7 +5,7 @@ import { IoClose } from "react-icons/io5";
 import { FaAngleDoubleUp } from "react-icons/fa";
 import { MdDescription } from "react-icons/md";
 import { FaAngleDoubleDown } from "react-icons/fa";
-import { RiMessage3Fill } from "react-icons/ri";
+import { RiMenu3Fill, RiMessage3Fill } from "react-icons/ri";
 import { IoShareSocialSharp } from "react-icons/io5";
 import { motion,useInView } from 'framer-motion';
 import { toast } from 'react-toastify';
@@ -24,7 +24,7 @@ export default function ImagePost(props)
   const [showComments,setShowComments] = useState(false);
   const [validComment,setValidComment] = useState(false);
   const [commentData,setCommentData] = useState('');
-  const [showPost,setShowPost] = useState(true);
+  const [showPost,setShowPost] = useState(false);
   const [upVotes,setUpVotes] = useState(props?.likes?.length??0-props?.dislikes?.length??0);
   const [liked, setLiked] = useState(props.noAuth ? true : props?.likes?.some(like => like?._id === user?._id));
   const handleUpVote = async ()=>{
@@ -125,8 +125,23 @@ export default function ImagePost(props)
   const handleShareClick = ()=>{
     navigator.clipboard.writeText(process.env.REACT_APP_FRONTEND_HOST+"/posts/"+props._id);
   }
+  const handlePostDelete = async ()=>{
+    try {
+      setShowPost(!showPost);
+      const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/posts/deletePost",{
+        postId : props._id
+      })).data;
+      if(response.status){
+        console.log("Successfull deletion!");
+      }
+      else{
+        throw new Error("Failed to delete due to : "+response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
-    showPost && 
     <motion.div 
     ref={ref}
     style={{
@@ -143,12 +158,22 @@ export default function ImagePost(props)
             <p className='text-xs font-light text-slate-600'>{props.userPosted&&props.userPosted.education ? props.userPosted.education : "Enthusiast at Nerd.net"}</p>
           </div>
         </div>
-        <div id='post-close' className='text-2xl mx-2 cursor-pointer'>
-          <IoClose color='red' onClick={()=>{setShowPost(!showPost)}}/>
-        </div>
+        <div id="post-close" className={`${showPost ? " relative m-2 " : " "} text-2xl mx-2 cursor-pointer h-fit flex flex-col items-center justify-start`}>
+            <RiMenu3Fill
+              color="black"
+              onClick={() => {
+                setShowPost(!showPost);
+              }}
+            />
+            {showPost ? 
+            <div className="bg-white p-2 text-sm rounded-md border-black border-2 trans300">
+              <p className="border-2 border-black m-1">Save</p>
+              <p onClick={handlePostDelete} className="border-2 border-black m-1">Delete</p>
+            </div> : <></>}
+          </div>
       </div>
       <div id='post-data' className='pb-2 px-0 pt-0 overflow-hidden m-2'>
-        <img alt='post' src={props.postData} className='post-images w-full h-full object-contain object-center select-none'/>
+        {!showPost ? <img alt='post' src={props.postData} className='post-images w-full h-full object-contain object-center select-none'/> : <></>}
       </div>
       <div id='post-metrics' className={`${props.noAuth ? " pointer-events-none  " : " "} flex items-center justify-start p-2 mt-0 pt-0`}>
         <div id='metric-btn' className='flex items-center justify-around p-2 rounded-full'>
