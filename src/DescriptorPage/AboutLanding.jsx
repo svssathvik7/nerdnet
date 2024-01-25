@@ -48,13 +48,13 @@ export default function AboutLanding() {
       <Revenue/>
       <DFooter/>
       <div className={`scale-50 absolute left-24 top-28 -rotate-6 z-30`} id="sample-post1">
-        <Post {...postConstants[0]}/>
+        <Post {...postConstants[0]} noAuth={true}/>
       </div>
       <div className={`scale-50 absolute right-24 top-28 rotate-6 z-30`} id="sample-post2">
-        <Post {...postConstants[1]}/>
+        <Post {...postConstants[1]} noAuth={true}/>
       </div>
       <div className={`scale-50 absolute right-24 top-80 rotate-6 z-30`} id="sample-post3">
-        <Post {...postConstants[2]}/>
+        <Post {...postConstants[2]} noAuth={true}/>
       </div>
     </div>
   )

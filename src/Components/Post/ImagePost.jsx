@@ -147,7 +147,7 @@ export default function ImagePost(props)
           <IoClose color='red' onClick={()=>{setShowPost(!showPost)}}/>
         </div>
       </div>
-      <div id='post-data' className='p-2 pt-0 overflow-hidden m-2'>
+      <div id='post-data' className='pb-2 px-0 pt-0 overflow-hidden m-2'>
         <img alt='post' src={props.postData} className='post-images w-full h-full object-contain object-center select-none'/>
       </div>
       <div id='post-metrics' className={`${props.noAuth ? " pointer-events-none  " : " "} flex items-center justify-start p-2 mt-0 pt-0`}>

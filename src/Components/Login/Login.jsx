@@ -81,6 +81,7 @@ function Login({data}) {
               progress: undefined,
               theme: "dark",
               });
+              console.log(error);
           }
         })
       };

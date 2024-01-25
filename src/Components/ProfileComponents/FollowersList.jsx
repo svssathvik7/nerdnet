@@ -7,6 +7,7 @@ const formatAge = (age) => {
     const year = 365*24*60*60*100;
     const accAge = (difference/year).toFixed(1);
     const days = 24*60*60*100;
+    console.log(accAge);
     if(accAge == 0)
     {
       return Number.parseInt(difference/days)+"d Nerd";
@@ -23,7 +24,6 @@ export default function FollowersList() {
 
     return (
         <div id='followers-list' className='flex items-center justify-evenly flex-wrap'>
-            <h6 className='text-white'>Followers</h6>
             {userProfile && userProfile.followers.length ? userProfile.followers.map((follower, i) => (
                 <div key={i} className='bg-white rounded-lg w-fit h-fit flex flex-col items-center justify-around m-2 p-2 cursor-pointer hover:scale-105 trans300 flex-wrap'>
                     <Link to={`/profile/${follower.email}`}><img alt='dp' src={follower.dp} className='w-16 rounded-full'/></Link>
