@@ -82,7 +82,7 @@ export default function TextPost(props) {
       props.noAuth ? 0 : props?.likes?.some((like) => like?._id === user?._id)
     );
     setIsSameUser((props?.userPosted?._id??0)==(user?._id??1));
-    // console.log(props);
+    console.log(props);
   }, [props.likes, location.pathname]);
   const handleCommentChange = (e) => {
     const value = e.target.value;

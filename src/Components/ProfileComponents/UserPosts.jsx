@@ -8,12 +8,12 @@ export default function UserPosts() {
   const {userProfile} = useContext(friendContextProvider);
   const {user} = useContext(userContextProvider);
   const [showPosts,setShowPosts] = useState(true);
-  useEffect(()=>{console.log(userProfile?.savedPosts)},[showPosts]);
+  // useEffect(()=>{console.log(userProfile.savedPosts)})
   return (
     <div id='user-posts-scroller' className='flex flex-col items-center justify-start p-2'>
       <div className='flex w-fit items-center justify-around p-1'>
         <p className={`text-white font-bold text-xl ${showPosts ? " opacity-100 " : " opacity-50 "} cursor-pointer`} onClick={()=>{setShowPosts(true)}}>Your Posts</p>
-        <div className='w-[2px] h-4 bg-slate-500 mx-2 rounded-lg'></div>
+        {(userProfile?._id??0 == user?._id??1) && <div className='w-[2px] h-4 bg-slate-500 mx-2 rounded-lg'></div>}
         {(userProfile?._id??0 == user?._id??1) && <p className={`text-white font-bold text-xl ${!showPosts ? " opacity-100 " : " opacity-50 "} cursor-pointer`} onClick={()=>{setShowPosts(false)}}>Saved Posts</p>}
       </div>
       {showPosts ? userProfile && userProfile.posts ? 
