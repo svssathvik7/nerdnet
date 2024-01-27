@@ -19,7 +19,6 @@ export default function NotFound() {
     
           requestAnimationFrame(moveMover);
         };
-    
         moveMover();
       }, []);
   return (
