@@ -82,7 +82,7 @@ export default function TextPost(props) {
       props.noAuth ? 0 : props?.likes?.some((like) => like?._id === user?._id)
     );
     setIsSameUser((props?.userPosted?._id??0)==(user?._id??1));
-    console.log(isSameUser);
+    // console.log(props);
   }, [props.likes, location.pathname]);
   const handleCommentChange = (e) => {
     const value = e.target.value;
@@ -144,6 +144,25 @@ export default function TextPost(props) {
   });
   const handleShareClick = ()=>{
     navigator.clipboard.writeText(process.env.REACT_APP_FRONTEND_HOST+"/posts/"+props._id);
+  }
+  const handlePostSave = async ()=>{
+    try{
+      setShowPost(!showPost);
+      const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/posts/savePost",{
+        userId : user._id,
+        postId : props._id,
+        operation : "add"
+      })).data;
+      if(response.status){
+        console.log("Success");
+      }
+      else{
+        console.log(response);
+      }
+    }
+    catch(error){
+      console.log(error);
+    }
   }
   const handlePostDelete = async ()=>{
     try {
@@ -213,7 +232,7 @@ export default function TextPost(props) {
             />
             {showPost ? 
             <div className="bg-white p-1 text-sm rounded-md border-black border-2 trans300">
-              <p className="border-2 px-1 border-black m-1">Save</p>
+              <p onClick={handlePostSave} className="border-2 px-1 border-black m-1">Save</p>
               {isSameUser ? <p onClick={handlePostDelete} className="border-2 border-black m-1">Delete</p> : <></>}
             </div> : <></>}
           </div>
