@@ -10,9 +10,7 @@ import Search from './Pages/Search';
 import Home from './Pages/Home';
 import AddPostForm from './Components/AddPost/AddPostForm';
 import PostView from './Components/PostView/PostView';
-import { useState,useEffect } from 'react';
-import Loader from "./assets/Loader.json";
-import Lottie from 'lottie-react';
+import NotFound from './Pages/NotFound';
 function App() {
   // const [loading, setLoading] = useState(true);
   // useEffect(
@@ -42,6 +40,7 @@ function App() {
         <Route path='/search/:type/:searchQuery' element={<Search/>}/>
         <Route path='/explore' exact element={<Explore/>}/>
         <Route path='/posts/:postId' element={<PostView/>}/>
+        <Route path='*' element={<NotFound/>}/>
       </Routes>
       <ToastContainer
         position="top-right"
