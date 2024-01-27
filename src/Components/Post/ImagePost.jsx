@@ -80,7 +80,7 @@ export default function ImagePost(props)
     } else {
       setValidComment(false);
     }
-    console.log(commentData);
+    // console.log(commentData);
   };
   
   const handleCommentSubmit = async (e)=>{

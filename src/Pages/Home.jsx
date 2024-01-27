@@ -5,6 +5,7 @@ import MiniNavBar from '../Components/Navbar/MiniNavBar';
 import HomeFeed from '../Components/Feed/HomeFeed';
 import AddPostBtn from '../Components/AddPost/AddPostBtn';
 import AsideBar from '../Partials/AsideBar';
+import Chat from '../Components/ChatComponents/Chat';
 export default function Home(props) {
   const [isMobile,setIsMobile] = useState(window.innerWidth<768);
     useEffect(
@@ -21,6 +22,7 @@ export default function Home(props) {
         <HomeFeed />
       </div>
       {isMobile ? null : <AddPostBtn />}
+      <Chat/>
     </div>
   );
 }
