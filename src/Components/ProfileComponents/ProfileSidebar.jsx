@@ -188,7 +188,7 @@ export default function ProfileSidebar() {
                     </div>
                     <div className='flex items-center justify-start flex-wrap w-fit'>
                         <FaImages className='text-2xl' color='white' title='dp'/>
-                        <input className='text-lg font-bold mx-2 text-slate-500 inline-block outline-none w-fit' placeholder={`${user && userProfile.dp ? user.dp : "#"}`} onChange={handleFormChange} value={formData.dp} name='dp'/>
+                        <input className='text-lg font-bold mx-2 text-slate-500 inline-block outline-none w-fit' placeholder={`Enter your dp`} onChange={handleFormChange} value={formData.dp} name='dp'/>
                     </div>
                 </form>
                 :
