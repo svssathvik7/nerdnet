@@ -175,7 +175,7 @@ export default function ProfileSidebar() {
                 {isSameUser && editable ? 
                 <form>
                     <div className='flex items-center justify-start w-fit'>
-                        <SiNamebase className='text-2xl' color='black' title='username'/>
+                        <SiNamebase className='text-2xl' color='white' title='username'/>
                         <input className={`text-lg font-bold mx-2 text-slate-500 inline-block outline-none w-fit`} placeholder={`${user ? user.username : "Nerd"}`} onChange={handleFormChange} value={formData.username} name='username'/>
                     </div>
                     <div className='flex items-center justify-start w-fit'>

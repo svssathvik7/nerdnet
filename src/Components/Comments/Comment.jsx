@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import "./Comment.css";
 import { Link } from 'react-router-dom';
-const TimeAgo = (props) => {
 const calculateTimeDifference = (timestamp) => {
     const currentTime = new Date().getTime();
     const postTime = new Date(timestamp).getTime();
@@ -15,18 +14,21 @@ const calculateTimeDifference = (timestamp) => {
     const weeks = Math.floor(days / 7);
 
     if (weeks > 0) {
-    return `${weeks} ${weeks === 1 ? 'week' : 'w'} ago`;
+        return `${weeks} ${weeks === 1 ? 'week' : 'weeks'} ago`;
     } else if (days > 0) {
-    return `${days} ${days === 1 ? 'day' : 'd'} ago`;
+        return `${days} ${days === 1 ? 'day' : 'days'} ago`;
     } else if (hours > 0) {
-    return `${hours} ${hours === 1 ? 'hour' : 'hrs'} ago`;
+        return `${hours} ${hours === 1 ? 'hour' : 'hours'} ago`;
     } else if (minutes > 0) {
-    return `${minutes} ${minutes === 1 ? 'minute' : 'm'} ago`;
+        return `${minutes} ${minutes === 1 ? 'minute' : 'minutes'} ago`;
+    } else if (seconds > 10) {
+        return `${seconds} ${seconds === 1 ? 'second' : 'seconds'} ago`;
     } else {
-    return 'Just now';
+        return 'Just now';
     }
 };
 
+const TimeAgo = (props) => {
     return (
         <div className='flex w-full items-center justify-end'>
             <p className='post-time-stamp'>{calculateTimeDifference(props.date)}</p>

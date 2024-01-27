@@ -209,10 +209,11 @@ export default function TextPost(props) {
               onClick={() => {
                 setShowPost(!showPost);
               }}
+              className='hover:scale-110 trans100'
             />
             {showPost ? 
-            <div className="bg-white p-2 text-sm rounded-md border-black border-2 trans300">
-              <p className="border-2 border-black m-1">Save</p>
+            <div className="bg-white p-1 text-sm rounded-md border-black border-2 trans300">
+              <p className="border-2 px-1 border-black m-1">Save</p>
               {isSameUser ? <p onClick={handlePostDelete} className="border-2 border-black m-1">Delete</p> : <></>}
             </div> : <></>}
           </div>
