@@ -170,7 +170,7 @@ export default function ProfileSidebar() {
     <div id='profile-sidebar' className='flex flex-col items-center justify-start p-2'>
       <div id='profile-info-container' className='flex flex-col items-center justify-start w-full'>
         <div id='profile-dp-container' className='p-2 m-2 flex items-center justify-around w-full'>
-            <img className='object-contain object-center rounded-full w-52' alt='dp' src={userProfile ? userProfile.dp : <CgProfile color='white'/>}/>
+            <img className='object-contain object-center rounded-full w-44 h-44' alt='dp' src={userProfile ? userProfile.dp : <CgProfile color='white'/>}/>
             <div>
                 {isSameUser && editable ? 
                 <form>

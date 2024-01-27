@@ -127,6 +127,25 @@ export default function ImagePost(props)
   const handleShareClick = ()=>{
     navigator.clipboard.writeText(process.env.REACT_APP_FRONTEND_HOST+"/posts/"+props._id);
   }
+  const handlePostSave = async ()=>{
+    try{
+      setShowPost(!showPost);
+      const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/posts/savePost",{
+        userId : user._id,
+        postId : props._id,
+        operation : "add"
+      })).data;
+      if(response.status){
+        console.log("Success");
+      }
+      else{
+        console.log(response);
+      }
+    }
+    catch(error){
+      console.log(error);
+    }
+  }
   const handlePostDelete = async ()=>{
     try {
       setShowPost(!showPost);
@@ -170,10 +189,10 @@ export default function ImagePost(props)
             />
             {showPost ? 
             <div className="bg-white p-1 text-sm rounded-md border-black border-2 trans300">
-              <p className="border-2 px-1 border-black m-1">Save</p>
+              <p onClick={handlePostSave} className="border-2 px-1 border-black m-1">Save</p>
               {isSameUser ? <p onClick={handlePostDelete} className="border-2 border-black m-1">Delete</p> : <></>}
             </div> : <></>}
-          </div>
+        </div>
       </div>
       <div id='post-data' className='pb-2 px-0 pt-0 overflow-hidden m-2'>
         {!showPost ? <img alt='post' src={props.postData} className='post-images w-full h-full object-contain object-center select-none'/> : <></>}
@@ -206,7 +225,7 @@ export default function ImagePost(props)
           ))}
         </div>
         :
-        <div className='w-full'>
+        <div className='w-full text-center'>
           <p>No Comments!</p>
         </div>
         :
