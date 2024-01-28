@@ -8,6 +8,7 @@ import AboutLanding from './DescriptorPage/AboutLanding';
 import Explore from './Pages/Explore';
 import Search from './Pages/Search';
 import Home from './Pages/Home';
+import Communities from './Pages/Communities';
 import AddPostForm from './Components/AddPost/AddPostForm';
 import PostView from './Components/PostView/PostView';
 import NotFound from './Pages/NotFound';
@@ -40,6 +41,7 @@ function App() {
         <Route path='/search/:type/:searchQuery' element={<Search/>}/>
         <Route path='/explore' exact element={<Explore/>}/>
         <Route path='/posts/:postId' element={<PostView/>}/>
+        <Route path='/communities' element={<Communities/>}/>
         <Route path='*' element={<NotFound/>}/>
       </Routes>
       <ToastContainer

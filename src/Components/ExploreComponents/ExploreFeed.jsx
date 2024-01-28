@@ -44,7 +44,7 @@ export default function ExploreFeed() {
             <div className='single-feed flex-wrap flex items-center justify-start' key={i} onClick={()=>{setSelectedPost(post)}}>
               {
                 post?.isMultimedia ? 
-                <img className='trans100 img-post-preview m-1 object-contain object-center select-none cursor-pointer' alt='post' src={post.postData}/>
+                <img className='trans100 img-post-preview m-1 object-contain object-center select-none cursor-pointer rounded-lg' alt='post' src={post.postData}/>
                 :
                 <p className='trans100 font-normal m-1 text-post-preview text-black bg-white p-2 rounded-lg cursor-pointer'>{post.postData}</p>
               }
@@ -58,9 +58,8 @@ export default function ExploreFeed() {
         </div>
       )
     )}
-    {selectedPost ? <div className='absolute w-screen h-screen bg-slate-400 flex items-center justify-center flex-col top-0 left-0'>
-        <div className='text-red-600 text-3xl ml-80' onClick={()=>{setSelectedPost(null)}}>X</div>
-        <div className='single-feed m-2'>
+    {selectedPost ? <div className='absolute w-screen h-screen flex items-center justify-center flex-col top-0 left-0 bg-[#000000a5]' onClick={()=>{setSelectedPost(null)}}>
+        <div className='single-feed m-2 blue-sm' onClick={(e)=>{e.stopPropagation()}}>
           <Post {...selectedPost}/>
         </div>
     </div> : <></>}

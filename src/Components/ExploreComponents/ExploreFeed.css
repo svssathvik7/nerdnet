@@ -1,7 +1,8 @@
 #explore-feed-scroller{
     overflow-y: scroll;
     overflow-x: hidden;
-    height: 90dvh;
+    height: fit-content;
+    max-height: 90dvh;
     padding-bottom: 5em;
     width: 100%;
 }
