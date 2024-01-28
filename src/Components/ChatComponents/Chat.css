@@ -23,3 +23,17 @@
     flex-wrap: wrap;
     max-width: 10dvw;
 }
+.time-stamp-holders{
+    font-size: 0.5em;
+}
+@media (max-width:768px) {
+    #chat-box{
+        width: 90dvw;
+        height: fit-content;
+        max-height: 80dvh;
+        overflow-y: hidden;
+        position: absolute;
+        top: 0;bottom: 0;left: 0;right: 0;
+        margin: auto;
+    }
+}
