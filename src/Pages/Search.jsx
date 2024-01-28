@@ -5,6 +5,7 @@ import AsideBar from '../Partials/AsideBar';
 import AddPostBtn from '../Components/AddPost/AddPostBtn';
 import { connect } from 'react-redux';
 import SearchSection from '../Components/SearchComponents/SearchSection';
+import Chat from '../Components/ChatComponents/Chat';
 function Search({data}) {
   return (
     <div id='search-page'>
@@ -15,6 +16,7 @@ function Search({data}) {
         <SearchSection/>
       </div>
       {data.isMobile ? null : <AddPostBtn />}
+      <Chat/>
     </div>
   )
 }

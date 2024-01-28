@@ -44,7 +44,7 @@ export default function HomeFeed() {
       homeFeed.length > 0 ? (
         <div id='home-feed-scroller' className='flex flex-col items-center justify-start'>
           {homeFeed.map((post, i) => (
-            <div className='single-feed m-2' key={i}>
+            <div className='m-2' key={i}>
               <Post {...post}/>
             </div>
           ))}

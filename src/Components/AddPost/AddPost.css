@@ -1,6 +1,9 @@
 #add-post-form{
     width: 45dvw;
 }
+#add-post-btn{
+    box-shadow: 0 25px 50px -12px rgba(255,255,255,1);
+}
 #post-input-container{
     width: 100%;
 }

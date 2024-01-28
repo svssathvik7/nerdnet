@@ -7,12 +7,11 @@ import DoneAnimation from "../../assets/doneAnimation.json";
 import { ThreeCircles } from 'react-loader-spinner';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
-import {homeFeedContextProvider} from "../../Context/homeFeedContext";
-import { useContext } from 'react';
 export default function ExploreFeed() {
   const [isLoading,setIsLoading] = useState(true);
   const location = useLocation();
   const [posts,setPosts] = useState([]);
+  const [selectedPost,setSelectedPost] = useState(null);
   useEffect(
     ()=>{
       const getPosts = async ()=>{
@@ -25,7 +24,7 @@ export default function ExploreFeed() {
     }
   ,[posts,location.pathname]);
   return (
-    <div id='explore-feed' className='flex flex-col items-center justify-center'>
+    <div id='explore-feed' className='flex items-center justify-start flex-wrap'>
     {isLoading ? (
       <div className='w-96 flex items-center justify-center'>
         <ThreeCircles
@@ -40,10 +39,15 @@ export default function ExploreFeed() {
       </div>
     ) : (
       posts.length > 0 ? (
-        <div id='explore-feed-scroller' className='flex flex-col items-center justify-start'>
+        <div id='explore-feed-scroller' className='flex items-center justify-start flex-wrap w-full'>
           {posts.map((post, i) => (
-            <div className='single-feed m-2' key={i}>
-              <Post {...post}/>
+            <div className='single-feed flex-wrap flex items-center justify-start' key={i} onClick={()=>{setSelectedPost(post)}}>
+              {
+                post?.isMultimedia ? 
+                <img className='trans100 img-post-preview m-1 object-contain object-center select-none cursor-pointer' alt='post' src={post.postData}/>
+                :
+                <p className='trans100 font-normal m-1 text-post-preview text-black bg-white p-2 rounded-lg cursor-pointer'>{post.postData}</p>
+              }
             </div>
           ))}
         </div>
@@ -54,6 +58,12 @@ export default function ExploreFeed() {
         </div>
       )
     )}
+    {selectedPost ? <div className='absolute w-screen h-screen bg-slate-400 flex items-center justify-center flex-col top-0 left-0'>
+        <div className='text-red-600 text-3xl ml-80' onClick={()=>{setSelectedPost(null)}}>X</div>
+        <div className='single-feed m-2'>
+          <Post {...selectedPost}/>
+        </div>
+    </div> : <></>}
   </div>
   )
 }

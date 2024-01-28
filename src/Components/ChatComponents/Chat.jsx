@@ -7,7 +7,7 @@ import { SyncLoader } from 'react-spinners';
 import dateFormat from 'dateformat';
 import { Link } from 'react-router-dom';
 import ChatIcon from "../../assets/chat.png";
-import CloseIcon from "../../assets/x.png";
+import { FaLink } from "react-icons/fa6";
 export default function Chat() {
     const [active,setActive] = useState(0);
     const {user} = useContext(userContextProvider);
@@ -68,7 +68,7 @@ export default function Chat() {
     ,[client,user,messages]);
   return (
     <div className='absolute bottom-2 left-2 m-2 cursor-pointer w-fit flex items-center justify-start'>
-      <div className='bg-white w-12 h-12 rounded-full flex items-center justify-center' onClick={()=>{setActive(!active)}}>
+      <div className='bg-white w-12 h-12 rounded-full flex items-center justify-center' onClick={()=>{setActive(!active)}} title={`${user?.following?.length + " friends"}`}>
         {!active ? 
         <div className='w-12 h-12'>
             <img alt='chat-icon' src={ChatIcon}/>
@@ -82,23 +82,31 @@ export default function Chat() {
         ))}
       </div>}
       {active==2 && 
-        <div id='chat-box' className='bg-white m-2 border-2 border-black rounded-lg p-1 flex flex-col items-center justify-start trans300'>
+        <div id='chat-box' className='bg-white m-2 border-2 border-black rounded-lg flex flex-col items-center justify-start trans300'>
             <div id='chat-header' className='h-1/6 bg-yellow-500 w-full flex items-center justify-between p-1'>
                 <Link to={"/profile/" + client?.email} className='flex items-center justify-start mx-1 cursor-pointer'>
-                    <img alt='dp' src={client.dp} className='w-12 h-12 rounded-full bg-black p-1'/>
-                    <p className='font-bold text-xl ml-1'>{client.username}</p>
+                    <img alt='dp' src={client?.dp} className='w-10 h-10'/>
+                    <div className="mx-1">
+                        <p className='font-bold text-xl'>{client?.username}</p>
+                        <p className='text-xs'>{client?.education}</p>
+                    </div>
                 </Link>
                 <IoClose color='red' className='font-extrabold mx-1 text-2xl' onClick={()=>{setActive(0)}}/>
             </div>
-            <div id='chat-scroller'>
+            <div id='chat-scroller' className='my-1'>
                 {
                     messages && messages.length && messages?.map((message,i)=>(
                         <div key={i} className='flex w-full flex-col'>
                             {
                                 (message?.user == user?._id)?
                                 <div className='self-end text-white message m-1 flex-wrap flex'>
-                                    <div className='flex items-center justify-start msg-box flex-wrap p-2 bg-slate-500 rounded-lg flex-col'>
-                                        <p className='flex-wrap'>{message.message}</p>
+                                    <div className='flex items-center justify-start msg-box flex-wrap p-2 bg-slate-500 rounded-lg flex-col group'>
+                                        {(message.isUrl===true)
+                                        ? 
+                                        <a title={`${message?.message}`} target='_blank' href={`${message?.message}`} className='flex-wrap flex items-center justify-center group-hover:scale-110 trans100'>Link<FaLink/></a>
+                                         :
+                                         <p className='flex-wrap'>{message.message}</p>
+                                        }
                                         <div className='time-stamp-holders'>
                                             <p>{formatDate(message.timestamp)}</p>
                                         </div>
@@ -108,8 +116,13 @@ export default function Chat() {
                                 :
                                 <div className='self-start text-white message m-1 flex-wrap flex'>
                                     <Link to={"/profile/" + client?.email}><img alt='dp' src={client?.dp} className='w-6 h-6 rounded-full mx-1'/></Link>
-                                    <div className='flex items-center justify-start msg-box flex-wrap p-2 bg-black rounded-lg flex-col'>
-                                        <p className='flex-wrap'>{message.message}</p>
+                                    <div className='flex items-center justify-start msg-box flex-wrap p-2 bg-black rounded-lg flex-col group'>
+                                        {(message.isUrl===true)
+                                        ? 
+                                        <a title={`${message?.message}`}  className='flex-wrap flex items-center justify-center group-hover:scale-110 trans100'>Link<FaLink/></a>
+                                         :
+                                         <p className='flex-wrap'>{message.message}</p>
+                                        }
                                         <div className='time-stamp-holders'>
                                             <p>{formatDate(message.timestamp)}</p>
                                         </div>

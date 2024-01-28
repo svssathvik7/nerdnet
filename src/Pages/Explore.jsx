@@ -4,6 +4,7 @@ import AddPostBtn from '../Components/AddPost/AddPostBtn';
 import Header from '../Partials/Header';
 import MiniNavBar from '../Components/Navbar/MiniNavBar';
 import ExploreFeed from '../Components/ExploreComponents/ExploreFeed';
+import Chat from '../Components/ChatComponents/Chat';
 export default function Explore() {
     const [isMobile,setIsMobile] = useState(window.innerWidth<=768);
     useEffect(
@@ -20,6 +21,7 @@ export default function Explore() {
             <ExploreFeed/>
           </div>
           {isMobile ? <></> : <AddPostBtn />}
+          <Chat/>
         </div>
     );
 }

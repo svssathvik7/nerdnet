@@ -5,18 +5,9 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import Post from "../Post/Post";
-const formatAge = (age) => {
-  const difference = Date.now() - Date.parse(age);
-  const year = 365 * 24 * 60 * 60 * 100;
-  const accAge = (difference / year).toFixed(1);
-  const days = 24 * 60 * 60 * 100;
-  if (accAge == 0) {
-    return Number.parseInt(difference / days) + "d Nerd";
-  } else if (accAge <= 12) {
-    return Number.parseInt(accAge) + "m Nerd";
-  } else {
-    return Number.parseInt(accAge / 12) + "y Nerd";
-  }
+import dateFormat from "dateformat";
+const formatAge = (date) => {
+  return "Joined - " + dateFormat(date,"mmmm dS, yyyy");
 };
 
 export default function SearchSection() {
@@ -95,7 +86,7 @@ export default function SearchSection() {
             result.map((item, i) => (
               <div key={i} className="bg-white rounded-lg w-fit h-fit flex flex-col items-center justify-around m-2 p-2 cursor-pointer hover:scale-105 transition-transform flex-wrap">
                 <Link to={`/profile/${item.email}`}>
-                  <img alt="dp" src={item.dp} className="w-16 rounded-full" />
+                  <img alt="dp" src={item.dp} className="w-16 h-16 rounded-full" />
                 </Link>
                 <Link to={`/profile/${item.email}`}>
                   <p className="text-black font-medium text-lg">

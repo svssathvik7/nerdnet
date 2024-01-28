@@ -8,6 +8,7 @@ import { useState,useEffect } from 'react'
 import {profileNavigatorContextProvider} from '../Context/profileNavigatorContext'
 import FollowersList from '../Components/ProfileComponents/FollowersList'
 import FollowingList from '../Components/ProfileComponents/FollowingList'
+import Chat from '../Components/ChatComponents/Chat'
 export default function Profile() {
   const [isMobile,setIsMobile] = useState(window.innerWidth <= 768);
   useEffect(
@@ -26,6 +27,7 @@ export default function Profile() {
         </div>
       {isMobile ? <MiniNavBar/> : <></>}
       {isMobile ? <></> : <AddPostBtn/>}
+      <Chat/>
     </div>
   )
 }

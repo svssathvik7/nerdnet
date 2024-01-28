@@ -7,6 +7,9 @@
 #home-feed-scroller::-webkit-scrollbar{
     display: none;
 }
+#home-feed{
+    flex: 1;
+}
 @media (max-width:768px) {
     #home-feed-scroller{
         overflow-y: scroll;
