@@ -191,7 +191,7 @@ export default function TextPost(props) {
           scale: isTextInView ? 1 : 0.8,
         }}
         id="text-post"
-        className={`bg-white rounded-lg flex flex-col items-center justify-center trans300`}
+        className={`bg-white rounded-lg flex flex-col items-center justify-center trans300 z-10`}
       >
         <div
           id="post-meta-data"

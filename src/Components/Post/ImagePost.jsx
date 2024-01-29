@@ -170,7 +170,7 @@ export default function ImagePost(props)
         transform: isInView ? 'translateY(0px)' : 'translateY(-30px)',
         scale: isInView ? 1 : 0.8,
     }}
-    id='image-post' className={`bg-white rounded-lg flex flex-col items-center justify-center trans300`}>
+    id='image-post' className={`bg-white rounded-lg flex flex-col items-center justify-center trans300 z-10`}>
       <div id='post-meta-data' className={`${props.noAuth ? " pointer-events-none " : "  "} flex items-center justify-between bg-yellow-400 rounded-lg border-b-2 border-black`}>
         <div className='flex items-center justify-center p-2 mx-2'>
           <Link to={"/profile/"+props.userPosted.email} className='cursor-pointer'><img alt='dp' src={props.userPosted ? props.userPosted.dp : "#"} className='w-8 mx-2 cursor-pointer select-none'/></Link>

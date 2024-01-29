@@ -4,4 +4,5 @@
 }
 #header{
     height: 10dvh;
+    z-index: 500;
 }
