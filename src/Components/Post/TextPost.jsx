@@ -242,7 +242,7 @@ export default function TextPost(props) {
         </div>
         <div
           id="post-metrics"
-          className={`${props.noAuth ? " pointer-events-none blur-sm " : "  "} flex items-center justify-start p-2 mt-0 pt-0`}
+          className={`${props.noAuth ? " pointer-events-none blur-sm " : "  "} flex items-center justify-center p-2 mt-0 pt-0 w-full`}
         >
           <div
             id="metric-btn"
@@ -283,7 +283,7 @@ export default function TextPost(props) {
           </div>
           <input
             id="comment-input"
-            className="trans300 p-2 outline-none mx-2 placeholder:text-black placeholder:font-medium placeholder:opacity-70"
+            className="trans300 p-2 outline-none mx-2 placeholder:text-black placeholder:font-medium placeholder:opacity-70 border-b-2 hover:border-black"
             type="text"
             placeholder="Comment your words!"
             value={commentData}
@@ -309,7 +309,7 @@ export default function TextPost(props) {
               {props?.comments.map((comment, i) => (
                 <div
                   key={i}
-                  className="w-full px-2 flex items-center justify-end"
+                  className="w-full flex items-center justify-end"
                 >
                   <Comment {...comment} />
                 </div>

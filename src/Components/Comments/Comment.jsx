@@ -43,15 +43,10 @@ export default function Comment(props) {
         }
     ,[]);
   return (
-    <div className='comment-box m-1 flex items-center justify-start p-1 rounded-l-lg rounded-bl-lg bg-slate-400'>
-        <div>
-            <Link to={"/profile/"+props?.commentedUser?.email??"user@gmail.com"}>
-                <img className='w-8 rounded-full comment-box-dp' alt='user-dp' src={props?.commentedUser?.dp??"#"} title={props?.commentedUser?.username??"Nerd"}/>
-            </Link>
-        </div>
-        <div className='flex flex-col items-center justify-center'>
+    <div className='comment-box m-1 flex w-fit justify-end'>
+        <div className='flex flex-col items-center justify-center bg-slate-600 text-white p-2 rounded-lg'>
             <div>
-                <p className='mx-1'>{props.data}</p>
+                <p>{props.data}</p>
             </div>
             <div className='w-full'>
                 <TimeAgo date={props.date} />
@@ -59,6 +54,11 @@ export default function Comment(props) {
             <div id='comment-metrics'>
 
             </div>
+        </div>
+        <div className=''>
+            <Link to={"/profile/"+props?.commentedUser?.email??"user@gmail.com"}>
+                <img className='w-2 h-2 rounded-full comment-box-dp' alt='user-dp' src={props?.commentedUser?.dp??"#"} title={props?.commentedUser?.username??"Nerd"}/>
+            </Link>
         </div>
     </div>
   )

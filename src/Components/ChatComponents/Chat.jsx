@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { userContextProvider } from '../../Context/userContext';
 import "./Chat.css";
 import axios from 'axios';
@@ -10,6 +10,66 @@ import ChatIcon from "../../assets/chat.png";
 import { FaLink } from "react-icons/fa6";
 import EmojiPicker from 'emoji-picker-react';
 import { MdEmojiEmotions } from "react-icons/md";
+import {motion} from "framer-motion";
+import { useInView } from 'framer-motion';
+const emojis = ["\u2764\uFE0F","\uD83D\uDC4D","\uD83D\uDC4E","\uD83D\uDE32"];
+const ReactionOpener = ({userType})=>{
+    const ref = useRef(null);
+    const isInView = useInView(ref);
+    return (
+        <motion.div ref={ref} className={`${userType===true ? " bg-black " : " bg-slate-500 "} flex items-center justify-around rounded-lg h-fit p-1 mx-1 self-end trans300`} 
+        initial="hidden"
+        style={{
+            scale : isInView ? 1 : 0.9,
+          }}>
+            {emojis.map((emoji,i)=>(
+                <div key={i} className={`${userType===true ? " bg-slate-500 " : " bg-black "} bg-black w-6 h-6 rounded-full flex items-center justify-center hover:scale-125 mx-1 trans100`}>
+                    <p>{emoji}</p>
+                </div>
+            ))}
+        </motion.div>
+    )
+}
+const Text = ({message,user,client})=>{
+    const formatDate = (date)=>{
+        return dateFormat(date,"mmmm dS, yyyy");
+    }
+    const [isHovered,setIsHovered] = useState(false);
+    return (
+            (message?.user === user?._id)?
+            <div className='self-end text-white message m-1 flex-wrap flex' onMouseEnter={()=>{setIsHovered(true)}} onMouseLeave={()=>{setIsHovered(false)}}>
+                {isHovered && <ReactionOpener userType={message?.user == user?._id}/>}
+                <div className='flex items-center justify-start msg-box flex-wrap p-2 bg-slate-500 rounded-lg flex-col group'>
+                    {(message.isUrl===true)
+                    ? 
+                    <a title={`${message?.message}`} target='_blank' href={`${message?.message}`} className='flex-wrap flex items-center justify-center group-hover:scale-110 trans100'>Link<FaLink/></a>
+                     :
+                     <p className='flex-wrap'>{message.message}</p>
+                    }
+                    <div className='time-stamp-holders'>
+                        <p>{formatDate(message.timestamp)}</p>
+                    </div>
+                </div>
+                <Link to={"/profile/" + user?.email}><img alt='dp' src={user?.dp} className='w-6 h-6 rounded-full mx-1'/></Link>
+            </div>
+            :
+            <div className='self-start text-white message m-1 flex-wrap flex' onMouseEnter={()=>{setIsHovered(true)}} onMouseLeave={()=>{setIsHovered(false)}}>
+                <Link to={"/profile/" + client?.email}><img alt='dp' src={client?.dp} className='w-6 h-6 rounded-full mx-1'/></Link>
+                <div className='flex items-center justify-start msg-box flex-wrap p-2 bg-black rounded-lg flex-col group'>
+                    {(message.isUrl===true)
+                    ? 
+                    <a title={`${message?.message}`} target='_blank' href={`${message?.message}`} className='flex-wrap flex items-center justify-center group-hover:scale-110 trans100'>Link<FaLink/></a>
+                     :
+                     <p className='flex-wrap'>{message.message}</p>
+                    }
+                    <div className='time-stamp-holders'>
+                        <p>{formatDate(message.timestamp)}</p>
+                    </div>
+                </div>
+                {isHovered && <ReactionOpener userType={message?.user == user?._id}/>}
+            </div>
+    )
+}
 export default function Chat() {
     const [active,setActive] = useState(0);
     const {user} = useContext(userContextProvider);
@@ -18,9 +78,6 @@ export default function Chat() {
     const [messages,setMessages] = useState([]);
     const [loading,setLoading] = useState(false);
     const [showEmojiPicker,setEmojiPicker] = useState(false);
-    const formatDate = (date)=>{
-        return dateFormat(date,"mmmm dS, yyyy");
-    }
     const fetchChat = async ()=>{
         try{
             const users = [user._id,client._id].sort();
@@ -103,44 +160,15 @@ export default function Chat() {
                 </Link>
                 <IoClose color='red' className='font-extrabold mx-1 text-2xl' onClick={()=>{setActive(0)}}/>
             </div>
-            <div id='chat-scroller' className='my-1'>
+            <div id='chat-scroller' className='my-1 items-center'>
                 {
-                    messages && messages.length && messages?.map((message,i)=>(
+                    messages && messages.length ? messages?.map((message,i)=>(
                         <div key={i} className='flex w-full flex-col'>
-                            {
-                                (message?.user == user?._id)?
-                                <div className='self-end text-white message m-1 flex-wrap flex'>
-                                    <div className='flex items-center justify-start msg-box flex-wrap p-2 bg-slate-500 rounded-lg flex-col group'>
-                                        {(message.isUrl===true)
-                                        ? 
-                                        <a title={`${message?.message}`} target='_blank' href={`${message?.message}`} className='flex-wrap flex items-center justify-center group-hover:scale-110 trans100'>Link<FaLink/></a>
-                                         :
-                                         <p className='flex-wrap'>{message.message}</p>
-                                        }
-                                        <div className='time-stamp-holders'>
-                                            <p>{formatDate(message.timestamp)}</p>
-                                        </div>
-                                    </div>
-                                    <Link to={"/profile/" + user?.email}><img alt='dp' src={user?.dp} className='w-6 h-6 rounded-full mx-1'/></Link>
-                                </div>
-                                :
-                                <div className='self-start text-white message m-1 flex-wrap flex'>
-                                    <Link to={"/profile/" + client?.email}><img alt='dp' src={client?.dp} className='w-6 h-6 rounded-full mx-1'/></Link>
-                                    <div className='flex items-center justify-start msg-box flex-wrap p-2 bg-black rounded-lg flex-col group'>
-                                        {(message.isUrl===true)
-                                        ? 
-                                        <a title={`${message?.message}`} target='_blank' href={`${message?.message}`} className='flex-wrap flex items-center justify-center group-hover:scale-110 trans100'>Link<FaLink/></a>
-                                         :
-                                         <p className='flex-wrap'>{message.message}</p>
-                                        }
-                                        <div className='time-stamp-holders'>
-                                            <p>{formatDate(message.timestamp)}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
+                            <Text message={message} user={user} client={client}/>
                         </div>
                     ))
+                    :
+                    <p className='font-medium text-slate-600'>Your chat will appear here</p>
                 }
             </div>
             <form id='chat-controller' className='m-2 flex items-center justify-start'>

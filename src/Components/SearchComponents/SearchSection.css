@@ -6,5 +6,5 @@
 #search-scroller{
     height: 90dvh;
     overflow-y: scroll;
-    width: 100%;
+    flex: 1;
 }

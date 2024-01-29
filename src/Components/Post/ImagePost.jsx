@@ -197,7 +197,7 @@ export default function ImagePost(props)
       <div id='post-data' className='pb-2 px-0 pt-0 overflow-hidden m-2'>
         {!showPost ? <img alt='post' src={props.postData} className='post-images w-full h-full object-contain object-center select-none'/> : <></>}
       </div>
-      <div id='post-metrics' className={`${props.noAuth ? " pointer-events-none  " : " "} flex items-center justify-start p-2 mt-0 pt-0`}>
+      <div id='post-metrics' className={`${props.noAuth ? " pointer-events-none  " : " "} flex items-center justify-around p-2 mt-0 pt-0 w-full`}>
         <div id='metric-btn' className='flex items-center justify-around p-2 rounded-full'>
             <button onClick={handleUpVote} className={`text-lg cursor-pointer mx-1 ${liked ? " opacity-50 " : " "}`} disabled={liked}><FaAngleDoubleUp className='active:scale-110 hover:scale-110'/></button>
           <p className='select-none'>{upVotes}</p>
@@ -208,7 +208,7 @@ export default function ImagePost(props)
           <div className='text-xl cursor-pointer mx-1' onClick={()=>{setShowComments(!showComments)}}><RiMessage3Fill className='active:scale-110 hover:scale-110'/></div>
           <div className='text-xl cursor-pointer mx-1'><IoShareSocialSharp onClick={handleShareClick} className='active:scale-110 hover:scale-110  trans100'/></div>
         </div>
-        <input id='comment-input' className='trans300 p-2 outline-none mx-2 placeholder:text-black placeholder:font-medium placeholder:opacity-70' type='text' placeholder='Comment your words!' value={commentData} onChange={handleCommentChange} name='commentData'/>
+        <input id='comment-input' className='trans300 p-2 outline-none mx-2 placeholder:text-black placeholder:font-medium placeholder:opacity-70 border-b-2 hover:border-black' type='text' placeholder='Comment your words!' value={commentData} onChange={handleCommentChange} name='commentData'/>
         <button className={`text-white font-medium p-1 bg-black rounded-md trans300 hover:scale-105 ${validComment ? " cursor-pointer " : " opacity-70 cursor-not-allowed "}`} disabled={!validComment} onClick={handleCommentSubmit} type='submit'>Post</button>
       </div>
       {showCaption ? <div id='post-caption' className='w-full p-2 h-fit trans300'>

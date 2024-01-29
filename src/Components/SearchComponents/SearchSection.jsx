@@ -80,7 +80,7 @@ export default function SearchSection() {
           </h4>
         )}
       </div>
-      <div id="search-scroller" className="flex items-start justify-start p-2 flex-wrap">
+      <div id="search-scroller" className="flex items-center justify-center p-2 flex-wrap">
           {result?.length??0 ? 
             type === "user" ?
             result.map((item, i) => (
