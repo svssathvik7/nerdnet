@@ -13,22 +13,50 @@ import { MdEmojiEmotions } from "react-icons/md";
 import {motion} from "framer-motion";
 import { useInView } from 'framer-motion';
 const emojis = ["\u2764\uFE0F","\uD83D\uDC4D","\uD83D\uDC4E","\uD83D\uDE32"];
-const ReactionOpener = ({userType})=>{
+const ReactionOpener = ({userType,messageId,user})=>{
     const ref = useRef(null);
     const isInView = useInView(ref);
+    const handleEmojiClick = async (e)=>{
+        try{
+            const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/chat/chat-reaction/",{
+                messageId : messageId,
+                reaction : e.target?.innerHTML,
+                userId : user?._id
+            }).data);
+            if(response.status){
+                console.log("Success");
+            }
+            else{
+                console.log("Failed to add reaction! ",response);
+            }
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
     return (
-        <motion.div ref={ref} className={`${userType===true ? " bg-black " : " bg-slate-500 "} flex items-center justify-around rounded-lg h-fit p-1 mx-1 self-end trans300`} 
-        initial="hidden"
-        style={{
-            scale : isInView ? 1 : 0.9,
-          }}>
-            {emojis.map((emoji,i)=>(
-                <div key={i} className={`${userType===true ? " bg-slate-500 " : " bg-black "} bg-black w-6 h-6 rounded-full flex items-center justify-center hover:scale-125 mx-1 trans100`}>
-                    <p>{emoji}</p>
-                </div>
-            ))}
+        <motion.div
+          ref={ref}
+          className={`${
+            userType === true ? 'bg-black' : 'bg-slate-500'
+          } flex items-center justify-around rounded-lg h-fit p-1 mx-1 self-end trans300`}
+          initial="hidden"
+          style={{
+            scale: isInView ? 1 : 0.9,
+          }}
+        >
+          {emojis.map((emoji, i) => (
+            <div
+              key={i}
+              className={`${
+                userType === true ? 'bg-slate-500' : 'bg-black'
+              } bg-black w-6 h-6 rounded-full flex items-center justify-center hover:scale-125 mx-1 trans100`}
+            >
+              <p value={emoji} onClick={handleEmojiClick}>{emoji}</p>
+            </div>
+          ))}
         </motion.div>
-    )
+      );
 }
 const Text = ({message,user,client})=>{
     const formatDate = (date)=>{
@@ -38,8 +66,8 @@ const Text = ({message,user,client})=>{
     return (
             (message?.user === user?._id)?
             <div className='self-end text-white message m-1 flex-wrap flex' onMouseEnter={()=>{setIsHovered(true)}} onMouseLeave={()=>{setIsHovered(false)}}>
-                {isHovered && <ReactionOpener userType={message?.user == user?._id}/>}
-                <div className='flex items-center justify-start msg-box flex-wrap p-2 bg-slate-500 rounded-lg flex-col group'>
+                {isHovered && <ReactionOpener userType={message?.user == user?._id} messageId={message._id} user={user}/>}
+                <div className='flex items-center justify-start msg-box flex-wrap p-2 bg-slate-500 rounded-lg flex-col message-container'>
                     {(message.isUrl===true)
                     ? 
                     <a title={`${message?.message}`} target='_blank' href={`${message?.message}`} className='flex-wrap flex items-center justify-center group-hover:scale-110 trans100'>Link<FaLink/></a>
@@ -66,7 +94,7 @@ const Text = ({message,user,client})=>{
                         <p>{formatDate(message.timestamp)}</p>
                     </div>
                 </div>
-                {isHovered && <ReactionOpener userType={message?.user == user?._id}/>}
+                {isHovered && <ReactionOpener userType={message?.user == user?._id} messageId={message._id} user={user}/>}
             </div>
     )
 }
@@ -80,14 +108,14 @@ export default function Chat() {
     const [showEmojiPicker,setEmojiPicker] = useState(false);
     const fetchChat = async ()=>{
         try{
-            const users = [user._id,client._id].sort();
+            const users = [user?._id,client?._id].sort();
             const chatId = users[0]+users[1];
             const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/chat/get-chat",{
                 chatId : chatId
             })).data;
             if(response.status){
                 setMessages(response.data.chats);
-                console.log(messages);
+                // console.log(messages);
             }
             else{
                 setMessages([]);
@@ -126,10 +154,6 @@ export default function Chat() {
             fetchChat();
         }
     ,[client,user,messages]);
-    const customPicker = {
-        width : '200px',
-        height : '200px'
-    }
     const handleEmojiClick = async (emoji)=>{
         setValue(value+emoji.emoji);
     }

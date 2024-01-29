@@ -25,7 +25,6 @@
 .time-stamp-holders{
     font-size: 0.5em;
 }
-
 @media (max-width:768px) {
     #chat-box{
         width: 90dvw;
