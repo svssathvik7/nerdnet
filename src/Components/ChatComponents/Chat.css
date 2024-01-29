@@ -1,8 +1,9 @@
 #chat-box{
-    width: 25dvw;
+    width: 38dvw;
     height: fit-content;
     max-height: 65dvh;
     overflow-y: hidden;
+    overflow-x: hidden;
 }
 #chat-scroller{
     height: fit-content;
@@ -15,17 +16,18 @@
 }
 .message{
     width: fit-content;
-    max-width: 20dvw;
+    max-width: 30dvw;
     border-radius: 1rem;
     height: fit-content;
 }
 .message-box p{
     flex-wrap: wrap;
-    max-width: 10dvw;
+    max-width: 15dvw;
 }
 .time-stamp-holders{
     font-size: 0.5em;
 }
+
 @media (max-width:768px) {
     #chat-box{
         width: 90dvw;

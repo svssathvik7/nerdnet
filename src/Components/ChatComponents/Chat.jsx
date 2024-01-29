@@ -8,6 +8,8 @@ import dateFormat from 'dateformat';
 import { Link } from 'react-router-dom';
 import ChatIcon from "../../assets/chat.png";
 import { FaLink } from "react-icons/fa6";
+import EmojiPicker from 'emoji-picker-react';
+import { MdEmojiEmotions } from "react-icons/md";
 export default function Chat() {
     const [active,setActive] = useState(0);
     const {user} = useContext(userContextProvider);
@@ -15,6 +17,7 @@ export default function Chat() {
     const [value,setValue] = useState('');
     const [messages,setMessages] = useState([]);
     const [loading,setLoading] = useState(false);
+    const [showEmojiPicker,setEmojiPicker] = useState(false);
     const formatDate = (date)=>{
         return dateFormat(date,"mmmm dS, yyyy");
     }
@@ -66,9 +69,16 @@ export default function Chat() {
             fetchChat();
         }
     ,[client,user,messages]);
+    const customPicker = {
+        width : '200px',
+        height : '200px'
+    }
+    const handleEmojiClick = async (emoji)=>{
+        setValue(value+emoji.emoji);
+    }
   return (
     <div className='absolute bottom-2 left-2 m-2 cursor-pointer w-fit flex items-center justify-start'>
-      <div className='bg-white w-12 h-12 rounded-full flex items-center justify-center' onClick={()=>{setActive(!active)}} title={`${user?.following?.length + " friends"}`}>
+      <div className='bg-white w-12 h-12 rounded-full flex items-center justify-center' onClick={()=>{setActive(!active); setEmojiPicker(false)}} title={`${user?.following?.length + " friends"}`}>
         {!active ? 
         <div className='w-12 h-12'>
             <img alt='chat-icon' src={ChatIcon}/>
@@ -77,7 +87,7 @@ export default function Chat() {
       {active==1 && <div id='online-frnds-container' className='flex items-center justify-start'>
         {user && user.following && user.following.map((member,i)=>(
             <div key={i} className='flex'>
-                <img alt='dp' src={member.dp} className='w-12 h-12 rounded-full mx-1 bg-white p-1' onClick={()=>{setClient(member);setActive(2)}}/>
+                <img alt='dp' src={member.dp} className='w-12 h-12 rounded-full mx-1 bg-white p-1' onClick={()=>{setClient(member);setActive(2);setEmojiPicker(false)}}/>
             </div>
         ))}
       </div>}
@@ -119,7 +129,7 @@ export default function Chat() {
                                     <div className='flex items-center justify-start msg-box flex-wrap p-2 bg-black rounded-lg flex-col group'>
                                         {(message.isUrl===true)
                                         ? 
-                                        <a title={`${message?.message}`}  className='flex-wrap flex items-center justify-center group-hover:scale-110 trans100'>Link<FaLink/></a>
+                                        <a title={`${message?.message}`} target='_blank' href={`${message?.message}`} className='flex-wrap flex items-center justify-center group-hover:scale-110 trans100'>Link<FaLink/></a>
                                          :
                                          <p className='flex-wrap'>{message.message}</p>
                                         }
@@ -134,7 +144,14 @@ export default function Chat() {
                 }
             </div>
             <form id='chat-controller' className='m-2 flex items-center justify-start'>
-                <input type='text' className='border-b-2 border-black' name='chatInput' placeholder='Enter message...' onChange={(e)=>{setValue(e.target.value);}} value={value}/>
+                {
+                    showEmojiPicker &&
+                    <div className='emoji-picker absolute flex scale-75 top-0 bottom-0 left-0 right-0 m-auto'>
+                        <EmojiPicker theme='dark' onEmojiClick={handleEmojiClick} width={350} height={400}/>
+                    </div>
+                }
+                <MdEmojiEmotions className={`${showEmojiPicker ? " bg-slate-500 rounded-lg text-white " : "  "} text-2xl mx-2`} onClick={()=>{setEmojiPicker(!showEmojiPicker)}}/>
+                <input type='text' className='border-b-2 border-black w-56' name='chatInput' placeholder='Enter message...' onChange={(e)=>{setValue(e.target.value);}} value={value}/>
                 {loading ? <div className='bg-black w-fit mx-1 p-2 rounded-lg flex items-center justify-center h-fit'><SyncLoader color="#fff" size={15}/></div> : <button type='submit' onClick={handleSendMessage} className='mx-1 p-1 bg-yellow-500 text-white font-normal rounded-lg'>Send</button>}
             </form>
         </div>
