@@ -12,11 +12,12 @@ import { PulseLoader } from 'react-spinners';
 import { useContext } from 'react';
 import { userContextProvider } from '../../Context/userContext';
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-function Login({data}) {
+export default function Login() {
   const {getUserDetails} = useContext(userContextProvider);
     const history = useNavigate();
     const [loading,setLoading] = useState(false);
     const [validForm,setValidForm] = useState(false);
+    const [isMobile,setIsMobile] = useState(window.innerWidth < 768);
     const [formData, setFormData] = useState({
         userEmail: '',
         password: '',
@@ -123,8 +124,8 @@ function Login({data}) {
                 <button id='login-submit' className={`flex items-center justify-center bg-yellow-400 p-1 m-2 border-2 border-black rounded-lg select-none hover:bg-black hover:text-yellow-400 trans100 ${validForm ? "cursor-pointer" : "cursor-not-allowed opacity-40"}`} type="submit" onClick={handleSubmit} disabled={!validForm}>{loading ? <PulseLoader className='scale-75' color='white'/> : "Login"}</button>
             </form>
         </div>
-        {data.isMobile ? <></> : <div id='v-line' className='bg-slate-400 w-1 h-20 rounded-full mx-2'></div>}
-        {data.isMobile ? <></> : <div id='login-lottie' className='w-56'>
+        {isMobile ? <></> : <div id='v-line' className='bg-slate-400 w-1 h-20 rounded-full mx-2'></div>}
+        {isMobile ? <></> : <div id='login-lottie' className='w-56'>
             <Lottie animationData={loginAnimation} loop={true}/>
         </div>}
       </div>
@@ -141,11 +142,3 @@ function Login({data}) {
     </div>
   )
 }
-const mapStateToProps = (state)=>{
-  return {
-    data : {
-      isMobile : state.isMobile,
-    }
-  }
-}
-export default connect(mapStateToProps)(Login);

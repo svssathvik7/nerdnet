@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import IntroBg from "../assets/nerd-intro.png";
 import IntroBgMobile from "../assets/nerd-intro-mobile.png";
 import Register from '../Components/Signup/Register';
-import { connect } from 'react-redux';
 export default function RegisterPage() {
   const [isMobile,setIsMobile] = useState(window.innerWidth <768);
   return (

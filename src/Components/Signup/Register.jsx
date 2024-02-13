@@ -10,8 +10,9 @@ import { connect } from 'react-redux';
 import { PulseLoader } from 'react-spinners';
 import axios from 'axios';
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-function Register({data}) {
+export default function Register() {
   const [loading,setLoading] = useState(false);
+  const [isMobile,setIsMobile] = useState(window.innerWidth < 768);
   var history = useNavigate();
   const [formData,setFormData] = useState({
     username : '',
@@ -135,8 +136,8 @@ function Register({data}) {
             <input className='register-inputs outline-none trans300 p-2 pb-0' type='url' placeholder='Enter Dp Url (optional)' required name='dp' value={formData.dp} onChange={handleFormChange}/>
             <button onClick={submitForm} disabled={!formFilled} type='submit' className={`flex items-center justify-center text-black bg-yellow-400 p-1 rounded-lg w-24 border-2 border-black hover:bg-black hover:text-yellow-400 trans300 mt-2 ${formFilled ? 'cursor-pointer' : 'opacity-40 cursor-not-allowed'}`}>{loading ? <PulseLoader color='white'/> :'SignUp'}</button>
           </form>
-          {data.isMobile ? <></> : <div className='bg-slate-400 w-1 h-16 rounded-full' id='v-line'></div>}
-          {data.isMobile?<></>:<div className='w-56'>
+          {isMobile ? <></> : <div className='bg-slate-400 w-1 h-16 rounded-full' id='v-line'></div>}
+          {isMobile?<></>:<div className='w-56'>
             <Lottie animationData={SignUpAnimation} loop={true}/>
           </div>}
       </div>
@@ -150,11 +151,3 @@ function Register({data}) {
     </div>
   )
 }
-const mapStateToProps = (state)=>{
-  return {
-    data : {
-      isMobile : state.isMobile,
-    }
-  }
-}
-export default connect(mapStateToProps)(Register);
