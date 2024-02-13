@@ -5,6 +5,9 @@
     height: 90dvh;
     width: 60dvw;
     flex-wrap: wrap;
+    overflow-x: hidden;
+    resize: horizontal;
+    
 }
 
 @media (max-width:768px) {

@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { userContextProvider } from '../../Context/userContext';
 import "./Chat.css";
+import { css } from '@emotion/css';
+import ScrollToBottom from 'react-scroll-to-bottom';
 import axios from 'axios';
 import { IoClose } from "react-icons/io5";
 import { SyncLoader } from 'react-spinners';
@@ -12,6 +14,8 @@ import EmojiPicker from 'emoji-picker-react';
 import { MdEmojiEmotions } from "react-icons/md";
 import {motion} from "framer-motion";
 import { useInView } from 'framer-motion';
+import {io} from "socket.io-client";
+const socket = io.connect("http://localhost:3500");
 const emojis = ["\u2764\uFE0F","\uD83D\uDC4D","\uD83D\uDC4E","\uD83D\uDE32"];
 const ReactionOpener = ({userType,messageId,user})=>{
     const ref = useRef(null);
@@ -110,37 +114,64 @@ export default function Chat() {
         try{
             const users = [user?._id,client?._id].sort();
             const chatId = users[0]+users[1];
-            const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/chat/get-chat",{
+            // const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/chat/get-chat",{
+            //     chatId : chatId
+            // })).data;
+            socket.emit("fetch-chat",{
                 chatId : chatId
-            })).data;
-            if(response.status){
-                setMessages(response.data.chats);
-                // console.log(messages);
-            }
-            else{
-                setMessages([]);
-            }
+            });
+            // if(response.status){
+            //     setMessages(response.data.chats);
+            //     // console.log(messages);
+            // }
+            // else{
+            //     setMessages([]);
+            // }
+            socket.on("fetched-data",(data)=>{
+                if(data.status === true)
+                {
+                    setMessages(data.data.chats);
+                }
+                else{
+                    setMessages([]);
+                }
+            })
         }
         catch(error){
             console.log(error);
         }
     }
-    const handleSendMessage = async ()=>{
+    const handleSendMessage = async (e)=>{
+        e.preventDefault();
         const users = [user._id,client._id].sort();
         try{
             setLoading(true);
             const chatId = users[0]+users[1];
-            const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/chat/add-message/",{
+            // const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/chat/add-message/",{
+            //     chatId : chatId,
+            //     userId : user._id,
+            //     message : value
+            // })).data;
+            socket.emit("add-message",{
                 chatId : chatId,
                 userId : user._id,
                 message : value
-            })).data;
-            if(response.status){
-                console.log("Success");
-            }
-            else{
-                console.log(response);
-            }
+            });
+            // if(response.status){
+            //     console.log("Success");
+            // }
+            // else{
+            //     console.log(response);
+            // }
+            socket.on("added-message",(data)=>{
+                if(data.response)
+                {
+                    console.log("Successfully added message!");
+                }
+                else{
+                    console.log(data);
+                }
+            });
             setValue('');
             fetchChat();
         }
@@ -153,7 +184,7 @@ export default function Chat() {
         ()=>{
             fetchChat();
         }
-    ,[client,user,messages]);
+    ,[client,user,messages,socket]);
     const handleEmojiClick = async (emoji)=>{
         setValue(value+emoji.emoji);
     }
@@ -184,7 +215,7 @@ export default function Chat() {
                 </Link>
                 <IoClose color='red' className='font-extrabold mx-1 text-2xl' onClick={()=>{setActive(0)}}/>
             </div>
-            <div id='chat-scroller' className='my-1 items-center'>
+            <div id='chat-scroller' className={`my-1 items-center`}>
                 {
                     messages && messages.length ? messages?.map((message,i)=>(
                         <div key={i} className='flex w-full flex-col'>

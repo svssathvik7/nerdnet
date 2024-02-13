@@ -228,7 +228,7 @@ export default function TextPost(props) {
               onClick={() => {
                 setShowPost(!showPost);
               }}
-              className='hover:scale-110 trans100 z-50'
+              className='hover:scale-110 trans100'
             />
             {showPost ? 
             <div className="bg-white p-1 text-sm rounded-md border-black border-2 trans300">
