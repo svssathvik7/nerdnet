@@ -189,7 +189,7 @@ export default function Chat() {
         setValue(value+emoji.emoji);
     }
   return (
-    <div className='absolute bottom-2 left-2 m-2 cursor-pointer w-fit flex items-center justify-start'>
+    <div className='fixed bottom-2 left-2 m-2 cursor-pointer w-fit flex items-center justify-start'>
       <div className='bg-white w-12 h-12 rounded-full flex items-center justify-center' onClick={()=>{setActive(!active); setEmojiPicker(false)}} title={`${user?.following?.length + " friends"}`}>
         {!active ? 
         <div className='w-12 h-12'>

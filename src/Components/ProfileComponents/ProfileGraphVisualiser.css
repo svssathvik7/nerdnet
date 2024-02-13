@@ -1,3 +1,8 @@
 #graph-component{
     height: 40dvh;
 }
+@media (max-width:768px) {
+    #graph-component{
+        height: 50dvh;
+    }
+}

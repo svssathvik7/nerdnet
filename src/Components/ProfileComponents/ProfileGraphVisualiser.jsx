@@ -70,7 +70,7 @@ export default function ProfileGraphVisualiser() {
   }, [userProfile,refreshGraph]);
 
   return (
-    <div id='graph-component' className='flex flex-col items-center justify-around m-2 p-2 h-full'>
+    <div id='graph-component' className='flex flex-col items-center justify-around m-2 p-2'>
       {graph && options ? (
         <Graph key={refreshGraph} graph={graph} options={options} />
       ) : (
