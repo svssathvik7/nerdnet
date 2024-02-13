@@ -12,7 +12,7 @@ export default function Home(props) {
         ()=>{
             setIsMobile(window.innerWidth < 768);
         }
-    ,[window.innerWidth]);
+    ,[window]);
   return (
     <div id='home-page' className=''>
       <Header />

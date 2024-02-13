@@ -8,9 +8,10 @@ import { toast } from 'react-toastify'
 import "./AddPost.css";
 import { connect } from 'react-redux'
 import MiniNavBar from '../Navbar/MiniNavBar'
-function AddPostForm({data}) {
+export default function AddPostForm({data}) {
     const {user,getUserDetails} = useContext(userContextProvider);
     const [textInput,setInputType] = useState(true);
+    const [isMobile,setIsMobile] = useState(window.innerWidth < 768);
     // use for limiting tags len
     const [errText,setErrText] = useState("");
     const [textTags,setTextTags] = useState([]);
@@ -169,15 +170,7 @@ function AddPostForm({data}) {
             </div>
         </div>
       </form>
-      {data.isMobile ? <MiniNavBar/> : <></>}
+      {isMobile ? <MiniNavBar/> : <></>}
     </div>
   )
 }
-const mapStateToProps = (state)=>{
-    return {
-        data : {
-          isMobile : state.isMobile,
-        }
-      }
-}
-export default connect(mapStateToProps)(AddPostForm);

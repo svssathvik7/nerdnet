@@ -8,3 +8,9 @@
     min-height: 2dvw;
     min-width: 2dvw;
 }
+@media (max-width:768px) {
+    .comment-box-dp{
+        min-height: 8dvw;
+        min-width: 8dvw;
+    }
+}

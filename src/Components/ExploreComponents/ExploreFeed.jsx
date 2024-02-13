@@ -41,7 +41,7 @@ export default function ExploreFeed() {
       posts.length > 0 ? (
         <div id='explore-feed-scroller' className='flex items-center justify-start flex-wrap w-full'>
           {posts.map((post, i) => (
-            <div className='single-feed flex-wrap flex items-center justify-start' key={i} onClick={()=>{setSelectedPost(post)}}>
+            <div className='single-feed flex-wrap flex items-center md:justify-start justify-start mx-auto' key={i} onClick={()=>{setSelectedPost(post)}}>
               {
                 post?.isMultimedia ? 
                 <img className='trans100 img-post-preview m-1 object-contain object-center select-none cursor-pointer rounded-lg' alt='post' src={post.postData}/>
@@ -59,7 +59,7 @@ export default function ExploreFeed() {
       )
     )}
     {selectedPost ? <div className='absolute w-screen h-screen flex items-center justify-center flex-col top-0 left-0 bg-[#000000a5]' onClick={()=>{setSelectedPost(null)}}>
-        <div className='single-feed m-2 blue-sm' onClick={(e)=>{e.stopPropagation()}}>
+        <div className='single-feed blue-sm mx-auto w-full self-center' onClick={(e)=>{e.stopPropagation()}}>
           <Post {...selectedPost}/>
         </div>
     </div> : <></>}

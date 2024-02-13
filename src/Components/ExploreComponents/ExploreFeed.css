@@ -10,7 +10,7 @@
     display: none;
 }
 .single-feed{
-    width: 33%;
+    width: 95%;
 }
 #explore-feed{
     flex: 1;
@@ -31,5 +31,8 @@
     }
     #feed-covered-message{
         flex-direction: column-reverse;
+    }
+    .single-feed{
+        width: 95%;
     }
 }
