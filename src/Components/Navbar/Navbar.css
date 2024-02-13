@@ -1,5 +1,5 @@
 #header-nav-links-mini{
-    width: 90dvw;
+    width: fit-content;
 }
 /* Use more specific selectors */
 input[type="text"]:focus {

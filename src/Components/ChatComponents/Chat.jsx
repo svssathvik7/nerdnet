@@ -15,7 +15,7 @@ import { MdEmojiEmotions } from "react-icons/md";
 import {motion} from "framer-motion";
 import { useInView } from 'framer-motion';
 import {io} from "socket.io-client";
-const socket = io.connect("http://localhost:3500");
+const socket = io.connect(process.env.REACT_APP_BACKEND_BASE_URL);
 const emojis = ["\u2764\uFE0F","\uD83D\uDC4D","\uD83D\uDC4E","\uD83D\uDE32"];
 const ReactionOpener = ({userType,messageId,user})=>{
     const ref = useRef(null);
