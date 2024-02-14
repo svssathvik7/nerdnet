@@ -26,7 +26,7 @@ export default function ExploreFeed() {
   return (
     <div id='explore-feed' className='flex items-center justify-start flex-wrap'>
     {isLoading ? (
-      <div className='w-96 flex items-center justify-center'>
+      <div className='w-96 flex items-center justify-center self-center text-center'>
         <ThreeCircles
           visible={true}
           height="100"
@@ -39,9 +39,9 @@ export default function ExploreFeed() {
       </div>
     ) : (
       posts.length > 0 ? (
-        <div id='explore-feed-scroller' className='flex items-center justify-start flex-wrap w-full'>
+        <div id='explore-feed-scroller' className='flex items-center justify-start flex-wrap'>
           {posts.map((post, i) => (
-            <div className='single-feed flex-wrap flex items-center md:justify-start justify-start mx-auto' key={i} onClick={()=>{setSelectedPost(post)}}>
+            <div className='single-feed flex-wrap flex items-center justify-start' key={i} onClick={()=>{setSelectedPost(post)}}>
               {
                 post?.isMultimedia ? 
                 <img className='trans100 img-post-preview m-1 object-contain object-center select-none cursor-pointer rounded-lg' alt='post' src={post.postData}/>
