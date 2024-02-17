@@ -14,6 +14,8 @@ import Comment from "../Comments/Comment";
 import { userContextProvider } from "../../Context/userContext";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
+import Lottie from "lottie-react";
+import Reaction from "../../assets/Clicked.json";
 export default function TextPost(props) {
   const location = useLocation();
   const [validComment, setValidComment] = useState(false);
@@ -24,10 +26,11 @@ export default function TextPost(props) {
   const [showPost, setShowPost] = useState(false);
   const [upVotes, setUpVotes] = useState(
     props?.likes?.length ?? 0 - props?.dislikes?.length ?? 0
-  );
-  const [liked, setLiked] = useState(
-    props.noAuth ? true : props?.likes?.some((like) => like?._id === user?._id)
-  );
+    );
+    const [liked, setLiked] = useState(
+      props.noAuth ? true : props?.likes?.some((like) => like?._id === user?._id)
+      );
+    const [clickedUp,setClickedUp] = useState(liked);
   const [isSameUser,setIsSameUser] = useState((props?.userPosted?._id??0)==(user?._id??1));
   const handleUpVote = async () => {
     try {
@@ -45,6 +48,7 @@ export default function TextPost(props) {
         if (response.status) {
           setLiked(true);
           setUpVotes((prevValue) => prevValue + 1);
+          setClickedUp(true);
         }
         console.log(response);
       }
@@ -68,6 +72,7 @@ export default function TextPost(props) {
         if (response.status) {
           setLiked(false);
           setUpVotes((prevValue) => prevValue - 1);
+          setClickedUp(false);
         }
       }
     } catch (error) {
@@ -250,12 +255,13 @@ export default function TextPost(props) {
           >
             <button
               onClick={handleUpVote}
-              className={`text-lg cursor-pointer mx-1 ${
+              className={`text-lg cursor-pointer mx-1 flex items-center justify-center ${
                 liked ? " opacity-50 " : " "
               }`}
               disabled={liked}
             >
               <FaAngleDoubleUp className="active:scale-110 hover:scale-110"/>
+              {clickedUp && <Lottie animationData={Reaction} className="w-16 absolute" loop={false}/>}
             </button>
             <p className="select-none">{upVotes}</p>
             <button
