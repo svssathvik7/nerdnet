@@ -9,7 +9,10 @@ import {profileNavigatorContextProvider} from '../Context/profileNavigatorContex
 import FollowersList from '../Components/ProfileComponents/FollowersList'
 import FollowingList from '../Components/ProfileComponents/FollowingList'
 import Chat from '../Components/ChatComponents/Chat'
+import { loaderContextProvider } from '../Context/loaderContext'
+import Loading from '../Components/LoadPage/Loading'
 export default function Profile() {
+  const {isLoading} = useContext(loaderContextProvider);
   const [isMobile,setIsMobile] = useState(window.innerWidth <= 768);
   useEffect(
     ()=>{
@@ -20,6 +23,7 @@ export default function Profile() {
   return (
 
     <div id='profile'>
+      {isLoading && <Loading/>}
       <Header/>
         <div id="profile-container" className={`flex ${isMobile ? " flex-col " : " "} items-center justify-start`}>
           <ProfileSidebar/>

@@ -9,9 +9,11 @@ import FriendContext from "./Context/friendContext";
 import StatContext from './Context/statContext';
 import HomeFeedContext from './Context/homeFeedContext';
 import ProfileNavigatorContext from './Context/profileNavigatorContext';
+import LoaderContext from './Context/loaderContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <BrowserRouter>
+      <LoaderContext>
       <UserContext>
         <StatContext>
         <FriendContext>
@@ -25,5 +27,6 @@ root.render(
         </FriendContext>
         </StatContext>
       </UserContext>
+      </LoaderContext>
     </BrowserRouter>
 );

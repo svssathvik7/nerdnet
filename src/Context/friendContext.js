@@ -2,9 +2,11 @@ import React from 'react'
 import { userContextProvider } from './userContext';
 import { useContext,useState } from 'react';
 import axios from 'axios';
+import {loaderContextProvider} from "./loaderContext";
 export const friendContextProvider = React.createContext(null);
 export default function FriendContext({children}) {
     const {user} = useContext(userContextProvider);
+    const {setIsLoading} = useContext(loaderContextProvider);
     const [userProfile,setUserProfile] = useState(user);
     const getUserProfile = async(profileemail)=>{
         if(profileemail === user.email)

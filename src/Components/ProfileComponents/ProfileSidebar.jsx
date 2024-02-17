@@ -17,7 +17,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import {profileNavigatorContextProvider} from '../../Context/profileNavigatorContext';
 export default function ProfileSidebar() {
-    const [loading,setIsLoading] = useState(false);
+    const [loading,setIsLoadingState] = useState(false);
     const {user} = useContext(userContextProvider);
     const {userProfile,getUserProfile} = useContext(friendContextProvider);
     const [isSameUser,setIsSameUser] = useState(false);
@@ -47,7 +47,7 @@ export default function ProfileSidebar() {
     const [editable,setEditable] = useState(false);
     const handleFollowBtn = async (e) =>{
         e.preventDefault();
-        setIsLoading(true);
+        setIsLoadingState(true);
         try{
             const response =  (await axios.post(process.env.REACT_APP_BACKEND_URL+"/auth/updateFollowers",{
                 masterAcc : userProfile.email,
@@ -57,7 +57,7 @@ export default function ProfileSidebar() {
             console.log(response);
             if(response.status){
                 setIsFollowing(!isFollowing);
-                setIsLoading(false);
+                setIsLoadingState(false);
                 toast.success('Refresh to update changes!', {
                     position: "top-right",
                     autoClose: 5000,
@@ -80,7 +80,7 @@ export default function ProfileSidebar() {
                     progress: undefined,
                     theme: "dark",
                 });
-                setIsLoading(false);
+                setIsLoadingState(false);
             }
         }
         catch(error){
@@ -94,14 +94,14 @@ export default function ProfileSidebar() {
                 progress: undefined,
                 theme: "dark",
             });
-            setIsLoading(false);
+            setIsLoadingState(false);
         }
     }
     const handledEditButton = async (e)=>{
         e.preventDefault();
         try{
             if(editable===true){
-                setIsLoading(true);
+                setIsLoadingState(true);
                 if(formData.username!==user.username || formData.education !== user.education || formData.dp !== user.dp){
                     const response = await axios.post(process.env.REACT_APP_BACKEND_URL+"/auth/updateProfile",{
                         email : user.email,
@@ -138,7 +138,7 @@ export default function ProfileSidebar() {
                 else{
                     setEditable(false);
                 }
-                setIsLoading(false);
+                setIsLoadingState(false);
             }
         }
         catch(error){
@@ -152,7 +152,7 @@ export default function ProfileSidebar() {
             progress: undefined,
             theme: "dark",
             });
-            setIsLoading(false);
+            setIsLoadingState(false);
         }
         setEditable(!editable);
     }

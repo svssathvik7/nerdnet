@@ -64,6 +64,9 @@ export default function SearchSection() {
     };
     handleQuery();
   }, [searchQuery,type]);
+  const handleAddChat = async(e)=>{
+    e.preventDefault();
+  }
   return (
     <div
       id="search-section"
@@ -84,7 +87,7 @@ export default function SearchSection() {
           {result?.length??0 ? 
             type === "user" ?
             result.map((item, i) => (
-              <div key={i} className="bg-white rounded-lg w-fit h-fit flex flex-col items-center justify-around m-2 p-2 cursor-pointer hover:scale-105 transition-transform flex-wrap">
+              <div key={i} className="bg-white rounded-lg w-fit h-fit flex flex-col items-center justify-around m-2 p-2 cursor-pointer hover:scale-105 trans100 flex-wrap">
                 <Link to={`/profile/${item.email}`}>
                   <img alt="dp" src={item.dp} className="w-16 h-16 rounded-full" />
                 </Link>
@@ -101,6 +104,7 @@ export default function SearchSection() {
                     {item.education}
                   </p>
                 </Link>
+                <button onClick={handleAddChat} className="bg-slate-500 text-white p-2 text-sm rounded-md hover:rounded-xl trans100">Add to Chats!</button>
               </div>
             ))
             :
