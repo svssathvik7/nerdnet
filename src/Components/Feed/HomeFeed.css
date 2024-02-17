@@ -2,6 +2,7 @@
     overflow-y: scroll;
     overflow-x: hidden;
     height: 90dvh;
+    width: 100%;
     padding-bottom: 5em;
 }
 #home-feed-scroller::-webkit-scrollbar{
