@@ -2,6 +2,7 @@ import React from 'react'
 import Communities from "../../assets/Communities.json";
 import Lottie from 'lottie-react';
 import "./CommunityLander.css";
+import { Link } from 'react-router-dom';
 const communitySections = [
     {
         heading : "Join Our Thriving Communities",
@@ -23,9 +24,15 @@ export default function CommunityLander() {
         <div className='w-80'>
             <Lottie animationData={Communities}/>
         </div>
-        <div className='text-white m-2'>
-            <h2 className='text-4xl'>{matter?.heading??""}</h2>
-            <p className='text-xs'>{matter?.caption??""}</p>
+        <div>
+            <div className='text-white m-2'>
+                <h2 className='text-4xl'>{matter?.heading??""}</h2>
+                <p className='text-xs'>{matter?.caption??""}</p>
+            </div>
+            <div className='flex m-2 items-center justify-start w-full'>
+                <Link className="p-2 mx-1 w-20 bg-white rounded-md trans100 hover:rounded-xl text-center">Create</Link>
+                <Link className="p-2 mx-1 w-20 bg-slate-500 text-white rounded-md trans100 hover:rounded-xl text-center">Explore</Link>
+            </div>
         </div>
     </div>
   )
