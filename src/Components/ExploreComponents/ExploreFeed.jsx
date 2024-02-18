@@ -41,10 +41,10 @@ export default function ExploreFeed() {
       posts.length > 0 ? (
         <div id='explore-feed-scroller' className='flex items-center justify-start flex-wrap'>
           {posts.map((post, i) => (
-            <div className='single-feed flex-wrap flex items-center justify-start rounded-lg' key={i} onClick={()=>{setSelectedPost(post)}}>
+            <div className='single-feed flex-wrap flex items-center justify-start rounded-lg post-container' key={i} onClick={()=>{setSelectedPost(post)}}>
               {
                 post?.isMultimedia ? 
-                <img className='trans100 img-post-preview m-1 object-contain object-center select-none cursor-pointer rounded-lg p-2' alt='post' src={post.postData}/>
+                <img className='trans100 img-post-preview m-1 object-contain object-center select-none cursor-pointer rounded-lg p-2 bg-white' alt='post' src={post.postData}/>
                 :
                 <p className='trans100 font-normal m-1 text-post-preview text-black bg-white p-2 rounded-lg cursor-pointer'>{post.postData}</p>
               }

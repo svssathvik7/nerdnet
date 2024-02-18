@@ -16,11 +16,14 @@
     flex: 1;
 }
 .text-post-preview{
-    width:100%;
-    height: fit-content;
+    width: 22dvw;
+    height: 40dvh;
+    display: flex;
+    overflow-y: scroll;
 }
 .img-post-preview{
-    width: 100%;
+    width: 22dvw;
+    height: 40dvh;
 }
 @media (max-width:768px) {
     #explore-feed-scroller{
