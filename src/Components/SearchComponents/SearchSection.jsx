@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./SearchSection.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import Post from "../Post/Post";
 import dateFormat from "dateformat";
+import { userContextProvider } from "../../Context/userContext";
 const formatAge = (date) => {
   return "Joined - " + dateFormat(date,"mmmm dS, yyyy");
 };
@@ -13,6 +14,7 @@ const formatAge = (date) => {
 export default function SearchSection() {
   const [result, setResult] = useState([]);
   const { type, searchQuery } = useParams();
+  const {user} = useContext(userContextProvider);
   useEffect(() => {
     const handleQuery = async () => {
       try {
@@ -64,8 +66,19 @@ export default function SearchSection() {
     };
     handleQuery();
   }, [searchQuery,type]);
-  const handleAddChat = async(e)=>{
-    e.preventDefault();
+  const handleAddChat = async(friendId)=>{
+    try {
+        const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/chat/add-recent-chats",{
+          userId : user._id,
+          friendId : friendId
+        })).data;
+        if(!response.status)
+        {
+          console.log(response)
+        }
+    } catch (error) {
+      console.log(error);
+    }
   }
   return (
     <div
@@ -104,7 +117,7 @@ export default function SearchSection() {
                     {item.education}
                   </p>
                 </Link>
-                <button onClick={handleAddChat} className="bg-slate-500 text-white p-2 text-sm rounded-md hover:rounded-xl trans100">Add to Chats!</button>
+                <button onClick={()=>{handleAddChat(item._id)}} className="bg-slate-500 text-white p-2 text-sm rounded-md hover:rounded-xl trans100">Add to Chats!</button>
               </div>
             ))
             :
