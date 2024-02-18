@@ -10,9 +10,11 @@ const UserContext = ({children}) => {
         try{
             const token = localStorage.getItem('token');
             const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/auth/currUser/",{token})).data;
-            console.log(response.userData)
             if(response.status){
-                setUser(response.userData);
+                var data = response.userData;
+                data.recentChats = [...data.recentChats,...data.following];
+                setUser(data);
+                console.log(data);
             }
             else{
                 setUser(null);

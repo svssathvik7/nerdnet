@@ -197,7 +197,7 @@ export default function Chat() {
         </div> : <div className='w-12 h-12 text-red-700 flex items-center justify-center font-extrabold text-2xl'>X</div>}
       </div>
       {active==1 && <div id='online-frnds-container' className='flex items-center justify-start'>
-        {user && user.following && user.following.map((member,i)=>(
+        {user && user.recentChats && user.recentChats.map((member,i)=>(
             <div key={i} className='flex'>
                 <img alt='dp' src={member.dp} className='w-12 h-12 rounded-full mx-1 bg-white p-1' onClick={()=>{setClient(member);setActive(2);setEmojiPicker(false)}}/>
             </div>
