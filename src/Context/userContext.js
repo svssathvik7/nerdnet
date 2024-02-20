@@ -12,7 +12,8 @@ const UserContext = ({children}) => {
             const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/auth/currUser/",{token})).data;
             if(response.status){
                 var data = response.userData;
-                data.recentChats = [...data.recentChats,...data.following];
+                const temp = new Set(data.recentChats);
+                data.recentChats = [...temp];
                 setUser(data);
                 console.log(data);
             }
