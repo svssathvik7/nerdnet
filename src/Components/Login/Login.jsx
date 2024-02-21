@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Lottie from 'lottie-react'
 import loginAnimation from "../../assets/loginAnimation.json";
 import { Link } from 'react-router-dom';
@@ -11,8 +11,19 @@ import { useNavigate } from 'react-router-dom';
 import { PulseLoader } from 'react-spinners';
 import { useContext } from 'react';
 import { userContextProvider } from '../../Context/userContext';
+import TokenValidity from "../../Utilities/TokenValidity";
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export default function Login() {
+  const navigate = useNavigate();
+  useEffect(
+    ()=>{
+      TokenValidity().then((res)=>{
+        if(res !== false){
+          navigate("/home");
+        }
+      })
+    }
+  )
   const {getUserDetails} = useContext(userContextProvider);
     const history = useNavigate();
     const [loading,setLoading] = useState(false);
