@@ -12,24 +12,9 @@ import Communities from './Pages/Communities';
 import AddPostForm from './Components/AddPost/AddPostForm';
 import PostView from './Components/PostView/PostView';
 import NotFound from './Pages/NotFound';
+import CreateCommunity from './Components/CommunitiesComponents/CreateCommunity';
 function App() {
-  // const [loading, setLoading] = useState(true);
-  // useEffect(
-  //   ()=>{
-  //     setLoading(true);
-
-  //     const timeoutId = setTimeout(() => {
-  //       setLoading(false);
-  //     }, 1000);
-  //     return () => clearTimeout(timeoutId);
-  //   }
-  // ,[]);
   return (
-    // loading ?
-    //   <div className='absolute w-screen h-screen top-0 bottom-0 left-0 right-0 m-auto flex items-center justify-center bg-white'>
-    //     <Lottie loop={true} animationData={Loader} className='w-52'/>
-    //   </div>
-    // :
     <div className="App">
       <Routes>
         <Route path='/' element={<Landing/>}/>
@@ -42,6 +27,7 @@ function App() {
         <Route path='/explore' exact element={<Explore/>}/>
         <Route path='/posts/:postId' element={<PostView/>}/>
         <Route path='/communities' element={<Communities/>}/>
+        <Route path='/create-community' element={<CreateCommunity/>}/>
         <Route path='*' element={<NotFound/>}/>
       </Routes>
       <ToastContainer
