@@ -13,8 +13,8 @@ import LoaderContext from './Context/loaderContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <BrowserRouter>
-      <LoaderContext>
       <UserContext>
+      <LoaderContext>
         <StatContext>
         <FriendContext>
           <HomeFeedContext>
@@ -26,7 +26,7 @@ root.render(
           </HomeFeedContext>
         </FriendContext>
         </StatContext>
-      </UserContext>
       </LoaderContext>
+      </UserContext>
     </BrowserRouter>
 );
