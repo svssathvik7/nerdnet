@@ -2,11 +2,14 @@ import React, { useContext, useEffect, useState } from 'react'
 import "./CreateCommunity.css"
 import { CustomCard } from '@tsamantanis/react-glassmorphism'
 import '@tsamantanis/react-glassmorphism/dist/index.css'
-const Pages = (pageNum)=>{
+const Pages = (props)=>{
   return (
-    (pageNum == 0) ? 
-    <div className='text-white bg-red-500'>
+    (props.pageNum == 0) ? 
+    <div className='text-white'>
       <h1 className='text-4xl'>Welcome to NerdCommunities!</h1>
+      <div>
+        
+      </div>
     </div> : <></>
   )
 }

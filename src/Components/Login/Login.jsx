@@ -18,7 +18,7 @@ export default function Login() {
   useEffect(
     ()=>{
       TokenValidity().then((res)=>{
-        if(res !== true){
+        if(res === true){
           navigate("/home");
         }
       })
