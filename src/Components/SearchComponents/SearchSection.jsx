@@ -12,7 +12,7 @@ const formatAge = (date) => {
 };
 
 export default function SearchSection() {
-  const [result, setResult] = useState([]);
+  const [usersresult, setUsersResult] = useState([]);
   const { type, searchQuery } = useParams();
   const {user} = useContext(userContextProvider);
   useEffect(() => {
@@ -29,10 +29,10 @@ export default function SearchSection() {
           ).data;
           console.log(response.status);
           if (response.status) {
-            setResult(response.result);
-            console.log(result);
+            setUsersResult(response.usersresult);
+            console.log(usersresult);
           } else {
-            setResult([]);
+            setUsersResult([]);
           }
         } else if (type == "filter") {
           const response = (
@@ -45,9 +45,9 @@ export default function SearchSection() {
           ).data;
           console.log(response.status);
           if (response.status) {
-            setResult(response.posts);
+            setUsersResult(response.posts);
           } else {
-            setResult([]);
+            setUsersResult([]);
           }
         }
       } catch (error) {
@@ -97,9 +97,9 @@ export default function SearchSection() {
         )}
       </div>
       <div id="search-scroller" className="flex items-center justify-center p-2 flex-wrap">
-          {result?.length??0 ? 
+          {usersresult?.length??0 ? 
             type === "user" ?
-            result.map((item, i) => (
+            usersresult.map((item, i) => (
               <div key={i} className="bg-white rounded-lg w-fit h-fit flex flex-col items-center justify-around m-2 p-2 cursor-pointer hover:scale-105 trans100 flex-wrap">
                 <Link to={`/profile/${item.email}`}>
                   <img alt="dp" src={item.dp} className="w-16 h-16 rounded-full" />
@@ -121,7 +121,7 @@ export default function SearchSection() {
               </div>
             ))
             :
-            result.map((item, i)=>(
+            usersresult.map((item, i)=>(
               <div key={i} className="m-2">
                 <Post {...item}/>
               </div>
