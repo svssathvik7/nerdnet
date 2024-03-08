@@ -1,0 +1,12 @@
+.community-aside{
+    height: 90dvh;
+    width: fit-content;
+    max-width: 25dvw;
+}
+.community-dp img{
+    width: 8dvw;
+    height: 8dvw;
+}
+.community-description{
+    width: 100%;
+}

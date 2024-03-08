@@ -12,6 +12,7 @@ import Communities from './Pages/Communities';
 import AddPostForm from './Components/AddPost/AddPostForm';
 import PostView from './Components/PostView/PostView';
 import NotFound from './Pages/NotFound';
+import Community from './Components/CommunitiesComponents/Community';
 import CreateCommunity from './Components/CommunitiesComponents/CreateCommunity';
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path='/posts/:postId' element={<PostView/>}/>
         <Route path='/communities' element={<Communities/>}/>
         <Route path='/create-community' element={<CreateCommunity/>}/>
+        <Route path='/community/:community_name' exact element={<Community/>}/>
         <Route path='*' element={<NotFound/>}/>
       </Routes>
       <ToastContainer

@@ -42,7 +42,7 @@ export default function MaxiNavBar() {
     <div id='header-nav-links' className='flex items-center justify-around'>
         <Link className={`${path === "/home" ? "bg-[#1eb81e]" : ""} p-1 rounded-lg text-white font-medium`} to="/home">Home</Link>
         <Link className={`text-white font-medium ${path === "/explore" ? "bg-[#1eb81e]" : ""} p-1 rounded-lg `} to="/explore">Explore</Link>
-        <Link className={`text-white font-medium ${path === "/communities" ? "bg-[#1eb81e]" : ""} p-1 rounded-lg `} to="/communities">Communitites</Link>
+        <Link className={`text-white font-medium ${(path).includes("/commun") ? "bg-[#1eb81e]" : ""} p-1 rounded-lg `} to="/communities">Communitites</Link>
         <div className='text-white font-medium flex items-center justify-center' to="/home"><input name='headerSearch' value={searchQuery} onChange={handleSearchChange} id='header-search' type='text' className='bg-transparent outline-none border-b-2 w-56' placeholder='Search nerds, #topics...' autoComplete='off'/><button onClick={handleSearchSubmit} className='p-1 bg-white rounded-full' disabled={!(searchQuery.length>1)}><FaMagnifyingGlass color='black'/></button></div>
     </div>
   )
