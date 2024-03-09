@@ -8,13 +8,14 @@ import Post from "../Post/Post";
 import dateFormat from "dateformat";
 import { userContextProvider } from "../../Context/userContext";
 const formatAge = (date) => {
-  return "Joined - " + dateFormat(date,"mmmm dS, yyyy");
+  return "Joined - " + dateFormat(date, "mmmm dS, yyyy");
 };
 
 export default function SearchSection() {
   const [usersresult, setUsersResult] = useState([]);
+  const [communitiesresult, setCommunitiesResult] = useState([]);
   const { type, searchQuery } = useParams();
-  const {user} = useContext(userContextProvider);
+  const { user } = useContext(userContextProvider);
   useEffect(() => {
     const handleQuery = async () => {
       try {
@@ -29,7 +30,8 @@ export default function SearchSection() {
           ).data;
           console.log(response.status);
           if (response.status) {
-            setUsersResult(response.usersresult);
+            setUsersResult(response?.usersresult);
+            setCommunitiesResult(response?.communityresult);
             console.log(usersresult);
           } else {
             setUsersResult([]);
@@ -46,6 +48,7 @@ export default function SearchSection() {
           console.log(response.status);
           if (response.status) {
             setUsersResult(response.posts);
+            setCommunitiesResult(response?.communityresult);
           } else {
             setUsersResult([]);
           }
@@ -65,21 +68,25 @@ export default function SearchSection() {
       }
     };
     handleQuery();
-  }, [searchQuery,type]);
-  const handleAddChat = async(friendId)=>{
+  }, [searchQuery, type]);
+  const handleAddChat = async (friendId) => {
     try {
-        const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/chat/add-recent-chats",{
-          userId : user._id,
-          friendId : friendId
-        })).data;
-        if(!response.status)
-        {
-          console.log(response)
-        }
+      const response = (
+        await axios.post(
+          process.env.REACT_APP_BACKEND_URL + "/chat/add-recent-chats",
+          {
+            userId: user._id,
+            friendId: friendId,
+          }
+        )
+      ).data;
+      if (!response.status) {
+        console.log(response);
+      }
     } catch (error) {
       console.log(error);
     }
-  }
+  };
   return (
     <div
       id="search-section"
@@ -96,13 +103,23 @@ export default function SearchSection() {
           </h4>
         )}
       </div>
-      <div id="search-scroller" className="flex items-center justify-center p-2 flex-wrap">
-          {usersresult?.length??0 ? 
-            type === "user" ?
+      <div
+        id="search-scroller"
+        className="flex items-center justify-center p-2 flex-wrap"
+      >
+        {(usersresult?.length ?? 0) || (communitiesresult?.length ?? 0) ? (
+          type === "user" ? (
             usersresult.map((item, i) => (
-              <div key={i} className="bg-white rounded-lg w-fit h-fit flex flex-col items-center justify-around m-2 p-2 cursor-pointer hover:scale-105 trans100 flex-wrap">
+              <div
+                key={i}
+                className="bg-white rounded-lg w-fit h-fit flex flex-col items-center justify-around m-2 p-2 cursor-pointer hover:scale-105 trans100 flex-wrap"
+              >
                 <Link to={`/profile/${item.email}`}>
-                  <img alt="dp" src={item.dp} className="w-16 h-16 rounded-full" />
+                  <img
+                    alt="dp"
+                    src={item.dp}
+                    className="w-16 h-16 rounded-full"
+                  />
                 </Link>
                 <Link to={`/profile/${item.email}`}>
                   <p className="text-black font-medium text-lg">
@@ -117,20 +134,71 @@ export default function SearchSection() {
                     {item.education}
                   </p>
                 </Link>
-                <button onClick={()=>{handleAddChat(item._id)}} className="bg-slate-500 text-white p-2 text-sm rounded-md hover:rounded-xl trans100">Add to Chats!</button>
+                <button
+                  onClick={() => {
+                    handleAddChat(item._id);
+                  }}
+                  className="bg-slate-500 text-white p-2 text-sm rounded-md hover:rounded-xl trans100"
+                >
+                  Add to Chats!
+                </button>
               </div>
             ))
-            :
-            usersresult.map((item, i)=>(
+          ) : (
+            usersresult.map((item, i) => (
               <div key={i} className="m-2">
-                <Post {...item}/>
+                <Post {...item} />
               </div>
-            )
-          ):(
-            <div>
-              <p className="text-white font-extrabold text-3xl m-8">No Matching Results!</p>
+            ))
+          )
+        ) : (
+          <div>
+            <p className="text-white font-extrabold text-3xl m-8">
+              No Matching Results!
+            </p>
+          </div>
+        )}
+        {communitiesresult?.length ?? 0 ? (
+          communitiesresult.map((community, i) => (
+            <div key={i} className="bg-white w-fit p-1 flex flex-col items-center justify-start flex-wrap rounded-lg community-card">
+              <div className="flex flex-col items-end justify-end">
+                <img
+                  alt="cover"
+                  src={community.coverPic}
+                  className="preview-cover-pic object-contain"
+                />
+                <div className="p-1 bg-white absolute rounded-full">
+                  <img
+                    alt="dp"
+                    src={community.dp}
+                    className="preview-dp-pic rounded-full object-contain"
+                  />
+                </div>
+              </div>
+              <div>
+                <div>
+                  <div className="flex items-center justify-center">
+                    <h4 className="font-bold text-lg w-fit">
+                      {community.name}
+                    </h4>
+                    <p className="mx-1 w-fit text-sm rounded-lg bg-yellow-400 text-black">
+                      #{community.subject}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className='flex items-center justify-around w-fit p-2 flex-wrap'>
+                    <p><b>{community?.likes??10}</b> Likes</p>
+                    <p><b>{community?.members??7}</b> Nerds</p>
+                    <p><b>{community?.posts??100}</b> Posts</p>
+                    <p>Created on {community?.age??"Some date"}</p>
+              </div>
+              <Link className="bg-black text-white rounded-md p-1 w-20 hover:scale-95 trans100 hover:bg-white hover:text-black hover:border-2 hover:border-black text-center" to={"/community/"+community?.name}>Visit</Link>
             </div>
-          )}
+          ))
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );

@@ -8,3 +8,15 @@
     overflow-y: scroll;
     flex: 1;
 }
+.preview-cover-pic{
+    width: 20dvw;
+    aspect-ratio: 16/9;
+}
+.preview-dp-pic{
+    width: 5dvw;
+    aspect-ratio: 1/1;
+}
+.community-card{
+    width: fit-content;
+    max-width: 20dvw;
+}

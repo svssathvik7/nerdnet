@@ -42,10 +42,10 @@ const CommunityDetailsBar = (props)=>{
             <div className='text-white flex items-center justify-center flex-col my-1'>
                 <p className='self-start bg-slate-500 rounded-lg p-1'>About</p>
                 <div className='flex items-center justify-center'>
-                    <h4 className='font-bold text-xl w-fit'>{communityInfo.name}</h4>
+                    <h4 className='font-bold text-3xl w-fit'>{communityInfo.name}</h4>
                     <p className='mx-1 w-fit text-sm rounded-lg bg-yellow-400 text-black'>#{communityInfo.subject}</p>
                 </div>
-                <p className='community-description flex items-center justify-center flex-wrap underline'>{communityInfo.description}</p>
+                <p className='community-description flex items-center justify-center flex-wrap'>{communityInfo.description}</p>
             </div>
         )
     }
@@ -66,6 +66,7 @@ const CommunityDetailsBar = (props)=>{
         return (
             <div className='text-white flex flex-col items-center justify-center w-full my-1'>
                 <p className='self-start bg-slate-500 rounded-lg p-1'>Admins</p>
+                
             </div>
         )
     }
