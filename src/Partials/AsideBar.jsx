@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import TopNerdIcon from "../assets/bright-idea.svg";
 import TopTopicIcon from "../assets/test-tubes.svg";
 import TopPostIcon from "../assets/article.svg";
+import Home from "../assets/home-logo.png";
 import { statContextProvider } from '../Context/statContext';
 const formatToK = (val)=>{
   if(val >= 1000)
@@ -71,6 +72,18 @@ function TrendingPostsDiv(){
     </div>
   )
 }
+const MySpaces = ()=>{
+  return (
+    <div>
+      <div className='flex flex-wrap flex-col my-4'>
+        <div className='flex items-center justify-start'>
+          <img title='My Spaces' className='w-8' alt='emoji' src={Home}/>
+          <h6 className='font-medium underline text-slate-200'>My Spaces</h6>
+        </div>
+      </div>
+    </div>
+  )
+}
 function RedirectFooter(){
   return (
     <div id='semi-footer' className='flex w-[100%] items-center justify-around mt-4'>
@@ -93,6 +106,7 @@ export default function AsideBar() {
         <TrendingNerdsDiv/>
         <TrendingTopicsDiv/>
         <TrendingPostsDiv/>
+        <MySpaces/>
         <RedirectFooter/>
     </div>
   )

@@ -193,7 +193,7 @@ export default function SearchSection() {
                     <p><b>{community?.posts??100}</b> Posts</p>
                     <p>Created on {community?.age??"Some date"}</p>
               </div>
-              <Link className="bg-black text-white rounded-md p-1 w-20 hover:scale-95 trans100 hover:bg-white hover:text-black hover:border-2 hover:border-black text-center" to={"/community/"+community?.name}>Visit</Link>
+              <Link className="bg-black text-white rounded-md p-1 w-20 hover:scale-95 trans100 hover:bg-white hover:text-black hover:border-2 hover:border-black text-center" to={"/community/"+community?._id}>Visit</Link>
             </div>
           ))
         ) : (

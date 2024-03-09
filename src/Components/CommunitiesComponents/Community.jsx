@@ -22,7 +22,7 @@ const CommunityDetailsBar = (props)=>{
             const fetchCommunityDetails = async()=>{
                 try {
                     const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/community/get-community-info/",{
-                        name : props.community_name
+                        id : props.community_id
                     })).data;
                     if(response.status){
                         setCommunityInfo(response.community_info);
@@ -87,7 +87,7 @@ const CommunityDetailsBar = (props)=>{
     )
 }
 export default function Community() {
-    const {community_name} = useParams();
+    const {community_id} = useParams();
     const {isLoading} = useContext(loaderContextProvider);
     const [isMobile,setIsMobile] = useState(window.innerWidth <= 768);
   return (
@@ -95,7 +95,7 @@ export default function Community() {
         <Header />
         {isLoading && <Loading/>}
         {isMobile ? <MiniNavBar /> : null}
-        <CommunityDetailsBar community_name={community_name}/>
+        <CommunityDetailsBar community_id={community_id}/>
     </div>
   )
 }

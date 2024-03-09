@@ -4,7 +4,9 @@ import { CustomCard } from '@tsamantanis/react-glassmorphism'
 import '@tsamantanis/react-glassmorphism/dist/index.css'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { userContextProvider } from '../../Context/userContext'
 const Pages = (props)=>{
+  const {user} = useContext(userContextProvider);
   const navigate = useNavigate();
   const [formData,setFormData] = useState({
     community_name : "",
@@ -24,18 +26,13 @@ const Pages = (props)=>{
         community_dp : formData.community_dp,
         community_cover_pic : formData.community_cover_pic,
         subject : formData.subject,
-        description : formData.description
+        description : formData.description,
+        user : user._id
       })).data;
       if(response.status){
-        setFormData({
-          community_name : "",
-          community_dp : "",
-          community_cover_pic : "",
-          subject : "",
-          description : ""
-        })
+        setFormData(response.result)
+        navigate("/community/"+response.result);
         console.log("Community created!");
-        navigate("/community/"+formData.community_name);
       }
       else{
         console.log("Community failed")

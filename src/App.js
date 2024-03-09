@@ -29,7 +29,7 @@ function App() {
         <Route path='/posts/:postId' element={<PostView/>}/>
         <Route path='/communities' element={<Communities/>}/>
         <Route path='/create-community' element={<CreateCommunity/>}/>
-        <Route path='/community/:community_name' exact element={<Community/>}/>
+        <Route path='/community/:community_id' exact element={<Community/>}/>
         <Route path='*' element={<NotFound/>}/>
       </Routes>
       <ToastContainer
