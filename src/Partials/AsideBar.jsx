@@ -81,13 +81,15 @@ const MySpaces = ()=>{
   ,[])
   return (
       <div className='flex flex-wrap flex-col my-4'>
-        <div className='flex items-center justify-start'>
+        <div className='flex items-center justify-center'>
           <img title='My Spaces' className='w-8' alt='emoji' src={Home}/>
-          <h6 className='font-medium underline text-slate-200'>My Spaces</h6>
+          <h6 className='font-medium underline text-slate-200 text-center'>My Spaces</h6>
         </div>
-      <ol className='list-decimal pl-4 flex flex-col items-center justify-start text-white'>
-        {spaces?.map((space, i) => (
-            <p>{space.name}</p>
+      <ol className='flex pl-4 items-center justify-center text-center text-white flex-wrap'>
+        {(spaces)?.map((space, i) => (
+            <Link className='w-fit p-1 m-1 bg-white rounded-full hover:scale-110 trans100' to={"/community/"+space._id}>
+              <img alt={space.name} src={space.dp} className='w-8 rounded-full aspect-square'/>
+            </Link>
         ))}
       </ol>
       </div>
