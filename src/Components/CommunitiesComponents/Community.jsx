@@ -7,6 +7,7 @@ import MiniNavBar from '../Navbar/MiniNavBar';
 import { loaderContextProvider } from '../../Context/loaderContext';
 import { CiPen } from "react-icons/ci";
 import axios from 'axios';
+import { userContextProvider } from '../../Context/userContext';
 const CommunityDetailsBar = (props)=>{
     const [communityInfo,setCommunityInfo] = useState({
         name : "Community",
@@ -16,6 +17,8 @@ const CommunityDetailsBar = (props)=>{
         description : "A NerdNet Community",
         followers : []
     });
+    const {user} = useContext(userContextProvider);
+    const [founder,setFounder] = useState({});
     const path = useLocation();
     useEffect(
         ()=>{
@@ -34,12 +37,29 @@ const CommunityDetailsBar = (props)=>{
                     console.log(error);
                 }
             }
+            const getFounderDetails = async ()=>{
+                try {
+                    const founderData = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/stats/get-user-information",{
+                        user : communityInfo.createdBy
+                    })).data;
+                    if(founderData.status){
+                        setFounder(founderData.user)
+                    }
+                    else{
+                        setFounder({});
+                    }
+                } catch (error) {
+                    console.log(error);
+                    setFounder({});
+                }
+            }
+            getFounderDetails();
             fetchCommunityDetails();
         }
     ,[path.pathname]);
     const FormDiv = ()=>{
         return (
-            <div className='text-white flex items-center justify-center flex-col my-1'>
+            <div className='text-white flex items-center justify-center flex-col my-1 w-full'>
                 <p className='self-start bg-slate-500 rounded-lg p-1'>About</p>
                 <div className='flex items-center justify-center'>
                     <h4 className='font-bold text-3xl w-fit'>{communityInfo.name}</h4>
@@ -65,8 +85,14 @@ const CommunityDetailsBar = (props)=>{
     const AdminsDiv = ()=>{
         return (
             <div className='text-white flex flex-col items-center justify-center w-full my-1'>
-                <p className='self-start bg-slate-500 rounded-lg p-1'>Admins</p>
-                
+                <p className='self-start bg-slate-500 rounded-lg p-1'>Created By</p>
+                <div className='flex items-center justify-start m-2'>
+                    <img src={founder?.dp??"https://cdn.icon-icons.com/icons2/2468/PNG/512/user_icon_149329.png"} alt='dp' className='w-12 rounded-lg mx-1 aspect-square'/>
+                    <div>
+                        <p className='font-bold'>{founder?.username??"Nerd"}</p>
+                        <p className='text-base text-slate-200'>{founder?.education??"Enthusiast at NerdNet"}</p>
+                    </div>
+                </div>
             </div>
         )
     }
