@@ -28,7 +28,7 @@ function TrendingNerdsDiv(){
     </div>
     <ol className='list-decimal pl-4 flex flex-col items-center justify-start text-white'>
       {trendingNerds.map((value, i) => (
-          <li key={i}><Link to={"/profile/" + value.email} className='text-fuchsia-50 font-base text-lg'>{value.username.split(" ")[0].length <= 7 ? value.username.split(" ")[0] : value.username.slice(0,5)+"..."}</Link>
+          <li key={i} className='hover:scale-110 trans100'><Link to={"/profile/" + value.email} className='text-fuchsia-50 font-base text-lg'>{value.username.split(" ")[0].length <= 7 ? value.username.split(" ")[0] : value.username.slice(0,5)+"..."}</Link>
           <sub className='text-xs mx-2'>[{formatToK(value.followersCount)}]</sub>
           </li>
       ))}
@@ -46,7 +46,7 @@ function TrendingTopicsDiv(){
     </div>
     <ol className='list-decimal pl-4 flex flex-col items-center justify-start text-white'>
       {trendingTopics.map((value, i) => (
-          <li key={i}>
+          <li key={i} className='hover:scale-110 trans100'>
             <Link to={"/search/filter/"+value._id}>{value._id} <sub>[{formatToK(value.count)}]</sub></Link>
           </li>
       ))}
@@ -64,7 +64,7 @@ function TrendingPostsDiv(){
     </div>
     <ol className='list-decimal pl-4 flex flex-col items-center justify-start text-white'>
       {trendingPosts.map((value, i) => (
-          <li key={i}>
+          <li key={i} className='hover:scale-110 trans100'>
             <Link to={"/posts/"+value._id} title={value.caption.length > 0 ? value.caption : value.postData}>{value.caption.length > 0 ? value.caption.slice(0,10)+"..." : value.postData.slice(0,10)+"..."}</Link>
           </li>
       ))}
@@ -87,8 +87,8 @@ const MySpaces = ()=>{
         </div>
       <ol className='flex pl-4 items-center justify-center text-center text-white flex-wrap'>
         {(spaces)?.map((space, i) => (
-            <Link className='w-fit p-1 m-1 bg-white rounded-full hover:scale-110 trans100' to={"/community/"+space._id}>
-              <img alt={space.name} src={space.dp} className='w-8 rounded-full aspect-square'/>
+            <Link className='w-fit p-1 m-1 bg-white rounded-lg hover:scale-110 trans100' to={"/community/"+space._id}>
+              <img alt={space.name} src={space.dp} className='w-8 rounded-lg aspect-square'/>
             </Link>
         ))}
       </ol>

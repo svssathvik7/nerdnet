@@ -3,7 +3,7 @@ import "./CreateCommunity.css"
 import { CustomCard } from '@tsamantanis/react-glassmorphism'
 import '@tsamantanis/react-glassmorphism/dist/index.css'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { userContextProvider } from '../../Context/userContext'
 const Pages = (props)=>{
   const {user} = useContext(userContextProvider);
@@ -61,7 +61,8 @@ const Pages = (props)=>{
         <label for="description" className='text-slate-400'>Description:</label><br/>
         <textarea onChange={onFormChange} value={formData.description} id="description" name="description" rows="5" className='bg-transparent border-2 my-1 border-white resize-none outline-none p-2' cols="50" required></textarea><br/>
 
-        <button className='p-1 bg-white text-black rounded-lg hover:scale-105 trans100' onClick={submitCommunity}>Create</button>
+        <button className='mx-1 p-1 bg-white text-black rounded-lg hover:scale-105 trans100' onClick={submitCommunity}>Create</button>
+        <Link to={"/communities"} className="mx-1 p-1 bg-slate-600 text-white rounded-lg hover:scale-105 trans100">Back</Link>
         </div>
     </div> : <></>
   )

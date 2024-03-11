@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import "./Community.css"
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import Header from '../../Partials/Header';
 import Loading from '../LoadPage/Loading';
 import MiniNavBar from '../Navbar/MiniNavBar';
@@ -8,6 +8,7 @@ import { loaderContextProvider } from '../../Context/loaderContext';
 import { CiPen } from "react-icons/ci";
 import axios from 'axios';
 import { userContextProvider } from '../../Context/userContext';
+import AddPostBtn from '../AddPost/AddPostBtn';
 const CommunityDetailsBar = (props)=>{
     const [communityInfo,setCommunityInfo] = useState({
         name : "Community",
@@ -86,13 +87,13 @@ const CommunityDetailsBar = (props)=>{
         return (
             <div className='text-white flex flex-col items-center justify-center w-full my-1'>
                 <p className='self-start bg-slate-500 rounded-lg p-1'>Created By</p>
-                <div className='flex items-center justify-start m-2'>
+                <Link to={"/profile/"+founder?.email??user?.email} className='flex items-center justify-start m-2'>
                     <img src={founder?.dp??"https://cdn.icon-icons.com/icons2/2468/PNG/512/user_icon_149329.png"} alt='dp' className='w-12 rounded-lg mx-1 aspect-square'/>
                     <div>
                         <p className='font-bold'>{founder?.username??"Nerd"}</p>
                         <p className='text-base text-slate-200'>{founder?.education??"Enthusiast at NerdNet"}</p>
                     </div>
-                </div>
+                </Link>
             </div>
         )
     }
@@ -122,6 +123,7 @@ export default function Community() {
         {isLoading && <Loading/>}
         {isMobile ? <MiniNavBar /> : null}
         <CommunityDetailsBar community_id={community_id}/>
+        <AddPostBtn/>
     </div>
   )
 }

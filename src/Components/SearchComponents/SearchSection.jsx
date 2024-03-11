@@ -87,6 +87,24 @@ export default function SearchSection() {
       console.log(error);
     }
   };
+  const [hasSubscibedTempVar,setHasSubsTempVar] = useState(false);
+  const handleAddCommunity = async(community)=>{
+    try {
+      const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/auth/add-user-space",{
+        user : user._id,
+        space : community._id
+      })).data;
+      if(response.status){
+        console.log("Space added");
+        setHasSubsTempVar(true);
+      }
+      else{
+        console.log("Failed adding space");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <div
       id="search-section"
@@ -189,11 +207,14 @@ export default function SearchSection() {
               </div>
               <div className='flex items-center justify-around w-fit p-2 flex-wrap'>
                     <p><b>{community?.likes??10}</b> Likes</p>
-                    <p><b>{community?.members??7}</b> Nerds</p>
+                    <p><b>{community?.followers?.length??7}</b> Nerds</p>
                     <p><b>{community?.posts??100}</b> Posts</p>
                     <p>Created on {community?.age??"Some date"}</p>
               </div>
-              <Link className="bg-black text-white rounded-md p-1 w-20 hover:scale-95 trans100 hover:bg-white hover:text-black hover:border-2 hover:border-black text-center" to={"/community/"+community?._id}>Visit</Link>
+              <div className="flex items-center justify-around w-full">
+                <Link className="bg-black text-white rounded-md p-1 w-24 hover:scale-95 trans100 hover:bg-white hover:text-black hover:border-2 hover:border-black text-center" to={"/community/"+community?._id}>Visit</Link>
+                {!(community?.followers?.includes(user?._id) || (hasSubscibedTempVar)) && <button className="bg-black text-white rounded-md p-1 w-24 hover:scale-95 trans100 hover:bg-white hover:text-black hover:border-2 hover:border-black text-center" onClick={()=>{handleAddCommunity(community)}}>Subscribe</button>}
+              </div>
             </div>
           ))
         ) : (
