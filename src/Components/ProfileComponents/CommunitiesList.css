@@ -1,0 +1,8 @@
+.communities-list{
+    width: 45dvw;
+    height: 90dvh;
+    overflow-y: scroll;
+}
+.space-card{
+    width: 20dvw;
+}

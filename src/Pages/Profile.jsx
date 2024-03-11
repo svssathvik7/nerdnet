@@ -11,6 +11,7 @@ import FollowingList from '../Components/ProfileComponents/FollowingList'
 import Chat from '../Components/ChatComponents/Chat'
 import { loaderContextProvider } from '../Context/loaderContext'
 import Loading from '../Components/LoadPage/Loading'
+import CommunitiesList from '../Components/ProfileComponents/CommunitiesList'
 export default function Profile() {
   const {isLoading} = useContext(loaderContextProvider);
   const [isMobile,setIsMobile] = useState(window.innerWidth <= 768);
@@ -27,7 +28,7 @@ export default function Profile() {
       <Header/>
         <div id="profile-container" className={`flex ${isMobile ? " flex-col " : " "} items-center justify-start`}>
           <ProfileSidebar/>
-          {profileNavigator === 0 ? <UserPosts/> : profileNavigator === 1 ? <FollowersList/> : <FollowingList/>}
+          {profileNavigator === 0 ? <UserPosts/> : profileNavigator === 1 ? <FollowersList/> : profileNavigator == 3 ? <CommunitiesList/> : <FollowingList/>}
         </div>
       {isMobile ? <MiniNavBar/> : <></>}
       {isMobile ? <></> : <AddPostBtn/>}

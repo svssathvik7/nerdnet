@@ -16,6 +16,7 @@ import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import {profileNavigatorContextProvider} from '../../Context/profileNavigatorContext';
+import { statContextProvider } from '../../Context/statContext';
 export default function ProfileSidebar() {
     const [loading,setIsLoadingState] = useState(false);
     const {user} = useContext(userContextProvider);
@@ -28,6 +29,7 @@ export default function ProfileSidebar() {
     const {profileemail} = useParams();
     const location = useLocation();
     const {profileNavigator,setProfileNavigator} = useContext(profileNavigatorContextProvider);
+    const {spaces} = useContext(statContextProvider);
     useEffect(
         ()=>{
             const miniUtilities = async()=>{
@@ -43,8 +45,14 @@ export default function ProfileSidebar() {
             }
             miniUtilities();
         }
-    ,[location.pathname,user?.email,userProfile,isFollowing,profileemail]);
+        ,[location.pathname,user?.email,userProfile,isFollowing,profileemail]);
     const [editable,setEditable] = useState(false);
+    const {getStats} = useContext(statContextProvider);
+    useEffect(
+        ()=>{
+            getStats();
+        }
+    ,[]);
     const handleFollowBtn = async (e) =>{
         e.preventDefault();
         setIsLoadingState(true);
@@ -224,8 +232,8 @@ export default function ProfileSidebar() {
                 <p className='text-xs'>Following</p>
             </div>
             <div className='w-1 h-6 rounded-2xl bg-black'></div>
-            <div className='flex flex-col items-center justify-center'>
-                <p>{communities}</p>
+            <div className='flex flex-col items-center justify-center cursor-pointer' onClick={()=>{setProfileNavigator(profileNavigator == 3 ? 0 : 3)}}>
+                <p>{spaces?.length??0}</p>
                 <p className='text-xs'>Communities</p>
             </div>
         </div>
