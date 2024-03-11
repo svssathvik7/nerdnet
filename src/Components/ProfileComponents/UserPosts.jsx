@@ -10,7 +10,7 @@ export default function UserPosts() {
   const [showPosts,setShowPosts] = useState(true);
   // useEffect(()=>{console.log(userProfile.savedPosts)})
   return (
-    <div id='user-posts-scroller' className='flex flex-col items-start justify-start p-2'>
+    <div id='user-posts-scroller' className={`${(userProfile?.posts?.length && userProfile?.savedPosts?.length) ? " items-start " : " item-center "} flex flex-col justify-start p-2 mx-auto`}>
       <div className='flex w-full items-center justify-center p-1'>
         <p className={`text-white font-bold text-xl ${showPosts ? " opacity-100 " : " opacity-50 "} cursor-pointer`} onClick={()=>{setShowPosts(true)}}>Your Posts</p>
         {(userProfile?._id??0 == user?._id??1) && <div className='w-[2px] h-4 bg-slate-500 mx-2 rounded-lg'></div>}
