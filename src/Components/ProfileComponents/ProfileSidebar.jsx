@@ -29,7 +29,6 @@ export default function ProfileSidebar() {
     const {profileemail} = useParams();
     const location = useLocation();
     const {profileNavigator,setProfileNavigator} = useContext(profileNavigatorContextProvider);
-    const {spaces} = useContext(statContextProvider);
     useEffect(
         ()=>{
             const miniUtilities = async()=>{
@@ -233,7 +232,7 @@ export default function ProfileSidebar() {
             </div>
             <div className='w-1 h-6 rounded-2xl bg-black'></div>
             <div className='flex flex-col items-center justify-center cursor-pointer' onClick={()=>{setProfileNavigator(profileNavigator == 3 ? 0 : 3)}}>
-                <p>{spaces?.length??0}</p>
+                <p>{userProfile?.spaces?.length??0}</p>
                 <p className='text-xs'>Communities</p>
             </div>
         </div>

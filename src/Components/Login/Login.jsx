@@ -12,8 +12,10 @@ import { PulseLoader } from 'react-spinners';
 import { useContext } from 'react';
 import { userContextProvider } from '../../Context/userContext';
 import TokenValidity from "../../Utilities/TokenValidity";
+import { statContextProvider } from '../../Context/statContext';
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export default function Login() {
+  const {getStats} = useContext(statContextProvider);
   const navigate = useNavigate();
   useEffect(
     ()=>{
@@ -67,6 +69,7 @@ export default function Login() {
           const data = await response.data;
           localStorage.setItem("token",data.userToken);
           getUserDetails();
+          getStats();
           history("/home");
         }).catch((error)=>{
           setLoading(false);

@@ -12,7 +12,7 @@ export default function UserPosts() {
   return (
     <div id='user-posts-scroller' className={`${(userProfile?.posts?.length && userProfile?.savedPosts?.length) ? " items-start " : " item-center "} flex flex-col justify-start p-2 mx-auto`}>
       <div className='flex w-full items-center justify-center p-1'>
-        <p className={`text-white font-bold text-xl ${showPosts ? " opacity-100 " : " opacity-50 "} cursor-pointer`} onClick={()=>{setShowPosts(true)}}>Your Posts</p>
+        <p className={`text-white font-bold text-xl ${showPosts ? " opacity-100 " : " opacity-50 "} cursor-pointer`} onClick={()=>{setShowPosts(true)}}>{userProfile?.username}'s Posts</p>
         {(userProfile?._id??0 == user?._id??1) && <div className='w-[2px] h-4 bg-slate-500 mx-2 rounded-lg'></div>}
         {(userProfile?._id??0 == user?._id??1) && <p className={`text-white font-bold text-xl ${!showPosts ? " opacity-100 " : " opacity-50 "} cursor-pointer`} onClick={()=>{setShowPosts(false)}}>Saved Posts</p>}
       </div>
