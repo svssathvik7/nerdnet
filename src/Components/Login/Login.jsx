@@ -13,8 +13,10 @@ import { useContext } from 'react';
 import { userContextProvider } from '../../Context/userContext';
 import TokenValidity from "../../Utilities/TokenValidity";
 import { statContextProvider } from '../../Context/statContext';
+import { socketContextProvider } from '../../Context/socketContext';
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export default function Login() {
+  const {initSocket} = useContext(socketContextProvider);
   const {getStats} = useContext(statContextProvider);
   const navigate = useNavigate();
   useEffect(
@@ -70,6 +72,7 @@ export default function Login() {
           localStorage.setItem("token",data.userToken);
           getUserDetails();
           getStats();
+          initSocket();
           history("/home");
         }).catch((error)=>{
           setLoading(false);

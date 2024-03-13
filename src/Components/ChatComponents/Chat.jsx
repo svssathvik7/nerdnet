@@ -14,10 +14,10 @@ import EmojiPicker from 'emoji-picker-react';
 import { MdEmojiEmotions } from "react-icons/md";
 import {motion} from "framer-motion";
 import { useInView } from 'framer-motion';
-import {io} from "socket.io-client";
-const socket = io.connect(process.env.REACT_APP_BACKEND_BASE_URL);
+import { socketContextProvider } from '../../Context/socketContext';
 const emojis = ["\u2764\uFE0F","\uD83D\uDC4D","\uD83D\uDC4E","\uD83D\uDE32"];
 const ReactionOpener = ({userType,messageId,user})=>{
+    const {socket} = useContext(socketContextProvider);
     const ref = useRef(null);
     const isInView = useInView(ref);
     const handleEmojiClick = async (e)=>{
@@ -63,6 +63,7 @@ const ReactionOpener = ({userType,messageId,user})=>{
       );
 }
 const Text = ({message,user,client})=>{
+    const {socket} = useContext(socketContextProvider);
     const formatDate = (date)=>{
         return dateFormat(date,"mmmm dS, yyyy");
     }
@@ -103,6 +104,7 @@ const Text = ({message,user,client})=>{
     )
 }
 export default function Chat() {
+    const {socket} = useContext(socketContextProvider);
     const [active,setActive] = useState(0);
     const {user} = useContext(userContextProvider);
     const [client,setClient] = useState(user);
