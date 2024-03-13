@@ -10,13 +10,6 @@ import { userContextProvider } from '../../Context/userContext';
 import AddPostBtn from '../AddPost/AddPostBtn';
 import Post from '../Post/Post';
 import { socketContextProvider } from '../../Context/socketContext';
-const GetCommunityFromDb = async (community_id,socket)=>{
-    socket.emit("get-community-details",{
-        id : community_id
-    },(response)=>{
-        return response;
-    });
-}
 const CommunityDetailsBar = (props)=>{
     const {socket} = useContext(socketContextProvider)
     const [communityInfo,setCommunityInfo] = useState({

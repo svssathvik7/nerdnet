@@ -3,19 +3,24 @@ import { userContextProvider } from './userContext';
 import { useContext,useState } from 'react';
 import axios from 'axios';
 import {loaderContextProvider} from "./loaderContext";
+import {socketContextProvider} from  "./socketContext";
 export const friendContextProvider = React.createContext(null);
 export default function FriendContext({children}) {
     const {user} = useContext(userContextProvider);
     const {setIsLoading} = useContext(loaderContextProvider);
     const [userProfile,setUserProfile] = useState(user);
+    const {socket} = useContext(socketContextProvider);
     const getUserProfile = async(profileemail)=>{
         if(profileemail === user.email)
         {
             setUserProfile(user);
         }
         else{
-            const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/auth/profileDetails",{profileEmail:profileemail,requestEmail:user.email})).data;
-            setUserProfile(response.userProfile);
+            socket.emit("get-profile-details",{
+                profileEmail:profileemail,requestEmail:user.email
+            },(response)=>{
+                setUserProfile(response.userProfile);
+            });
         }
     }
   return (
