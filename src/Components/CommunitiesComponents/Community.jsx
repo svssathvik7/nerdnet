@@ -9,6 +9,13 @@ import { CiPen } from "react-icons/ci";
 import axios from 'axios';
 import { userContextProvider } from '../../Context/userContext';
 import AddPostBtn from '../AddPost/AddPostBtn';
+import Post from '../Post/Post';
+const getCommunityFromDb = async (community_id)=>{
+    const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/community/get-community-info/",{
+        id : community_id
+    })).data;
+    return response;
+}
 const CommunityDetailsBar = (props)=>{
     const [communityInfo,setCommunityInfo] = useState({
         name : "Community",
@@ -16,7 +23,8 @@ const CommunityDetailsBar = (props)=>{
         coverPic : "#",
         subject : "NerdNet",
         description : "A NerdNet Community",
-        followers : []
+        followers : [],
+        posts : []
     });
     const {user} = useContext(userContextProvider);
     const [founder,setFounder] = useState({});
@@ -25,9 +33,7 @@ const CommunityDetailsBar = (props)=>{
         ()=>{
             const fetchCommunityDetails = async()=>{
                 try {
-                    const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/community/get-community-info/",{
-                        id : props.community_id
-                    })).data;
+                    const response = await getCommunityFromDb(props.community_id);
                     if(response.status){
                         setCommunityInfo(response.community_info);
                     }
@@ -76,9 +82,9 @@ const CommunityDetailsBar = (props)=>{
                 <p className='self-start bg-slate-500 rounded-lg p-1'>Lifetime Metrics</p>
                 <div className='flex items-center justify-around w-full p-2 flex-wrap'>
                     <p>{communityInfo?.likes??10} Likes</p>
-                    <p>{communityInfo?.members??7} Nerds</p>
-                    <p>{communityInfo?.posts??100} Posts</p>
-                    <p>Created on {communityInfo?.age??"Some date"}</p>
+                    <p>{communityInfo?.followers?.length??7} Nerds</p>
+                    <p>{communityInfo?.posts?.length??100} Posts</p>
+                    <p>Created on {new Date(communityInfo?.dateCreated).toLocaleString()}</p>
                 </div>
             </div>
         )
@@ -117,12 +123,41 @@ export default function Community() {
     const {community_id} = useParams();
     const {isLoading} = useContext(loaderContextProvider);
     const [isMobile,setIsMobile] = useState(window.innerWidth <= 768);
+    const [communityPosts,setCommunityPosts] = useState([]);
+    useEffect(
+        ()=>{
+            const getCommunityPosts = async ()=>{
+                try {
+                    const response = await getCommunityFromDb(community_id);
+                    if(response.status){
+                        setCommunityPosts(response.community_info.posts);
+                    }
+                    else{
+                        setCommunityPosts([]);
+                    }
+                } catch (error) {
+                    console.log(error);
+                    setCommunityPosts([]);
+                }
+            }
+            getCommunityPosts();
+        }
+    ,[]);
   return (
     <div className='w-screen h-screen'>
         <Header />
         {isLoading && <Loading/>}
         {isMobile ? <MiniNavBar /> : null}
-        <CommunityDetailsBar community_id={community_id}/>
+        <div className='flex items-center justify-start'>
+            <CommunityDetailsBar community_id={community_id}/>
+            <div id='community-feed-scroller' className='flex-1 flex items-center justify-center'>
+                {communityPosts?.map((post,i)=>(
+                    <div key={i}>
+                        <Post {...post}/>
+                    </div>
+                ))}
+            </div>  
+        </div>
         <AddPostBtn/>
     </div>
   )
