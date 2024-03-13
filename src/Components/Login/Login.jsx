@@ -72,7 +72,7 @@ export default function Login() {
           localStorage.setItem("token",data.userToken);
           getUserDetails();
           getStats();
-          initSocket();
+          // initSocket();
           history("/home");
         }).catch((error)=>{
           setLoading(false);

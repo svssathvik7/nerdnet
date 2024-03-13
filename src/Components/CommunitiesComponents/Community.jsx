@@ -6,17 +6,19 @@ import Loading from '../LoadPage/Loading';
 import MiniNavBar from '../Navbar/MiniNavBar';
 import { loaderContextProvider } from '../../Context/loaderContext';
 import { CiPen } from "react-icons/ci";
-import axios from 'axios';
 import { userContextProvider } from '../../Context/userContext';
 import AddPostBtn from '../AddPost/AddPostBtn';
 import Post from '../Post/Post';
-const getCommunityFromDb = async (community_id)=>{
-    const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/community/get-community-info/",{
+import { socketContextProvider } from '../../Context/socketContext';
+const GetCommunityFromDb = async (community_id,socket)=>{
+    socket.emit("get-community-details",{
         id : community_id
-    })).data;
-    return response;
+    },(response)=>{
+        return response;
+    });
 }
 const CommunityDetailsBar = (props)=>{
+    const {socket} = useContext(socketContextProvider)
     const [communityInfo,setCommunityInfo] = useState({
         name : "Community",
         dp : "#",
@@ -33,28 +35,32 @@ const CommunityDetailsBar = (props)=>{
         ()=>{
             const fetchCommunityDetails = async()=>{
                 try {
-                    const response = await getCommunityFromDb(props.community_id);
-                    if(response.status){
-                        setCommunityInfo(response.community_info);
-                    }
-                    else{
-                        console.log("error getting community data");
-                    }
+                    socket.emit("get-community-details",{
+                        id : props?.community_id
+                    },(response)=>{
+                        if(response.status){
+                            setCommunityInfo(response?.community_info);
+                        }
+                        else{
+                            console.log("error getting community data");
+                        }
+                    });
                 } catch (error) {
                     console.log(error);
                 }
             }
             const getFounderDetails = async ()=>{
                 try {
-                    const founderData = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/stats/get-user-information",{
+                    socket.emit("get-community-founder",{
                         user : communityInfo.createdBy
-                    })).data;
-                    if(founderData.status){
-                        setFounder(founderData.user)
-                    }
-                    else{
-                        setFounder({});
-                    }
+                    },(founderData)=>{
+                        if(founderData.status){
+                            setFounder(founderData.user)
+                        }
+                        else{
+                            setFounder({});
+                        }
+                    })
                 } catch (error) {
                     console.log(error);
                     setFounder({});
@@ -124,23 +130,27 @@ export default function Community() {
     const {isLoading} = useContext(loaderContextProvider);
     const [isMobile,setIsMobile] = useState(window.innerWidth <= 768);
     const [communityPosts,setCommunityPosts] = useState([]);
+    const {socket} = useContext(socketContextProvider)
     useEffect(
         ()=>{
-            const getCommunityPosts = async ()=>{
+            const GetCommunityPosts = async ()=>{
                 try {
-                    const response = await getCommunityFromDb(community_id);
-                    if(response.status){
-                        setCommunityPosts(response.community_info.posts);
-                    }
-                    else{
-                        setCommunityPosts([]);
-                    }
+                    socket.emit("get-community-details",{
+                        id : community_id
+                    },(response)=>{
+                        if(response.status){
+                            setCommunityPosts(response.community_info.posts);
+                        }
+                        else{
+                            setCommunityPosts([]);
+                        }
+                    });
                 } catch (error) {
                     console.log(error);
                     setCommunityPosts([]);
                 }
             }
-            getCommunityPosts();
+            GetCommunityPosts();
         }
     ,[]);
   return (

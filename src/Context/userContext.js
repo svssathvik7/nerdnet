@@ -15,7 +15,6 @@ const UserContext = ({children}) => {
                 const temp = new Set(data.recentChats);
                 data.recentChats = [...temp];
                 setUser(data);
-                console.log(data);
             }
             else{
                 setUser(null);
