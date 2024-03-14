@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import { loaderContextProvider } from "./loaderContext";
 import { userContextProvider } from "./userContext";
+import { socketContextProvider } from "./socketContext";
 export const statContextProvider = React.createContext(null);
 export default function StatContext({ children }) {
   const [trendingNerds, setTrendingNerds] = useState([]);
@@ -11,22 +12,20 @@ export default function StatContext({ children }) {
   const [spaces, setSpaces] = useState([]);
   const { user } = useContext(userContextProvider);
   const { setIsLoading } = useContext(loaderContextProvider);
+  const {socket} = useContext(socketContextProvider);
   const getTrendingNerds = async () => {
     setIsLoading(true);
     try {
-      const allNerds = (
-        await axios.get(
-          process.env.REACT_APP_BACKEND_URL + "/stats/getTrendingNerds"
-        )
-      ).data;
-      if (allNerds.status) {
-        // console.log(topSortedNerds);
-        setTrendingNerds(allNerds.nerds);
-        setIsLoading(false);
-      } else {
-        setTrendingNerds([]);
-        setIsLoading(false);
-      }
+      socket.emit("get-trending-nerds",(allNerds)=>{
+        if (allNerds.status) {
+          // console.log(topSortedNerds);
+          setTrendingNerds(allNerds.nerds);
+          setIsLoading(false);
+        } else {
+          setTrendingNerds([]);
+          setIsLoading(false);
+        }
+      });
     } catch (error) {
       console.log(error);
       setTrendingNerds([]);
@@ -36,18 +35,15 @@ export default function StatContext({ children }) {
   const getTrendingTopics = async () => {
     setIsLoading(true);
     try {
-      const response = (
-        await axios.get(
-          process.env.REACT_APP_BACKEND_URL + "/stats/getTrendingTopics/"
-        )
-      ).data;
-      if (response.status) {
-        setTrendingTopics(response.tags);
-        setIsLoading(false);
-      } else {
-        setTrendingTopics([]);
-        setIsLoading(false);
-      }
+      socket.emit("get-trending-topics",(response)=>{
+        if (response.status) {
+          setTrendingTopics(response.tags);
+          setIsLoading(false);
+        } else {
+          setTrendingTopics([]);
+          setIsLoading(false);
+        }
+      });
     } catch (error) {
       console.log(error);
       setTrendingTopics([]);
@@ -57,17 +53,14 @@ export default function StatContext({ children }) {
   const getTrendingPosts = async () => {
     setIsLoading(true);
     try {
-      const response = (
-        await axios.get(
-          process.env.REACT_APP_BACKEND_URL + "/stats/getTrendingPosts/"
-        )
-      ).data;
-      if (response.status) {
-        setTrendingPosts(response.posts);
-        console.log(trendingPosts);
-      } else {
-        setTrendingPosts([]);
-      }
+      socket.emit("get-trending-posts",(response)=>{
+        if (response.status) {
+          setTrendingPosts(response.posts);
+          console.log(trendingPosts);
+        } else {
+          setTrendingPosts([]);
+        }
+      });
       setIsLoading(false);
     } catch (error) {
       setTrendingPosts([]);
@@ -76,24 +69,19 @@ export default function StatContext({ children }) {
   };
   const getMySpaces = async () => {
     setIsLoading(true);
-    console.log("I am called")
     try {
-      const response = (
-        await axios.post(
-          process.env.REACT_APP_BACKEND_URL + "/stats/get-user-spaces/",
-          {
-            user: user?._id,
-          }
-        )
-      ).data;
-      if (response.status) {
-        setSpaces(response.spaces);
-        setIsLoading(false);
-        console.log(response.spaces);
-      } else {
-        setSpaces([]);
-        setIsLoading(false);
-      }
+      socket.emit("get-user-spaces",{
+        user: user?._id
+      },(response)=>{
+        if (response.status) {
+          setSpaces(response.spaces);
+          setIsLoading(false);
+          console.log(response.spaces);
+        } else {
+          setSpaces([]);
+          setIsLoading(false);
+        }
+      });
     } catch (error) {
       console.log(error);
       setSpaces([]);

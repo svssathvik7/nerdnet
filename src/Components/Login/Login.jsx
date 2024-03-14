@@ -4,7 +4,6 @@ import loginAnimation from "../../assets/loginAnimation.json";
 import { Link } from 'react-router-dom';
 import "./Login.css";
 import { useState } from 'react';
-import { connect } from 'react-redux';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
@@ -13,10 +12,8 @@ import { useContext } from 'react';
 import { userContextProvider } from '../../Context/userContext';
 import TokenValidity from "../../Utilities/TokenValidity";
 import { statContextProvider } from '../../Context/statContext';
-import { socketContextProvider } from '../../Context/socketContext';
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export default function Login() {
-  const {initSocket} = useContext(socketContextProvider);
   const {getStats} = useContext(statContextProvider);
   const navigate = useNavigate();
   useEffect(
@@ -27,7 +24,7 @@ export default function Login() {
         }
       })
     }
-  )
+  ,[]);
   const {getUserDetails} = useContext(userContextProvider);
     const history = useNavigate();
     const [loading,setLoading] = useState(false);
@@ -72,7 +69,6 @@ export default function Login() {
           localStorage.setItem("token",data.userToken);
           getUserDetails();
           getStats();
-          // initSocket();
           history("/home");
         }).catch((error)=>{
           setLoading(false);

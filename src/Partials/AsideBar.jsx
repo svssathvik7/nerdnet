@@ -74,11 +74,6 @@ function TrendingPostsDiv(){
 }
 const MySpaces = ()=>{
   const {spaces} = useContext(statContextProvider);
-  useEffect(
-    ()=>{
-      console.log(spaces);
-    }
-  ,[])
   return (
       <div className='flex flex-wrap flex-col my-4'>
         <div className='flex items-center justify-center'>
@@ -86,7 +81,7 @@ const MySpaces = ()=>{
           <h6 className='font-medium underline text-slate-200 text-center'>My Spaces</h6>
         </div>
       <ol className='flex pl-4 items-center justify-center text-center text-white flex-wrap'>
-        {(spaces)?.map((space, i) => (
+        {spaces.map((space, i) => (
             <Link className='w-fit p-1 m-1 bg-white rounded-lg hover:scale-110 trans100' to={"/community/"+space._id}>
               <img alt={space.name} src={space.dp} className='w-8 rounded-lg aspect-square'/>
             </Link>
