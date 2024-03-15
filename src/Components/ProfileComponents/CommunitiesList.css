@@ -2,6 +2,7 @@
     width: 45dvw;
     height: 90dvh;
     overflow-y: scroll;
+    z-index: 0!important;
 }
 .space-card{
     width: 20dvw;

@@ -26,7 +26,7 @@ export default function Profile() {
     <div id='profile'>
       {isLoading && <Loading/>}
       <Header/>
-        <div id="profile-container" className={`flex ${isMobile ? " flex-col " : " "} items-center justify-start`}>
+        <div id="profile-container" className={`flex ${isMobile ? " flex-col " : " "} items-center justify-start z-0`}>
           <ProfileSidebar/>
           {profileNavigator === 0 ? <UserPosts/> : profileNavigator === 1 ? <FollowersList/> : profileNavigator == 3 ? <CommunitiesList/> : <FollowingList/>}
         </div>

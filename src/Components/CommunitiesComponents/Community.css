@@ -4,9 +4,12 @@
     max-width: 25dvw;
 }
 .community-dp img{
-    width: 8dvw;
-    height: 8dvw;
+    width: 5dvw!important;
+    height: 5dvw!important;
 }
 .community-description{
     width: 100%;
+}
+.community-input{
+    border-bottom: thin solid #fff;
 }

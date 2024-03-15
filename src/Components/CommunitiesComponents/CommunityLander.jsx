@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Communities from "../../assets/Communities.json";
 import Lottie from 'lottie-react';
 import "./CommunityLander.css";
@@ -30,8 +30,7 @@ export default function CommunityLander() {
                 <p className='text-xs'>{matter?.caption??""}</p>
             </div>
             <div className='flex m-2 items-center justify-start w-full'>
-                <Link to="/create-community" className="p-2 mx-1 w-20 bg-white rounded-md trans100 hover:rounded-xl text-center">Create</Link>
-                <Link className="p-2 mx-1 w-20 bg-slate-500 text-white rounded-md trans100 hover:rounded-xl text-center">Explore</Link>
+                <Link to="/create-community" className="p-2 mx-1 w-40 bg-white rounded-md trans100 hover:rounded-xl text-center">Create</Link>
             </div>
         </div>
     </div>
