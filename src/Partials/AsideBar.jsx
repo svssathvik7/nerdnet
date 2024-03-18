@@ -6,6 +6,7 @@ import TopTopicIcon from "../assets/test-tubes.svg";
 import TopPostIcon from "../assets/article.svg";
 import Home from "../assets/home-logo.png";
 import { statContextProvider } from '../Context/statContext';
+import { userContextProvider } from '../Context/userContext';
 const formatToK = (val)=>{
   if(val >= 1000)
   {
@@ -108,8 +109,16 @@ export default function AsideBar() {
       getStats();
     }
   ,[location.pathname]);
+  const {user} = useContext(userContextProvider);
   return (
-    <div className='flex flex-col items-center justify-start p-2 border-r-2 border-slate-300' id='aside-bar'>
+    user?.isAdmin ? 
+    <div className='flex flex-col items-center justify-start p-2 border-r-2 border-slate-300 text-white' id='aside-bar'>
+      <Link to={"/admin/statistics/users"} className='p-2 bg-slate-400 rounded-md hover:scale-95 trans100 m-2'>Monitor Users</Link>
+      <Link to={"/admin/statistics/users-data"} className='p-2 bg-slate-400 rounded-md hover:scale-95 trans100 m-2'>Monitor User's data</Link>
+      <Link to={"/admin/statistics/metrics"} className='p-2 bg-slate-400 rounded-md hover:scale-95 trans100 m-2'>Statistics</Link>
+      <Link to={"/admin/statistics/admins"} className='p-2 bg-slate-400 rounded-md hover:scale-95 trans100 m-2'>Add Admins</Link>
+    </div> 
+    : <div className='flex flex-col items-center justify-start p-2 border-r-2 border-slate-300' id='aside-bar'>
         <TrendingNerdsDiv/>
         <TrendingTopicsDiv/>
         <TrendingPostsDiv/>

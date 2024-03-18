@@ -16,7 +16,7 @@ export default function Communities() {
         }
     ,[window]);
   return (
-    <div id='home-page' className=''>
+    <div id='community-page' className=''>
       {isLoading && <Loading/>}
       <Header />
       {isMobile ? <MiniNavBar /> : null}

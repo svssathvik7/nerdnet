@@ -14,6 +14,7 @@ import PostView from './Components/PostView/PostView';
 import NotFound from './Pages/NotFound';
 import Community from './Components/CommunitiesComponents/Community';
 import CreateCommunity from './Components/CommunitiesComponents/CreateCommunity';
+import AdminStatistics from './Pages/AdminStatistics';
 function App() {
   return (
     <div className="App">
@@ -30,6 +31,7 @@ function App() {
         <Route path='/communities' element={<Communities/>}/>
         <Route path='/create-community' element={<CreateCommunity/>}/>
         <Route path='/community/:community_id' exact element={<Community/>}/>
+        <Route path='/admin/statistics/:admin_need' exact element={<AdminStatistics/>}/>
         <Route path='*' element={<NotFound/>}/>
       </Routes>
       <ToastContainer
