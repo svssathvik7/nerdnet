@@ -14,6 +14,9 @@ export default function AdminStatistics() {
   const { admin_need } = useParams();
   const [users, setUsers] = useState([]);
   const [pageNum, setPageNum] = useState(1);
+  const [stats,setStats] = useState([]);
+  const [triggerFetch,setTriggerFetch] = useState(true);
+  const [pageLimit, setPageLimit] = useState(1);
   const { user } = useContext(userContextProvider);
   const { socket } = useContext(socketContextProvider);
   const location = useLocation();
@@ -29,6 +32,7 @@ export default function AdminStatistics() {
           console.log(response);
           if (response.status) {
             setUsers(response.data);
+            setPageLimit(response.pageLimit);
           } else {
             setUsers([]);
             console.log(response);
@@ -36,8 +40,22 @@ export default function AdminStatistics() {
         }
       );
     };
+    const getStats = async()=>{
+      try {
+        socket.emit("admin-get-all-stats",{
+          userId: user?._id
+        },(response)=>{
+          if(response.status){
+            setStats(response.stats);
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getStats();
     getUsers();
-  }, [users, location.pathname, pageNum]);
+  }, [users, location.pathname, pageNum,triggerFetch]);
   const ShowAllUsers = () => {
     return (
       <div className="flex flex-col items-center justify-center">
@@ -60,20 +78,19 @@ export default function AdminStatistics() {
                   </div>
                 </div>
                 <div className="flex items-center justify-center gap-2 m-1">
-                    <div className="flex flex-col items-center justify-center">
-                        <p>{userRecord?.followers?.length}</p>
-                        <p>Followers</p>
-                    </div>
-                    <div className="flex flex-col items-center justify-center">
-                        <p>{userRecord?.following?.length}</p>
-                        <p>Following</p>
-                    </div>
-                    <div className="flex flex-col items-center justify-center">
-                        <p>{userRecord?.spaces?.length}</p>
-                        <p>Communities</p>
-                    </div>
+                  <div className="flex flex-col items-center justify-center">
+                    <p>{userRecord?.followers?.length}</p>
+                    <p>Followers</p>
+                  </div>
+                  <div className="flex flex-col items-center justify-center">
+                    <p>{userRecord?.following?.length}</p>
+                    <p>Following</p>
+                  </div>
+                  <div className="flex flex-col items-center justify-center">
+                    <p>{userRecord?.spaces?.length}</p>
+                    <p>Communities</p>
+                  </div>
                 </div>
-
               </div>
             ))}
         </div>
@@ -85,6 +102,11 @@ export default function AdminStatistics() {
             onClick={() => {
               setPageNum(pageNum - 1);
             }}
+            className={`${
+              pageNum === pageLimit
+                ? " opacity-50 pointer-events-none "
+                : " cursor-pointer "
+            }`}
           >
             Previous
           </button>
@@ -92,6 +114,11 @@ export default function AdminStatistics() {
             onClick={() => {
               setPageNum(pageNum + 1);
             }}
+            className={`${
+              pageNum === pageLimit
+                ? " opacity-50 pointer-events-none "
+                : " cursor-pointer "
+            }`}
           >
             Next
           </button>
@@ -103,7 +130,34 @@ export default function AdminStatistics() {
     return <div></div>;
   };
   const ShowNerdNetMetrics = () => {
-    return <div></div>;
+    return (
+      <div className="bg-white p-2 text-black w-3/4 flex flex-col items-center justify-start rounded-sm ">
+        <p className="font-bold text-xl">Real Time Stats</p>
+        <div className="flex items-center justify-around flex-wrap gap-2 m-2">
+          <div className="bg-black text-white p-2 rounded-md flex items-center justify-center flex-col">
+            <p>{stats?.totalNerds}</p>
+            <p>Total Nerds</p>
+          </div>
+          <div className="bg-black text-white p-2 rounded-md flex items-center justify-center flex-col">
+            <p>{stats?.totalAdmins}</p>
+            <p>Total Admins</p>
+          </div>
+          <div className="bg-black text-white p-2 rounded-md flex items-center justify-center flex-col">
+            <p>{stats?.totalPosts}</p>
+            <p>Total Posts</p>
+          </div>
+          <div className="bg-black text-white p-2 rounded-md flex items-center justify-center flex-col">
+            <p>{stats?.totalCommunities}</p>
+            <p>Total Communities</p>
+          </div>
+          <div className="bg-black text-white p-2 rounded-md flex items-center justify-center flex-col">
+            <p>{stats?.totalComments}</p>
+            <p>Total Comments</p>
+          </div>
+        </div>
+        <button className="bg-yellow-400 hover:scale-105 p-2 rounded-md font-bold m-2" onClick={()=>{setTriggerFetch(!triggerFetch)}}>ReFetch Data</button>
+      </div>
+    );
   };
   const AddOrRemoveAdmins = () => {
     return <div></div>;
