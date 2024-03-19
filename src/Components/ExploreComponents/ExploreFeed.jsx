@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Post from '../Post/Post'
 import "./ExploreFeed.css";
 import { useState } from 'react';
@@ -6,21 +6,28 @@ import Lottie from 'lottie-react';
 import DoneAnimation from "../../assets/doneAnimation.json";
 import { ThreeCircles } from 'react-loader-spinner';
 import axios from 'axios';
+import {socketContextProvider} from "../../Context/socketContext";
 import { useLocation } from 'react-router-dom';
 export default function ExploreFeed() {
   const [isLoading,setIsLoading] = useState(true);
   const location = useLocation();
   const [posts,setPosts] = useState([]);
   const [selectedPost,setSelectedPost] = useState(null);
+  const {socket} = useContext(socketContextProvider);
   useEffect(
     ()=>{
       const getPosts = async ()=>{
-        const allPosts = (await axios.get(process.env.REACT_APP_BACKEND_URL+"/posts/getAllPosts")).data;
-        setPosts(allPosts);
-        // console.log(allPosts);
-        setIsLoading(false);
+        socket.emit("get-all-posts-explore-feed",(response)=>{
+          if(response.status){
+            setPosts(response.data);
+            setIsLoading(false);
+          }
+        })
       }
       getPosts();
+      return ()=>{
+        socket.off("get-all-posts-explore-feed");
+      }
     }
   ,[posts,location.pathname]);
   return (

@@ -69,6 +69,11 @@ const CommunityDetailsBar = (props) => {
     };
     getFounderDetails();
     fetchCommunityDetails();
+
+    return ()=>{
+      socket.off("get-community-founder");
+      socket.off("get-community-details");
+    }
   }, [path.pathname, communityInfo, founder]);
   useEffect(() => {
     setIsAdmin(communityInfo?.admins?.includes(user?._id));
@@ -275,6 +280,11 @@ export default function Community() {
     };
     hasSubscribed();
     GetCommunityPosts();
+
+    return ()=>{
+      socket.off("check-community-subscription");
+      socket.off("get-community-details");
+    }
   }, []);
   const [contentReady, setContentReady] = useState(false);
   return (
