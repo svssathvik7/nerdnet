@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import "./CreateCommunity.css"
-import { CustomCard } from '@tsamantanis/react-glassmorphism'
-import '@tsamantanis/react-glassmorphism/dist/index.css'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import { userContextProvider } from '../../Context/userContext'

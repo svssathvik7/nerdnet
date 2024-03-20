@@ -18,7 +18,6 @@ export default function HomeFeedContext({children}) {
         }
         setHomeFeed(posts);
         setIsLoading(false);
-        console.log(posts)
     }
   return (
     <homeFeedContextProvider.Provider value={{homeFeed,recommendHomeFeed}}>

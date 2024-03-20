@@ -173,6 +173,7 @@ export default function AdminStatistics() {
         >
           <button
             onClick={() => {
+              if(pageNum!=1)
               setPageNum(pageNum - 1);
             }}
             className={`${

@@ -116,20 +116,11 @@ export default function Chat() {
         try{
             const users = [user?._id,client?._id].sort();
             const chatId = users[0]+users[1];
-            // const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/chat/get-chat",{
-            //     chatId : chatId
-            // })).data;
             socket.emit("fetch-chat",{
                 chatId : chatId
             });
-            // if(response.status){
-            //     setMessages(response.data.chats);
-            //     // console.log(messages);
-            // }
-            // else{
-            //     setMessages([]);
-            // }
-            socket.on("fetched-data",(data)=>{
+            socket.on("fetched-data/"+chatId,(data)=>{
+                console.log("chat data - ",data.data.chats)
                 if(data.status === true)
                 {
                     setMessages(data.data.chats);
@@ -143,50 +134,50 @@ export default function Chat() {
             console.log(error);
         }
     }
-    const handleSendMessage = async (e)=>{
-        e.preventDefault();
-        const users = [user._id,client._id].sort();
-        try{
-            setLoading(true);
-            const chatId = users[0]+users[1];
-            // const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/chat/add-message/",{
-            //     chatId : chatId,
-            //     userId : user._id,
-            //     message : value
-            // })).data;
-            socket.emit("add-message",{
-                chatId : chatId,
-                userId : user._id,
-                message : value
-            });
-            // if(response.status){
-            //     console.log("Success");
-            // }
-            // else{
-            //     console.log(response);
-            // }
-            socket.on("added-message",(data)=>{
-                if(data.response)
-                {
-                    console.log("Successfully added message!");
-                }
-                else{
-                    console.log(data);
-                }
-            });
-            setValue('');
-            fetchChat();
-        }
-        catch(error){
-            console.log(error);
-        }
-        setLoading(false);
-    }
     useEffect(
         ()=>{
             fetchChat();
         }
-    ,[client,user,messages,socket]);
+    ,[client,user]);
+    const handleSendMessage = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        const users = [user._id, client._id].sort();
+        const chatId = users[0] + users[1];
+        socket.emit("add-message", {
+            chatId: chatId,
+            userId: user._id,
+            message: value
+        });
+        setValue('');
+        setLoading(false);
+    };
+    
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         const users = [user?._id, client?._id].sort();
+    //         const chatId = users[0] + users[1];
+    //         try {
+    //             socket.emit("fetch-chat", {
+    //                 chatId: chatId
+    //             });
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //         socket.on("fetched-data/"+chatId, (data) => {
+    //             console.log("listening to data")
+    //             if (data.status === true) {
+    //                 setMessages(data.data);
+    //             } else {
+    //                 setMessages([]);
+    //             }
+    //         });   
+    //     };
+    //     fetchData(); 
+    //     return () => {
+    //         socket.off("fetch-chat");
+    //     };
+    // }, [client,user,messages]);
     const handleEmojiClick = async (emoji)=>{
         setValue(value+emoji.emoji);
     }
