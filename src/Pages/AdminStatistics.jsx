@@ -17,6 +17,8 @@ export default function AdminStatistics() {
   const [stats,setStats] = useState([]);
   const [triggerFetch,setTriggerFetch] = useState(true);
   const [pageLimit, setPageLimit] = useState(1);
+  const [displayUserInterests,setDisplayUserInterests] = useState(false);
+  const [userRecord,setUserRecord] = useState([]);
   const { user } = useContext(userContextProvider);
   const { socket } = useContext(socketContextProvider);
   const location = useLocation();
@@ -127,7 +129,87 @@ export default function AdminStatistics() {
     );
   };
   const ShowAllUsersData = () => {
-    return <div></div>;
+    return (
+      <div className="flex flex-col items-center justify-center">
+        <div className="flex items-center justify-center flex-wrap m-2">
+          {users &&
+            users?.map((userRecord, i) => (
+              <div
+                key={i}
+                className="bg-white cursor-pointer text-black p-2 rounded-md w-fit flex-wrap m-2"
+                onClick={()=>{setUserRecord(userRecord); setDisplayUserInterests(true)}}
+              >
+                <div className="flex items-center justify-center">
+                  <img
+                    alt="dp"
+                    src={userRecord?.dp}
+                    className="w-12 object-cover aspect-square rounded-md mx-1"
+                  />
+                  <div className="flex flex-col items-center justify-center">
+                    <p>{userRecord?.username}</p>
+                    <p>{userRecord?.email}</p>
+                  </div>
+                </div>
+                <div className="flex items-center justify-center gap-2 m-1">
+                  <div className="flex flex-col items-center justify-center">
+                    <p>{userRecord?.followers?.length}</p>
+                    <p>Followers</p>
+                  </div>
+                  <div className="flex flex-col items-center justify-center">
+                    <p>{userRecord?.following?.length}</p>
+                    <p>Following</p>
+                  </div>
+                  <div className="flex flex-col items-center justify-center">
+                    <p>{userRecord?.spaces?.length}</p>
+                    <p>Communities</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+        </div>
+        <div
+          id="pagination"
+          className="text-black flex items-center justify-around w-52 my-2 bg-white p-1 rounded-md"
+        >
+          <button
+            onClick={() => {
+              setPageNum(pageNum - 1);
+            }}
+            className={`${
+              pageNum === pageLimit
+                ? " opacity-50 pointer-events-none "
+                : " cursor-pointer "
+            }`}
+          >
+            Previous
+          </button>
+          <button
+            onClick={() => {
+              setPageNum(pageNum + 1);
+            }}
+            className={`${
+              pageNum === pageLimit
+                ? " opacity-50 pointer-events-none "
+                : " cursor-pointer "
+            }`}
+          >
+            Next
+          </button>
+        </div>
+        {(displayUserInterests === true) && 
+         ((userRecord?.interestsHistory?.length) ? <div className="absolute bg-yellow-400 w-fit h-fit rounded-md flex items-center justify-start flex-col text-black flex-wrap p-2 z-50">
+            <p className="font-bold">{userRecord?.username}'s Interests</p>
+            <div className="flex items-center justify-start max-w-2xl flex-wrap max-h-96">
+          {userRecord?.interestsHistory?.map((interest,i)=>(
+            <div key={i} className="w-fit inline bg-white p-2 rounded-lg m-2">
+              {interest}
+            </div>
+          ))}
+          </div>
+          <button className="bg-black text-white p-2 rounded-sm" onClick={()=>{setDisplayUserInterests(false)}}>Close</button>
+        </div> : <div className="absolute bg-yellow-400 w-fit h-fit rounded-md flex items-center justify-start flex-col flex-wrap p-2 z-50"><p className="text-black">No Interests to display</p><button className="bg-black text-white p-2 rounded-sm" onClick={()=>{setDisplayUserInterests(false)}}>Close</button></div>)}
+      </div>
+    );
   };
   const ShowNerdNetMetrics = () => {
     return (
