@@ -7,6 +7,11 @@
     width: 5dvw!important;
     height: 5dvw!important;
 }
+.community-cover{
+    width: 20dvw!important;
+    aspect-ratio: 16/9;
+    height: 10dvw;
+}
 .community-description{
     width: 100%;
 }
