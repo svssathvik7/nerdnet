@@ -5,27 +5,17 @@ import { useState } from 'react';
 import Lottie from 'lottie-react';
 import DoneAnimation from "../../assets/doneAnimation.json";
 import { ThreeCircles } from 'react-loader-spinner';
-import axios from 'axios';
-import { useLocation } from 'react-router-dom';
 import {homeFeedContextProvider} from "../../Context/homeFeedContext";
 import { useContext } from 'react';
 export default function HomeFeed() {
   const [isLoading,setIsLoading] = useState(true);
-  const location = useLocation();
-  const [posts,setPosts] = useState([]);
   const {homeFeed,recommendHomeFeed} = useContext(homeFeedContextProvider);
   useEffect(
     ()=>{
-      const getPosts = async ()=>{
-        const allPosts = (await axios.get(process.env.REACT_APP_BACKEND_URL+"/posts/getAllPosts")).data;
-        setPosts(allPosts);
-        recommendHomeFeed();
-        // console.log(allPosts);
-        setIsLoading(false);
-      }
-      getPosts();
+      recommendHomeFeed();
+      setIsLoading(false);
     }
-  ,[posts,location.pathname]);
+  ,[homeFeed]);
   return (
     <div id='home-feed' className='flex flex-col items-center justify-center'>
     {isLoading ? (
