@@ -8,7 +8,7 @@ import Post from "../Post/Post";
 import dateFormat from "dateformat";
 import { userContextProvider } from "../../Context/userContext";
 const formatAge = (date) => {
-  return "Joined - " + dateFormat(date, "mmmm dS, yyyy");
+  return "Created - " + dateFormat(date, "mmmm dS, yyyy");
 };
 
 export default function SearchSection() {
@@ -208,8 +208,8 @@ export default function SearchSection() {
               <div className='flex items-center justify-around w-fit p-2 flex-wrap'>
                     <p><b>{community?.likes??10}</b> Likes</p>
                     <p><b>{community?.followers?.length??7}</b> Nerds</p>
-                    <p><b>{community?.posts??100}</b> Posts</p>
-                    <p>Created on {community?.age??"Some date"}</p>
+                    <p><b>{community?.posts?.length??100}</b> Posts</p>
+                    <p>{formatAge(community?.dateCreated)??"Some date"}</p>
               </div>
               <div className="flex items-center justify-around w-full">
                 <Link className="bg-black text-white rounded-md p-1 w-24 hover:scale-95 trans100 hover:bg-white hover:text-black hover:border-2 hover:border-black text-center" to={"/community/"+community?._id}>Visit</Link>

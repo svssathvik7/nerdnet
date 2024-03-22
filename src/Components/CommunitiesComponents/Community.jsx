@@ -296,10 +296,10 @@ export default function Community() {
         {(contentReady && isAFollower) ? (
           <div
             id="community-feed-scroller"
-            className="flex-1 flex items-center justify-center"
+            className="flex-1 flex flex-col items-center justify-center"
           >
             {communityPosts?.map((post, i) => (
-              <div key={i}>
+              <div key={i} className="my-2">
                 <Post {...post} />
               </div>
             ))}

@@ -152,32 +152,6 @@ export default function Chat() {
         setValue('');
         setLoading(false);
     };
-    
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         const users = [user?._id, client?._id].sort();
-    //         const chatId = users[0] + users[1];
-    //         try {
-    //             socket.emit("fetch-chat", {
-    //                 chatId: chatId
-    //             });
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //         socket.on("fetched-data/"+chatId, (data) => {
-    //             console.log("listening to data")
-    //             if (data.status === true) {
-    //                 setMessages(data.data);
-    //             } else {
-    //                 setMessages([]);
-    //             }
-    //         });   
-    //     };
-    //     fetchData(); 
-    //     return () => {
-    //         socket.off("fetch-chat");
-    //     };
-    // }, [client,user,messages]);
     const handleEmojiClick = async (emoji)=>{
         setValue(value+emoji.emoji);
     }

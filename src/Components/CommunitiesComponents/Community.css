@@ -16,3 +16,7 @@
 .community-input{
     border-bottom: thin solid #fff;
 }
+#community-feed-scroller{
+    height: 90dvh;
+    overflow-y: scroll;
+}
