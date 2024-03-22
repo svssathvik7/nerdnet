@@ -248,17 +248,16 @@ export default function Community() {
           (response) => {
             if (response.status) {
               setCommunityPosts(response.community_info.posts);
-              setContentReady(true);
+              setContentReady(true)
             } else {
               setCommunityPosts([]);
-              setContentReady(false);
             }
           }
         );
       } catch (error) {
         console.log(error);
         setCommunityPosts([]);
-        setContentReady(false);
+        setContentReady(false)
       }
     };
     const hasSubscribed = async () => {
@@ -270,7 +269,7 @@ export default function Community() {
             user_id: user._id,
           },
           (response) => {
-            setIsAFollower(response.status);
+            setIsAFollower(response?.subscriptionStatus??false);
           }
         );
       } catch (error) {
@@ -294,7 +293,7 @@ export default function Community() {
       {isMobile ? <MiniNavBar /> : null}
       <div className="flex items-center justify-start">
         <CommunityDetailsBar community_id={community_id} />
-        {contentReady && isAFollower ? (
+        {(contentReady && isAFollower) ? (
           <div
             id="community-feed-scroller"
             className="flex-1 flex items-center justify-center"
