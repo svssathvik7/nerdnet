@@ -15,7 +15,7 @@ export default function HomeFeed() {
       recommendHomeFeed();
       setIsLoading(false);
     }
-  ,[homeFeed]);
+  ,[]);
   return (
     <div id='home-feed' className='flex flex-col items-center justify-center'>
     {isLoading ? (

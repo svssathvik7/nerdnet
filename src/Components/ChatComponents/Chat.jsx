@@ -120,7 +120,6 @@ export default function Chat() {
                 chatId : chatId
             });
             socket.on("fetched-data/"+chatId,(data)=>{
-                console.log("chat data - ",data.data.chats)
                 if(data.status === true)
                 {
                     setMessages(data.data.chats);

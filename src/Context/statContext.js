@@ -18,7 +18,6 @@ export default function StatContext({ children }) {
     try {
       socket.emit("get-trending-nerds",(allNerds)=>{
         if (allNerds.status) {
-          // console.log(topSortedNerds);
           setTrendingNerds(allNerds.nerds);
           setIsLoading(false);
         } else {
@@ -56,7 +55,6 @@ export default function StatContext({ children }) {
       socket.emit("get-trending-posts",(response)=>{
         if (response.status) {
           setTrendingPosts(response.posts);
-          console.log(trendingPosts);
         } else {
           setTrendingPosts([]);
         }
@@ -76,7 +74,6 @@ export default function StatContext({ children }) {
         if (response.status) {
           setSpaces(response.spaces);
           setIsLoading(false);
-          console.log(response.spaces);
         } else {
           setSpaces([]);
           setIsLoading(false);
