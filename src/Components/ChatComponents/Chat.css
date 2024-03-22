@@ -25,6 +25,10 @@
 .time-stamp-holders{
     font-size: 0.5em;
 }
+#online-frnds-container{
+    width: 60dvw;
+    overflow-x: scroll;
+}
 @media (max-width:768px) {
     #chat-box{
         width: 90dvw;
