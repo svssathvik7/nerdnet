@@ -12,6 +12,8 @@ import Chat from '../Components/ChatComponents/Chat'
 import { loaderContextProvider } from '../Context/loaderContext'
 import Loading from '../Components/LoadPage/Loading'
 import CommunitiesList from '../Components/ProfileComponents/CommunitiesList'
+import TokenValidity from '../Utilities/TokenValidity'
+import { useNavigate } from 'react-router-dom'
 export default function Profile() {
   const {isLoading} = useContext(loaderContextProvider);
   const [isMobile,setIsMobile] = useState(window.innerWidth <= 768);
@@ -21,6 +23,16 @@ export default function Profile() {
     }
   ,[window.innerWidth]);
   const {profileNavigator} = useContext(profileNavigatorContextProvider);
+  const navigate = useNavigate();
+  useEffect(
+    ()=>{
+      TokenValidity().then((res)=>{
+        if(res !== true){
+          navigate("/");
+        }
+      })
+    }
+  ,[]);
   return (
 
     <div id='profile'>

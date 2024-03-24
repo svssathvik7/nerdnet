@@ -16,7 +16,14 @@ export default function SearchSection() {
   const [communitiesresult, setCommunitiesResult] = useState([]);
   const { type, searchQuery } = useParams();
   const { user } = useContext(userContextProvider);
+  const [recentChatList,setRecentChatsList] = useState(new Set(user?.recentChats));
+  useEffect(
+    ()=>{
+      setRecentChatsList(new Set(user?.recentChats));
+    }
+  ,[user?.recentChats])
   useEffect(() => {
+    setRecentChatsList(new Set(user?.recentChats));
     const handleQuery = async () => {
       try {
         if (type == "user") {
@@ -28,7 +35,6 @@ export default function SearchSection() {
                 searchQuery
             )
           ).data;
-          console.log(response.status);
           if (response.status) {
             setUsersResult(response?.usersresult);
             setCommunitiesResult(response?.communityresult);
@@ -152,14 +158,14 @@ export default function SearchSection() {
                     {item.education}
                   </p>
                 </Link>
-                <button
+                {!(recentChatList?.has(item._id)) && <button
                   onClick={() => {
                     handleAddChat(item._id);
                   }}
                   className="bg-slate-500 text-white p-2 text-sm rounded-md hover:rounded-xl trans100"
                 >
-                  Add to Chats!
-                </button>
+                  Add to Chats!{recentChatList?.has(item._id)}
+                </button>}
               </div>
             ))
           ) : (

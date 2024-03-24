@@ -4,3 +4,6 @@
     height: 90dvh;
     overflow-y: scroll;
 }
+#aside-bar-admin{
+    width: fit-content;
+}

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Loading from "../Components/LoadPage/Loading";
 import Header from "../Partials/Header";
 import MiniNavBar from "../Components/Navbar/MiniNavBar";
@@ -9,6 +9,7 @@ import AddPostBtn from "../Components/AddPost/AddPostBtn";
 import AsideBar from "../Partials/AsideBar";
 import { socketContextProvider } from "../Context/socketContext";
 import { userContextProvider } from "../Context/userContext";
+import TokenValidity from "../Utilities/TokenValidity";
 
 export default function AdminStatistics() {
   const { admin_need } = useParams();
@@ -22,6 +23,7 @@ export default function AdminStatistics() {
   const { user } = useContext(userContextProvider);
   const { socket } = useContext(socketContextProvider);
   const location = useLocation();
+  const navigate = useNavigate();
   useEffect(() => {
     const getUsers = async () => {
       socket.emit(
@@ -102,10 +104,11 @@ export default function AdminStatistics() {
         >
           <button
             onClick={() => {
+              if(pageNum!=1)
               setPageNum(pageNum - 1);
             }}
             className={`${
-              pageNum === pageLimit
+              pageNum === 1
                 ? " opacity-50 pointer-events-none "
                 : " cursor-pointer "
             }`}
@@ -177,7 +180,7 @@ export default function AdminStatistics() {
               setPageNum(pageNum - 1);
             }}
             className={`${
-              pageNum === pageLimit
+              pageNum === 1
                 ? " opacity-50 pointer-events-none "
                 : " cursor-pointer "
             }`}
@@ -250,6 +253,15 @@ export default function AdminStatistics() {
   useEffect(() => {
     setIsMobile(window.innerWidth < 768);
   }, [window]);
+  useEffect(
+    ()=>{
+      TokenValidity().then((res)=>{
+        if(res !== true){
+          navigate("/");
+        }
+      })
+    }
+  ,[]);
   return (
     <div className="text-white flex flex-col item-center justify-start">
       {isLoading && <Loading />}

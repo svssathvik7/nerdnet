@@ -8,6 +8,8 @@ import AsideBar from '../Partials/AsideBar';
 import Chat from '../Components/ChatComponents/Chat';
 import Loading from '../Components/LoadPage/Loading';
 import { loaderContextProvider } from '../Context/loaderContext';
+import TokenValidity from '../Utilities/TokenValidity';
+import { useNavigate } from 'react-router-dom';
 export default function Home(props) {
   const {isLoading} = useContext(loaderContextProvider);
   const [isMobile,setIsMobile] = useState(window.innerWidth<768);
@@ -16,6 +18,16 @@ export default function Home(props) {
             setIsMobile(window.innerWidth < 768);
         }
     ,[window]);
+    const navigate = useNavigate();
+    useEffect(
+      ()=>{
+        TokenValidity().then((res)=>{
+          if(res !== true){
+            navigate("/");
+          }
+        })
+      }
+    ,[]);
   return (
     <div id='home-page' className=''>
       <Header />
