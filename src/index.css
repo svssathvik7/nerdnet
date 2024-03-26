@@ -2,6 +2,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+html{
+    width: 100dvw;
+    height: 100dvh;
+    overflow-y: hidden;
+}
 *{
     margin: 0;
     padding: 0;

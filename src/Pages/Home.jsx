@@ -29,7 +29,7 @@ export default function Home(props) {
       }
     ,[]);
   return (
-    <div id='home-page' className=''>
+    <div id='home-page' className='overflow-y-hidden h-screen'>
       <Header />
       {isLoading && <Loading/>}
       {isMobile ? <MiniNavBar /> : null}

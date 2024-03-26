@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import "./Community.css";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import Header from "../../Partials/Header";
 import Loading from "../LoadPage/Loading";
 import MiniNavBar from "../Navbar/MiniNavBar";
 import { loaderContextProvider } from "../../Context/loaderContext";
-import { CiPen } from "react-icons/ci";
 import { userContextProvider } from "../../Context/userContext";
 import AddPostBtn from "../AddPost/AddPostBtn";
 import Post from "../Post/Post";
@@ -142,13 +141,13 @@ const CommunityDetailsBar = (props) => {
     coverPic: "",
     description: "",
   });
-  const handleCommunityEditChange = async (e) => {
-    setEditedCommunityData({
-      ...editedCommunityData,
-      [e.target.name]: e.target.value,
-    });
-  };
   const EditForm = () => {
+    const handleCommunityEditChange = useCallback((e) => {
+      setEditedCommunityData({
+        ...editedCommunityData,
+        [e.target.name]: e.target.value,
+      });
+    }, [editedCommunityData]);  
     return (
       <div className="w-full">
         {editMode ? (
@@ -160,7 +159,8 @@ const CommunityDetailsBar = (props) => {
                 onChange={handleCommunityEditChange}
                 className="community-input bg-transparent trans100 w-full"
                 placeholder="Enter DP"
-                onClick={(e) => e.stopPropagation()}
+                onChang={(e) => e.stopPropagation()}
+                key={"dp-input"}
               />
               <input
                 name="coverPic"
@@ -169,6 +169,7 @@ const CommunityDetailsBar = (props) => {
                 className="community-input bg-transparent trans100 w-full"
                 placeholder="Enter cover pic"
                 onClick={(e) => e.stopPropagation()}
+                key={"coverpic-input"}
               />
               <input
                 name="description"
@@ -177,6 +178,7 @@ const CommunityDetailsBar = (props) => {
                 className="community-input bg-transparent trans100 w-full"
                 placeholder="Enter Description"
                 onClick={(e) => e.stopPropagation()}
+                key={"description-input"}
               />
             </div>
             <div className="flex items-center justify-around w-full gap-2">
