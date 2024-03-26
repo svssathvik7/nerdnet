@@ -27,23 +27,19 @@ export default function HomeFeed() {
   return (
     <div id="home-feed" className="flex flex-col items-center justify-center">
       <InfiniteScroll
-        dataLength={homeFeed.length}
+        dataLength={5}
         next={fetchMoreData}
         hasMore={true} // Set hasMore to true when there is more data to load
-        loader={
-          <ThreeCircles
-            visible={isLoading}
-            height="90"
-            width="100"
-            color="#fff"
-            ariaLabel="three-circles-loading"
-            wrapperStyle={{}}
-            wrapperClass=""
-            className="infinite-scroll h-fit self-start"
-          />
-        }
-        endMessage={
-          <div
+      >
+        <div
+          id="home-feed-scroller"
+          className="flex flex-col items-center justify-start"
+        >
+          {homeFeed?.length ? homeFeed?.map((post, i) => (
+            <div className="m-2" key={i}>
+              <Post {...post} />
+            </div>
+          )) :   <div
             id="feed-covered-message"
             className="flex items-center justify-center text-center"
           >
@@ -53,18 +49,17 @@ export default function HomeFeed() {
               className="w-64 h-fit p-0"
               loop={true}
             />
-          </div>
-        }
-      >
-        <div
-          id="home-feed-scroller"
-          className="flex flex-col items-center justify-start"
-        >
-          {homeFeed?.map((post, i) => (
-            <div className="m-2" key={i}>
-              <Post {...post} />
-            </div>
-          ))}
+            {isLoading && <ThreeCircles
+              height="90"
+              width="100"
+              color="#fff"
+              ariaLabel="three-circles-loading"
+              wrapperStyle={{}}
+              key={0}
+              wrapperClass=""
+              className="infinite-scroll h-fit self-start"
+            />}
+          </div>}
         </div>
       </InfiniteScroll>
     </div>
