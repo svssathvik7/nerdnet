@@ -8,12 +8,14 @@ import { ThreeCircles } from "react-loader-spinner";
 import { homeFeedContextProvider } from "../../Context/homeFeedContext";
 import { useContext } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { userContextProvider } from "../../Context/userContext";
 export default function HomeFeed() {
   const [isLoading, setIsLoading] = useState(true);
   const [pageNum, setPageNum] = useState(0);
   const { homeFeed, recommendHomeFeed, totalPostsLength } = useContext(
     homeFeedContextProvider
   );
+  const {user} = useContext(userContextProvider);
   const fetchMoreData = async () => {
     if(homeFeed?.length !== totalPostsLength){
       setPageNum(pageNum + 1);
@@ -37,7 +39,7 @@ export default function HomeFeed() {
         }
       ,3000);
     }
-  }, []);
+  }, [user]);
   return (
     <div
       id="home-feed-scroller"

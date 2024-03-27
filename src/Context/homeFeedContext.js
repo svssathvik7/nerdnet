@@ -7,10 +7,15 @@ export default function HomeFeedContext({children}) {
     const [homeFeed,setHomeFeed] = useState([]);
     const [totalPostsLength,setTotalPostsLength] = useState(0);
     const {user} = useContext(userContextProvider);
+    const {setIsLoading} = useContext(loaderContextProvider);
     const recommendHomeFeed = async (pageNum)=>{
         try {
           if(!user){
+            setIsLoading(true);
             return ;
+          }
+          else{
+            setIsLoading(false);
           }
           const response = await (axios.post(process.env.REACT_APP_BACKEND_URL+"/posts/get-home-posts/",{
             user : user?._id,
@@ -23,6 +28,7 @@ export default function HomeFeedContext({children}) {
             }
             else{
               setTotalPostsLength(response?.data?.totalNumPosts);
+              setHomeFeed(response?.data?.posts);
             }
           }
           else{

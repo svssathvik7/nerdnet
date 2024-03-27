@@ -5,7 +5,7 @@ import ImagePost from './ImagePost';
 
 export default function Post(props) {
   return (
-    <div id='post'>
+    <div id='post' className='my-6'>
       {props.isMultimedia ? 
         <ImagePost {...props}/>
       :
