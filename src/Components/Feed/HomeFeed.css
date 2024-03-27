@@ -1,9 +1,8 @@
 #home-feed-scroller{
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
-    height: fit-content;
     width: 75dvw;
-    max-height: 90dvh;
+    height: 90dvh;
 }
 #home-feed-scroller::-webkit-scrollbar{
     display: none!important;

@@ -15,21 +15,27 @@ export default function HomeFeed() {
     homeFeedContextProvider
   );
   const fetchMoreData = async () => {
-    setPageNum(pageNum + 1);
-    setIsLoading(true);
-    setTimeout(() => {
-      recommendHomeFeed(pageNum + 1); // Fetch the next page of data
-    }, 1500);
-    setIsLoading(false);
+    if(homeFeed?.length !== totalPostsLength){
+      setPageNum(pageNum + 1);
+      setIsLoading(true);
+      setTimeout(
+        ()=>{
+          recommendHomeFeed(pageNum + 1); // Fetch the next page of data
+          setIsLoading(false);
+        }
+      ,3000)// Fetch the next page of data
+    }
   };
   useEffect(() => {
     if (homeFeed?.length === 0) {
       setIsLoading(true);
       setPageNum(pageNum + 1);
-      setTimeout(() => {
-        recommendHomeFeed(pageNum + 1); // Fetch the next page of data
-      }, 1500);
-      setIsLoading(false);
+      setTimeout(
+        ()=>{
+          recommendHomeFeed(pageNum + 1); // Fetch the next page of data
+          setIsLoading(false);
+        }
+      ,3000);
     }
   }, []);
   return (
@@ -38,10 +44,10 @@ export default function HomeFeed() {
       className="flex flex-col items-center justify-start flex-1 p-2"
     >
       <InfiniteScroll
-        className="home-feed-posts-container"
         dataLength={homeFeed?.length}
         next={fetchMoreData}
         hasMore={homeFeed?.length !== totalPostsLength} // Set hasMore to true when there is more data to load
+        scrollableTarget="home-feed-scroller"
         loader={
           <ThreeCircles
             visible={isLoading}

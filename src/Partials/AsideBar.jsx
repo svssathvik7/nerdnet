@@ -121,6 +121,7 @@ const MySpaces = () => {
           <Link
             className="w-fit p-1 m-1 bg-white rounded-lg hover:scale-110 trans100"
             to={"/community/" + space._id}
+            key={i}
           >
             <img
               alt={space.name}
