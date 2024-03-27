@@ -15,15 +15,13 @@ export default function SearchSection() {
   const [usersresult, setUsersResult] = useState([]);
   const [communitiesresult, setCommunitiesResult] = useState([]);
   const { type, searchQuery } = useParams();
-  const { user } = useContext(userContextProvider);
-  const [recentChatList,setRecentChatsList] = useState(new Set(user?.recentChats));
-  useEffect(
-    ()=>{
-      setRecentChatsList(new Set(user?.recentChats));
-    }
-  ,[user?.recentChats])
+  const { user, setUser } = useContext(userContextProvider);
+  const [recentChatList, setRecentChatsList] = useState(user?.recentChats);
   useEffect(() => {
-    setRecentChatsList(new Set(user?.recentChats));
+    setRecentChatsList(user?.recentChats);
+  }, [user]);
+  useEffect(() => {
+    setRecentChatsList(user?.recentChats);
     const handleQuery = async () => {
       try {
         if (type == "user") {
@@ -88,29 +86,38 @@ export default function SearchSection() {
       ).data;
       if (!response.status) {
         console.log(response);
+      } else {
+        setUser((user) => ({
+          ...user,
+          chatList: response?.chatList,
+        }));
       }
     } catch (error) {
       console.log(error);
     }
   };
-  const [hasSubscibedTempVar,setHasSubsTempVar] = useState(false);
-  const handleAddCommunity = async(community)=>{
+  const [hasSubscibedTempVar, setHasSubsTempVar] = useState(false);
+  const handleAddCommunity = async (community) => {
     try {
-      const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/auth/add-user-space",{
-        user : user._id,
-        space : community._id
-      })).data;
-      if(response.status){
+      const response = (
+        await axios.post(
+          process.env.REACT_APP_BACKEND_URL + "/auth/add-user-space",
+          {
+            user: user._id,
+            space: community._id,
+          }
+        )
+      ).data;
+      if (response.status) {
         console.log("Space added");
         setHasSubsTempVar(true);
-      }
-      else{
+      } else {
         console.log("Failed adding space");
       }
     } catch (error) {
       console.log(error);
     }
-  }
+  };
   return (
     <div
       id="search-section"
@@ -158,14 +165,16 @@ export default function SearchSection() {
                     {item.education}
                   </p>
                 </Link>
-                {!(recentChatList?.has(item._id)) && <button
-                  onClick={() => {
-                    handleAddChat(item._id);
-                  }}
-                  className="bg-slate-500 text-white p-2 text-sm rounded-md hover:rounded-xl trans100"
-                >
-                  Add to Chats!{recentChatList?.has(item._id)}
-                </button>}
+                {!((user?.recentChats && [item._id]) == item._id) && ( // Check if recentChatList is empty or item._id is not present
+                  <button
+                    onClick={() => {
+                      handleAddChat(item._id);
+                    }}
+                    className={`bg-slate-500 text-white p-2 text-sm rounded-md hover:rounded-xl trans100`}
+                  >
+                    Add to Chats!
+                  </button>
+                )}
               </div>
             ))
           ) : (
@@ -184,7 +193,10 @@ export default function SearchSection() {
         )}
         {communitiesresult?.length ?? 0 ? (
           communitiesresult.map((community, i) => (
-            <div key={i} className="bg-white w-fit p-1 flex flex-col items-center justify-start flex-wrap rounded-lg community-card">
+            <div
+              key={i}
+              className="bg-white w-fit p-1 flex flex-col items-center justify-start flex-wrap rounded-lg community-card"
+            >
               <div className="flex flex-col items-end justify-end">
                 <img
                   alt="cover"
@@ -211,15 +223,38 @@ export default function SearchSection() {
                   </div>
                 </div>
               </div>
-              <div className='flex items-center justify-around w-fit p-2 flex-wrap'>
-                    <p><b>{community?.likes??10}</b> Likes</p>
-                    <p><b>{community?.followers?.length??7}</b> Nerds</p>
-                    <p><b>{community?.posts?.length??100}</b> Posts</p>
-                    <p>{formatAge(community?.dateCreated)??"Some date"}</p>
+              <div className="flex items-center justify-around w-fit p-2 flex-wrap">
+                <p>
+                  <b>{community?.likes ?? 10}</b> Likes
+                </p>
+                <p>
+                  <b>{community?.followers?.length ?? 7}</b> Nerds
+                </p>
+                <p>
+                  <b>{community?.posts?.length ?? 100}</b> Posts
+                </p>
+                <p>{formatAge(community?.dateCreated) ?? "Some date"}</p>
               </div>
               <div className="flex items-center justify-around w-full">
-                <Link className="bg-black text-white rounded-md p-1 w-24 hover:scale-95 trans100 hover:bg-white hover:text-black hover:border-2 hover:border-black text-center" to={"/community/"+community?._id}>Visit</Link>
-                {!(community?.followers?.includes(user?._id) || (hasSubscibedTempVar)) && <button className="bg-black text-white rounded-md p-1 w-24 hover:scale-95 trans100 hover:bg-white hover:text-black hover:border-2 hover:border-black text-center" onClick={()=>{handleAddCommunity(community)}}>Subscribe</button>}
+                <Link
+                  className="bg-black text-white rounded-md p-1 w-24 hover:scale-95 trans100 hover:bg-white hover:text-black hover:border-2 hover:border-black text-center"
+                  to={"/community/" + community?._id}
+                >
+                  Visit
+                </Link>
+                {!(
+                  community?.followers?.includes(user?._id) ||
+                  hasSubscibedTempVar
+                ) && (
+                  <button
+                    className="bg-black text-white rounded-md p-1 w-24 hover:scale-95 trans100 hover:bg-white hover:text-black hover:border-2 hover:border-black text-center"
+                    onClick={() => {
+                      handleAddCommunity(community);
+                    }}
+                  >
+                    Subscribe
+                  </button>
+                )}
               </div>
             </div>
           ))
