@@ -6,6 +6,7 @@ export const homeFeedContextProvider = React.createContext(null);
 export default function HomeFeedContext({children}) {
   const {setIsLoading} = useContext(loaderContextProvider);
     const [homeFeed,setHomeFeed] = useState([]);
+    const [totalPostsLength,setTotalPostsLength] = useState(0);
     const {user} = useContext(userContextProvider);
     const recommendHomeFeed = async (pageNum)=>{
         setIsLoading(true);
@@ -17,8 +18,8 @@ export default function HomeFeedContext({children}) {
           console.log(response)
           if(response?.data?.status){
             setHomeFeed(prevHomeFeed => [...prevHomeFeed,...response?.data?.posts]);
+            setTotalPostsLength(response?.data?.totalNumPosts);
             setIsLoading(false);
-            console.log(homeFeed)
           }
           else{
             setHomeFeed([]);
@@ -29,7 +30,7 @@ export default function HomeFeedContext({children}) {
         setIsLoading(false);
     }
   return (
-    <homeFeedContextProvider.Provider value={{homeFeed,recommendHomeFeed}}>
+    <homeFeedContextProvider.Provider value={{homeFeed,recommendHomeFeed,totalPostsLength}}>
         {children}
     </homeFeedContextProvider.Provider>
   )

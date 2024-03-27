@@ -10,58 +10,53 @@ import { useContext } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 export default function HomeFeed() {
   const [isLoading, setIsLoading] = useState(true);
-  const [pageNum,setPageNum] = useState(0);
-  const { homeFeed, recommendHomeFeed } = useContext(homeFeedContextProvider);
-  useEffect(() => {
-    setIsLoading(true);
-    fetchMoreData();
-    setIsLoading(false);
-  }, []);
+  const [pageNum, setPageNum] = useState(0);
+  const { homeFeed, recommendHomeFeed, totalPostsLength } = useContext(
+    homeFeedContextProvider
+  );
   const fetchMoreData = async () => {
     setPageNum(pageNum + 1);
     setIsLoading(true);
-    await recommendHomeFeed(pageNum + 1); // Fetch the next page of data
+    setTimeout(() => {
+      recommendHomeFeed(pageNum + 1); // Fetch the next page of data
+    }, 1500);
     setIsLoading(false);
   };
-  
+  useEffect(() => {
+    if (homeFeed?.length === 0) {
+      setIsLoading(true);
+      setPageNum(pageNum + 1);
+      setTimeout(() => {
+        recommendHomeFeed(pageNum + 1); // Fetch the next page of data
+      }, 1500);
+      setIsLoading(false);
+    }
+  }, []);
   return (
-    <div id="home-feed" className="flex flex-col items-center justify-center">
+    <div
+      id="home-feed-scroller"
+      className="flex flex-col items-center justify-start flex-1 p-2"
+    >
       <InfiniteScroll
-        dataLength={5}
+        className="home-feed-posts-container"
+        dataLength={homeFeed?.length}
         next={fetchMoreData}
-        hasMore={true} // Set hasMore to true when there is more data to load
+        hasMore={homeFeed?.length !== totalPostsLength} // Set hasMore to true when there is more data to load
+        loader={
+          <ThreeCircles
+            visible={isLoading}
+            height="90"
+            width="100"
+            color="#fff"
+          />
+        }
       >
-        <div
-          id="home-feed-scroller"
-          className="flex flex-col items-center justify-start"
-        >
-          {homeFeed?.length ? homeFeed?.map((post, i) => (
-            <div className="m-2" key={i}>
-              <Post {...post} />
-            </div>
-          )) :   <div
-            id="feed-covered-message"
-            className="flex items-center justify-center text-center"
-          >
-            <h1 className="text-5xl font-bold text-white">Feed got covered!</h1>
-            <Lottie
-              animationData={DoneAnimation}
-              className="w-64 h-fit p-0"
-              loop={true}
-            />
-            {isLoading && <ThreeCircles
-              height="90"
-              width="100"
-              color="#fff"
-              ariaLabel="three-circles-loading"
-              wrapperStyle={{}}
-              key={0}
-              wrapperClass=""
-              className="infinite-scroll h-fit self-start"
-            />}
-          </div>}
-        </div>
+        {homeFeed?.map((post, i) => (
+          <div className="m-2" key={i}>
+            <Post {...post} />
+          </div>
+        ))}
       </InfiniteScroll>
     </div>
   );
-}  
+}
