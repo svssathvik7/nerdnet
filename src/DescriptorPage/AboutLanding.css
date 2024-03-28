@@ -1,6 +1,7 @@
 #about-landing{
     overflow-x: hidden;
-    overflow-y: hidden;
+    overflow-y: scroll!important;
+    height: fit-content!important;
 }
 #about-hero{
     width: 65dvw;

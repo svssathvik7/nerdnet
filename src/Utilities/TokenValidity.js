@@ -1,6 +1,4 @@
-import React, { useContext } from 'react'
 import axios from 'axios'
-import { socketContextProvider } from '../Context/socketContext';
 export default async function TokenValidity() {
     try{
         const token = localStorage.getItem('token');

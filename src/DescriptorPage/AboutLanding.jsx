@@ -11,6 +11,7 @@ import { useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import Separator from '../Components/Separator';
 import DFooter from './DFooter/DFooter';
+import Credits from './Credits/Credits';
 export default function AboutLanding() {
   const ref = useRef(null);
   const isInView = useInView(ref,{
@@ -41,6 +42,8 @@ export default function AboutLanding() {
           </div>
         </motion.div>
       </div>
+      <Separator className="m-2"/>
+      <Credits/>
       <Separator className="m-2"/>
       <Privacy/>
       <Separator className="m-2"/>

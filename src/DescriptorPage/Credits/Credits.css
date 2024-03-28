@@ -1,0 +1,12 @@
+#credits-div{
+    width: 70dvw;
+    height: 100dvh;
+}
+.tech-card{
+    width: 8dvw;
+    aspect-ratio: 1/1;
+}
+.tech-scroller{
+    width: 40dvw;
+    height: 60dvh;
+}
