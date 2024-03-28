@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { userContextProvider } from '../Context/userContext';
 import { toast } from 'react-toastify';
+import { IoMdClose } from "react-icons/io";
 import { statContextProvider } from '../Context/statContext';
 export default function Header() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -53,10 +54,10 @@ export default function Header() {
         </div>
         {expand && (
           <div className='the-menu-head absolute top-0 bg-white p-2 rounded-md shadow-md right-0'>
+            <button onClick={()=>{setExpand(false)}} className='block text-red-600 hover:bg-gray-200 py-1 px-2 rounded-md font-extrabold mx-auto'><IoMdClose /></button>
             <Link to={"/profile/"+user.email} className='block text-gray-800 hover:bg-gray-200 py-1 px-2 rounded-md' onClick={()=>{setExpand(!expand)}}>
               Profile
             </Link>
-            <Link to={"/profile/"+user.email} className='block text-gray-800 hover:bg-gray-200 py-1 px-2 rounded-md' onClick={()=>{setExpand(!expand)}}>Notifications</Link>
             <a href='/' className='block text-gray-800 hover:bg-gray-200 py-1 px-2 rounded-md' onClick={handleLogout}>
               Logout
             </a>

@@ -28,7 +28,7 @@ export default function Communities() {
       }
     ,[]);
   return (
-    <div id='community-page' className=''>
+    <div id='community-page' className='overflow-y-hidden h-screen'>
       {isLoading && <Loading/>}
       <Header />
       {isMobile ? <MiniNavBar /> : null}
