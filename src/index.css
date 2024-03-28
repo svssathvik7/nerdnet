@@ -12,6 +12,9 @@ html{
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
+#home-page{
+    overflow-y: hidden;
+}
 body{
     overflow-x: hidden;
     background-color: #000;
