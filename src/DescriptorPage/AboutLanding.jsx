@@ -16,7 +16,6 @@ export default function AboutLanding() {
   const isInView = useInView(ref,{
     once:false
   })
-  console.log(postConstants[0]);
   return (
     <div id='about-landing' className='bg-black w-screen h-fit flex flex-col items-center justify-start'>
       <div id='about-header' className='flex items-center justify-center p-2'>
@@ -47,10 +46,10 @@ export default function AboutLanding() {
       <Separator className="m-2"/>
       <Revenue/>
       <DFooter/>
-      <div className={`scale-50 absolute left-24 top-28 -rotate-6 z-30`} id="sample-post1">
+      <div className={`scale-50 absolute left-24 top-24 -rotate-6 z-30`} id="sample-post1">
         <Post {...postConstants[0]} noAuth={true}/>
       </div>
-      <div className={`scale-50 absolute right-24 top-28 rotate-6 z-30`} id="sample-post2">
+      <div className={`scale-50 absolute right-24 top-16 rotate-6 z-30`} id="sample-post2">
         <Post {...postConstants[1]} noAuth={true}/>
       </div>
       <div className={`scale-50 absolute right-24 top-80 rotate-6 z-30`} id="sample-post3">

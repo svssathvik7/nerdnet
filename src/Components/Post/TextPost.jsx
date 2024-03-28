@@ -247,7 +247,7 @@ export default function TextPost(props) {
         </div>
         <div
           id="post-metrics"
-          className={`${props.noAuth ? " pointer-events-none blur-sm " : "  "} flex items-center justify-center p-2 mt-0 pt-0 w-full`}
+          className={`${props.noAuth ? " pointer-events-none " : "  "} flex items-center justify-center p-2 mt-0 pt-0 w-full`}
         >
           <div
             id="metric-btn"

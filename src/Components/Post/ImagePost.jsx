@@ -213,10 +213,10 @@ export default function ImagePost(props)
       </div>
       {showCaption ? <div id='post-caption' className='w-full p-2 h-fit trans300'>
         <p className='font-medium text-base w-fit h-fit inline-block selection:bg-yellow-400'>Word by Nerd :&nbsp;</p>
-        <p className='text-base w-fit h-fit inline-block selection:bg-yellow-400'>{props.caption}</p>
+        <p className='text-base w-fit h-fit inline-block selection:bg-yellow-400'>{props?.caption}</p>
       </div> : <></>}
       {
-        showComments ? props?.comments.length ?
+        showComments ? props?.comments?.length ?
         <div className='w-full'>
           {props?.comments.map((comment,i)=>(
             <div key={i} className='w-full px-2 flex items-center justify-end'>
