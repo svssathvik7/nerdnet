@@ -2,13 +2,10 @@ import axios from "axios";
 import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { socketContextProvider } from "./socketContext";
 export const userContextProvider = React.createContext(null);
 const UserContext = ({ children }) => {
   const location = useLocation();
   const [user, setUser] = useState(null);
-  const { socket } = useContext(socketContextProvider);
-
   const getUserDetails = async () => {
     try {
       const token = localStorage.getItem("token");

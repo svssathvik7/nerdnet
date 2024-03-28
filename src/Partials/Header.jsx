@@ -7,10 +7,12 @@ import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { userContextProvider } from '../Context/userContext';
 import { toast } from 'react-toastify';
+import { statContextProvider } from '../Context/statContext';
 export default function Header() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [expand, setExpand] = useState(false);
   const { user } = useContext(userContextProvider);
+  const {getStats} = useContext(statContextProvider);
   const handleLogout = ()=>{
     localStorage.removeItem("token");
     toast.success('LoggedOut!', {
@@ -30,7 +32,11 @@ export default function Header() {
         setIsMobile(window.innerWidth <= 768);
     }
   ,[window.innerWidth]);
-
+    useEffect(
+      ()=>{
+        getStats();
+      }
+    ,[user]);
   const toggleDropdown = () => {
     setExpand(!expand);
   }

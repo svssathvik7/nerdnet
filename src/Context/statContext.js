@@ -11,46 +11,46 @@ export default function StatContext({ children }) {
   const [trendingPosts, setTrendingPosts] = useState([]);
   const [spaces, setSpaces] = useState([]);
   const { user } = useContext(userContextProvider);
-  const { setIsLoading } = useContext(loaderContextProvider);
   const {socket} = useContext(socketContextProvider);
   const getTrendingNerds = async () => {
-    setIsLoading(true);
+    if(trendingNerds?.length !== 0){
+      return;
+    }
     try {
       socket.emit("get-trending-nerds",(allNerds)=>{
         if (allNerds.status) {
           setTrendingNerds(allNerds.nerds);
-          setIsLoading(false);
         } else {
           setTrendingNerds([]);
-          setIsLoading(false);
         }
       });
     } catch (error) {
       console.log(error);
       setTrendingNerds([]);
-      setIsLoading(false);
     }
   };
   const getTrendingTopics = async () => {
-    setIsLoading(true);
+
+    if(trendingTopics?.length !== 0){
+      return;
+    }
     try {
       socket.emit("get-trending-topics",(response)=>{
         if (response.status) {
           setTrendingTopics(response.tags);
-          setIsLoading(false);
         } else {
           setTrendingTopics([]);
-          setIsLoading(false);
         }
       });
     } catch (error) {
       console.log(error);
       setTrendingTopics([]);
-      setIsLoading(false);
     }
   };
   const getTrendingPosts = async () => {
-    setIsLoading(true);
+    if(trendingPosts?.length !== 0){
+      return;
+    }
     try {
       socket.emit("get-trending-posts",(response)=>{
         if (response.status) {
@@ -59,30 +59,30 @@ export default function StatContext({ children }) {
           setTrendingPosts([]);
         }
       });
-      setIsLoading(false);
     } catch (error) {
       setTrendingPosts([]);
-      setIsLoading(false);
     }
   };
   const getMySpaces = async () => {
-    setIsLoading(true);
+    if(spaces?.length !== 0){
+      return;
+    }
+    if(!user){
+      return;
+    }
     try {
       socket.emit("get-user-spaces",{
         user: user?._id
       },(response)=>{
-        if (response.status) {
-          setSpaces(response.spaces);
-          setIsLoading(false);
+        if (response?.status) {
+          setSpaces(response?.spaces);
         } else {
           setSpaces([]);
-          setIsLoading(false);
         }
       });
     } catch (error) {
       console.log(error);
       setSpaces([]);
-      setIsLoading(false);
     }
   };
   const getStats = async () => {
