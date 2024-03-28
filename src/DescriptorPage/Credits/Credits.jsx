@@ -6,6 +6,7 @@ import DevPic from "../../assets/sathvik1.jpeg"
 import { Link } from 'react-router-dom';
 import techStack from "../../constants/techStackConstants";
 import { SocialIcon } from 'react-social-icons';
+
 export default function Credits() {
   const ref = useRef(null);
   const isInView = useInView(ref,{
@@ -13,8 +14,8 @@ export default function Credits() {
   });
 
   const animationVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.8, ease: "easeInOut" } },
   };
 
   return (
