@@ -35,7 +35,7 @@ export default function Profile() {
   ,[]);
   return (
 
-    <div id='profile'>
+    <div id='profile' className='overflow-y-hidden h-screen w-screen'>
       {isLoading && <Loading/>}
       <Header/>
         <div id="profile-container" className={`flex ${isMobile ? " flex-col " : " "} items-center justify-start z-0`}>

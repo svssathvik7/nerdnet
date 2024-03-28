@@ -63,7 +63,7 @@ export default function AdminStatistics() {
     };
     getStats();
     getUsers();
-  }, [users, location.pathname, pageNum, triggerFetch]);
+  }, [users, triggerFetch]);
   const ShowAllUsers = () => {
     return (
       <div className="flex flex-col items-center justify-center">

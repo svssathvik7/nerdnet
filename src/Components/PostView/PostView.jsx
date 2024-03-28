@@ -65,7 +65,9 @@ export default function PostView() {
       {isMobile ? <MiniNavBar /> : null}
       <div className={`flex items-center ${isMobile ? " justify-center " : " justify-start "}`}>
         {isMobile ? null : <AsideBar />}
-        <Post {...post}/>
+        <div className='flex items-center justify-center flex-1'>
+            <Post {...post}/>
+        </div>
       </div>
       {isMobile ? null : <AddPostBtn />}
     </div>
