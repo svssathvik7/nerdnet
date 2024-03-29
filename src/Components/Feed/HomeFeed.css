@@ -1,14 +1,11 @@
 #home-feed-scroller{
-    overflow-y: auto;
+    overflow-y: scroll!important;
     overflow-x: hidden;
     width: 75dvw;
-    height: 90dvh;
+    height: 85dvh!important;
 }
 #home-feed-scroller::-webkit-scrollbar{
     display: none!important;
-}
-#home-feed{
-    flex: 1;
 }
 .gZmPOF{
     display: flex;

@@ -4,7 +4,8 @@
 @tailwind utilities;
 html{
     width: 100dvw;
-    height: 100dvh;
+    height: fit-content!important;
+    display: inline;
 }
 *{
     margin: 0;
@@ -14,7 +15,7 @@ html{
 }
 #home-page{
     overflow-y: hidden!important;
-    height: 100dvh;
+    height: 100dvh!important;
     width: 100dvw;
 }
 body{
