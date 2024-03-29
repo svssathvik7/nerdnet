@@ -67,8 +67,8 @@ export default function Login() {
           setLoading(false);
           const data = await response.data;
           localStorage.setItem("token",data.userToken);
-          getUserDetails();
-          getStats();
+          await getUserDetails();
+          await getStats();
           history("/home");
         }).catch((error)=>{
           setLoading(false);

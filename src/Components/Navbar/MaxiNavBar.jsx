@@ -35,7 +35,6 @@ export default function MaxiNavBar() {
         }
       })
       setPath(location.pathname);
-      getUserDetails();
     }
   ,[user,location.pathname]);
   return (
