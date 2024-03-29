@@ -10,6 +10,7 @@ import Loading from '../Components/LoadPage/Loading';
 import { loaderContextProvider } from '../Context/loaderContext';
 import TokenValidity from '../Utilities/TokenValidity';
 import { useNavigate } from 'react-router-dom';
+import "./Pages.css"
 export default function Home(props) {
   const {isLoading} = useContext(loaderContextProvider);
   const [isMobile,setIsMobile] = useState(window.innerWidth<768);

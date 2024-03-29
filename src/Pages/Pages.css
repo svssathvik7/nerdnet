@@ -1,0 +1,12 @@
+#admin-page{
+    height: fit-content!important;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 100dvw;
+}
+#home-page{
+    height: 100dvh!important;
+    overflow-y: hidden;
+    width: 100dvw;
+    overflow-x: hidden;
+}

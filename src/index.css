@@ -5,7 +5,6 @@
 html{
     width: 100dvw;
     height: 100dvh;
-    overflow-y: hidden!important;
 }
 *{
     margin: 0;
@@ -14,7 +13,9 @@ html{
     font-family: 'Poppins', sans-serif;
 }
 #home-page{
-    overflow-y: hidden;
+    overflow-y: hidden!important;
+    height: 100dvh;
+    width: 100dvw;
 }
 body{
     overflow-x: hidden;

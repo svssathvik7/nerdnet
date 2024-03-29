@@ -10,7 +10,7 @@ import AsideBar from "../Partials/AsideBar";
 import { socketContextProvider } from "../Context/socketContext";
 import { userContextProvider } from "../Context/userContext";
 import TokenValidity from "../Utilities/TokenValidity";
-
+import "./Pages.css"
 export default function AdminStatistics() {
   const { admin_need } = useParams();
   const [users, setUsers] = useState([]);
@@ -297,7 +297,7 @@ export default function AdminStatistics() {
     });
   }, []);
   return (
-    <div className="text-white flex flex-col item-center justify-start">
+    <div id="admin-page" className="text-white flex flex-col item-center justify-start h-fit">
       {isLoading && <Loading />}
       <Header />
       <div className="flex items-center justify-start">
