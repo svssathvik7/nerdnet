@@ -17,24 +17,23 @@ export default function HomeFeed() {
   );
   const {user} = useContext(userContextProvider);
   const fetchMoreData = async () => {
-    if(homeFeed?.length !== totalPostsLength){
+    console.log("fetch more data")
       setPageNum(pageNum + 1);
       setIsLoading(true);
       setTimeout(
         ()=>{
-          recommendHomeFeed(pageNum + 1); // Fetch the next page of data
+          recommendHomeFeed(pageNum); // Fetch the next page of data
           setIsLoading(false);
         }
       ,3000)// Fetch the next page of data
-    }
   };
   useEffect(() => {
     if (homeFeed?.length === 0) {
       setIsLoading(true);
-      setPageNum(pageNum + 1);
+      setPageNum(1);
       setTimeout(
-        ()=>{
-          recommendHomeFeed(pageNum + 1); // Fetch the next page of data
+        async()=>{
+          recommendHomeFeed(1);
           setIsLoading(false);
         }
       ,3000);

@@ -5,6 +5,7 @@
 html{
     width: 100dvw;
     height: 100dvh;
+    overflow-y: hidden!important;
 }
 *{
     margin: 0;
