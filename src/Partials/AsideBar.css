@@ -7,3 +7,14 @@
 #aside-bar-admin{
     width: fit-content;
 }
+.accordion__button{
+    background-color: transparent!important;
+    color: #fff!important;
+    cursor: pointer;
+    padding: 0!important;
+    width: 100%;
+    text-align: left;
+    border: none;
+    display: flex!important;
+    align-items: center!important;
+}

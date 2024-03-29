@@ -30,7 +30,7 @@ function TrendingNerdsDiv() {
     <div className="flex flex-wrap flex-col my-4">
       <Accordion allowZeroExpanded>
         <AccordionItem key={"nerds"}>
-          <AccordionItemHeading className="flex items-center justify-start">
+          <AccordionItemHeading>
             <AccordionItemButton>
               <div className="flex items-center justify-start">
                 <img

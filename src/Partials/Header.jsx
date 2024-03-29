@@ -12,7 +12,7 @@ import { statContextProvider } from '../Context/statContext';
 export default function Header() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [expand, setExpand] = useState(false);
-  const { user } = useContext(userContextProvider);
+  const { user,getUserDetails } = useContext(userContextProvider);
   const {getStats} = useContext(statContextProvider);
   const handleLogout = ()=>{
     localStorage.removeItem("token");
@@ -32,6 +32,11 @@ export default function Header() {
         getStats();
       }
     ,[user]);
+    useEffect(
+      ()=>{
+        getUserDetails();
+      }
+    ,[]);
   const toggleDropdown = () => {
     setExpand(!expand);
   }
