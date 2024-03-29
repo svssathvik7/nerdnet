@@ -27,12 +27,6 @@ export default function Header() {
       theme: "dark",
     });
   }
-
-  useEffect(
-    ()=>{
-        setIsMobile(window.innerWidth <= 768);
-    }
-  ,[window.innerWidth]);
     useEffect(
       ()=>{
         getStats();

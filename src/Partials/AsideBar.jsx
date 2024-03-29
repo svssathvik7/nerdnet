@@ -5,6 +5,13 @@ import TopNerdIcon from "../assets/bright-idea.svg";
 import TopTopicIcon from "../assets/test-tubes.svg";
 import TopPostIcon from "../assets/article.svg";
 import Home from "../assets/home-logo.png";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionItemHeading,
+  AccordionItemButton,
+  AccordionItemPanel,
+} from "react-accessible-accordion";
 import { statContextProvider } from "../Context/statContext";
 import { userContextProvider } from "../Context/userContext";
 const formatToK = (val) => {
@@ -20,32 +27,44 @@ function TrendingNerdsDiv() {
   const { trendingNerds } = useContext(statContextProvider);
   return (
     <div className="flex flex-wrap flex-col my-4">
-      <div className="flex items-center justify-start">
-        <img
-          title="TrendingNerds"
-          className="w-8"
-          alt="emoji"
-          src={TopNerdIcon}
-        />
-        <h6 className="font-medium underline text-slate-200">Trending Nerds</h6>
-      </div>
-      <ol className="list-decimal pl-4 flex flex-col items-center justify-start text-white">
-        {trendingNerds.map((value, i) => (
-          <li key={i} className="hover:scale-110 trans100">
-            <Link
-              to={"/profile/" + value.email}
-              className="text-fuchsia-50 font-base text-lg"
-            >
-              {value.username.split(" ")[0].length <= 7
-                ? value.username.split(" ")[0]
-                : value.username.slice(0, 5) + "..."}
-            </Link>
-            <sub className="text-xs mx-2">
-              [{formatToK(value.followersCount)}]
-            </sub>
-          </li>
-        ))}
-      </ol>
+      <Accordion allowZeroExpanded>
+        <AccordionItem key={"nerds"}>
+          <AccordionItemHeading>
+            <AccordionItemButton>
+              <div className="flex items-center justify-start">
+                <img
+                  title="TrendingNerds"
+                  className="w-8"
+                  alt="emoji"
+                  src={TopNerdIcon}
+                />
+                <h6 className="font-medium underline text-slate-200">
+                  Trending Nerds
+                </h6>
+              </div>
+            </AccordionItemButton>
+          </AccordionItemHeading>
+          <AccordionItemPanel>
+              <ol className="list-decimal pl-4 flex flex-col items-center justify-start text-white">
+                {trendingNerds.map((value, i) => (
+                  <li key={i} className="hover:scale-110 trans100">
+                    <Link
+                      to={"/profile/" + value.email}
+                      className="text-fuchsia-50 font-base text-lg"
+                    >
+                      {value.username.split(" ")[0].length <= 7
+                        ? value.username.split(" ")[0]
+                        : value.username.slice(0, 5) + "..."}
+                    </Link>
+                    <sub className="text-xs mx-2">
+                      [{formatToK(value.followersCount)}]
+                    </sub>
+                  </li>
+                ))}
+              </ol>
+          </AccordionItemPanel>
+        </AccordionItem>
+      </Accordion>
     </div>
   );
 }
@@ -180,39 +199,39 @@ export default function AsideBar() {
       <TrendingTopicsDiv />
       <TrendingPostsDiv />
       <MySpaces />
-      {(user?.isAdmin) ?
-      <div
-        className="flex flex-wrap flex-col my-4 rounded-full text-black"
-        id="aside-bar-admin"
-      >
-        <Link
-          to={"/admin/statistics/users"}
-          className="p-2 bg-white rounded-md hover:scale-95 trans100 m-2"
+      {user?.isAdmin ? (
+        <div
+          className="flex flex-wrap flex-col my-4 rounded-full text-black"
+          id="aside-bar-admin"
         >
-          Monitor Users
-        </Link>
-        <Link
-          to={"/admin/statistics/users-data"}
-          className="p-2 bg-white rounded-md hover:scale-95 trans100 m-2"
-        >
-          Monitor User's data
-        </Link>
-        <Link
-          to={"/admin/statistics/metrics"}
-          className="p-2 bg-white rounded-md hover:scale-95 trans100 m-2"
-        >
-          Statistics
-        </Link>
-        <Link
-          to={"/admin/statistics/admins"}
-          className="p-2 bg-white rounded-md hover:scale-95 trans100 m-2"
-        >
-          Add Admins
-        </Link>
-      </div>
-      :
-      <></>
-      }
+          <Link
+            to={"/admin/statistics/users"}
+            className="p-2 bg-white rounded-md hover:scale-95 trans100 m-2"
+          >
+            Monitor Users
+          </Link>
+          <Link
+            to={"/admin/statistics/users-data"}
+            className="p-2 bg-white rounded-md hover:scale-95 trans100 m-2"
+          >
+            Monitor User's data
+          </Link>
+          <Link
+            to={"/admin/statistics/metrics"}
+            className="p-2 bg-white rounded-md hover:scale-95 trans100 m-2"
+          >
+            Statistics
+          </Link>
+          <Link
+            to={"/admin/statistics/admins"}
+            className="p-2 bg-white rounded-md hover:scale-95 trans100 m-2"
+          >
+            Add Admins
+          </Link>
+        </div>
+      ) : (
+        <></>
+      )}
       <RedirectFooter />
     </div>
   );
