@@ -282,7 +282,11 @@ export default function AdminStatistics() {
     );
   };
   const AddOrRemoveAdmins = () => {
-    return <div></div>;
+    return (
+      <div className="bg-white">
+
+      </div>
+    )
   };
   const { isLoading } = useContext(loaderContextProvider);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -297,7 +301,7 @@ export default function AdminStatistics() {
     });
   }, []);
   return (
-    <div id="admin-page" className="text-white flex flex-col item-center justify-start h-fit">
+    <div id="admin-page" className="text-white flex flex-col item-center justify-start h-fit w-screen">
       {isLoading && <Loading />}
       <Header />
       <div className="flex items-center justify-start">

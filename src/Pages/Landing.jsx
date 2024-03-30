@@ -26,7 +26,7 @@ export default function Landing() {
     <div>
     {isLoading && <Loading/>}
       <img src={isMobile ? IntroBgMobile : IntroBg} alt='Introbg'
-        className='absolute -z-10 opacity-50 object-cover h-screen w-[100%] top-0 left-0'
+        className='absolute -z-10 opacity-50 object-cover h-screen w-screen top-0 left-0'
       />
       <Login/>
     </div>

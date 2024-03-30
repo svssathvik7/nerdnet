@@ -28,7 +28,7 @@ export default function Explore() {
       }
     ,[]);
     return (
-        <div id='explore-page' className=''>
+        <div id='explore-page' className='w-screen h-screen'>
           {isLoading && <Loading/>}
           <Header />
           {isMobile ? <MiniNavBar /> : <></>}

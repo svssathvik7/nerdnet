@@ -3,8 +3,8 @@
 @tailwind components;
 @tailwind utilities;
 html{
-    width: 100dvw;
-    height: fit-content!important;
+    width: 100dvw!important;
+    height: 100dvh!important;
     display: flex!important;
     overflow-y: hidden!important;
 }

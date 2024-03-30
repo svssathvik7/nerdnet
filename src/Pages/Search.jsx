@@ -11,7 +11,7 @@ export default function Search() {
   const [isMobile,setIsMobile] = useState(window.innerWidth <768);
   const {isLoading} = useContext(loaderContextProvider);
   return (
-    <div id='search-page'>
+    <div id='search-page' className='w-screen h-screen overflow-hidden'>
     {isLoading && <Loading/>}
       <Header />
       {isMobile ? <MiniNavBar /> : null}

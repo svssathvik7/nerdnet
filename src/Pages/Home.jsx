@@ -11,9 +11,6 @@ import { loaderContextProvider } from '../Context/loaderContext';
 import TokenValidity from '../Utilities/TokenValidity';
 import { useNavigate } from 'react-router-dom';
 import "./Pages.css"
-import { initParticlesEngine } from "@tsparticles/react";
-import ParticleBackground from '../assets/Particles/ParticleBackground';
-import { loadSlim } from '@tsparticles/slim';
 export default function Home(props) {
   const {isLoading} = useContext(loaderContextProvider);
   const [isMobile,setIsMobile] = useState(window.innerWidth<768);
@@ -22,16 +19,6 @@ export default function Home(props) {
             setIsMobile(window.innerWidth < 768);
         }
     ,[window]);
-    const [init,setInit] = useState(false);
-    useEffect(
-      ()=>{
-        initParticlesEngine(async(engine)=>{
-          await loadSlim(engine);
-        }).then(()=>{
-          setInit(true);
-        })
-      }
-    ,[]);
     const navigate = useNavigate();
     useEffect(
       ()=>{
@@ -43,7 +30,7 @@ export default function Home(props) {
       }
     ,[]);
   return (
-    <div id='home-page' className='overflow-y-hidden h-screen'>
+    <div id='home-page' className='overflow-y-hidden h-screen w-screen'>
       <Header />
       {isLoading && <Loading/>}
       {isMobile ? <MiniNavBar /> : null}
@@ -53,7 +40,6 @@ export default function Home(props) {
       </div>
       {isMobile ? null : <AddPostBtn />}
       <Chat/>
-      {init && <ParticleBackground/>}
     </div>
   );
 }

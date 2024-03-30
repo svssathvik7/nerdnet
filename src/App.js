@@ -15,7 +15,21 @@ import NotFound from './Pages/NotFound';
 import Community from './Components/CommunitiesComponents/Community';
 import CreateCommunity from './Components/CommunitiesComponents/CreateCommunity';
 import AdminStatistics from './Pages/AdminStatistics';
+import ParticleBackground from './assets/Particles/ParticleBackground';
+import { loadSlim } from '@tsparticles/slim';
+import { initParticlesEngine } from '@tsparticles/react';
+import { useEffect, useState } from 'react';
 function App() {
+  const [init,setInit] = useState(false);
+    useEffect(
+      ()=>{
+        initParticlesEngine(async(engine)=>{
+          await loadSlim(engine);
+        }).then(()=>{
+          setInit(true);
+        })
+      }
+    ,[]);
   return (
     <div className="App">
       <Routes>
@@ -46,6 +60,7 @@ function App() {
         pauseOnHover
         theme="dark"
       />
+      {init && <ParticleBackground/>}
     </div>
   );
 }

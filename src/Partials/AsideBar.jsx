@@ -217,7 +217,7 @@ export default function AsideBar() {
   const { user } = useContext(userContextProvider);
   return (
     <div
-      className="flex flex-col items-center justify-start p-2 border-r-2 border-slate-300"
+      className="flex flex-col items-center justify-start p-2"
       id="aside-bar"
     >
       <TrendingNerdsDiv />
