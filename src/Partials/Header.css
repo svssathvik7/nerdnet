@@ -9,3 +9,8 @@
 .the-menu-head{
     z-index: 1000!important;
 }
+.notification-tab{
+    height: fit-content;
+    max-height: 25dvh;
+    overflow-y: scroll;
+}
