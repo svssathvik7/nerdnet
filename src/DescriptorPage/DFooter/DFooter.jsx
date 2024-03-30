@@ -22,7 +22,7 @@ const DFooter = () => {
     }
   ,[location.pathname]);
   return (
-    <footer className="footer-container bg-slate-500">
+    <footer className="footer-container bg-slate-500 mt-2">
       <div className="footer-content">
         <div className='text-white'>
           <img id='footer-img' alt='footer-img' src={FooterImg} className='w-32 rounded-full'/>

@@ -1,9 +1,10 @@
 #privacy {
-    height: fit-content;
+    height: 90dvh;
     width: 100vw;
 }
 #policy-container{
     width: 70dvw;
+    height: 60dvh;
 }
 .privacy-card{
     height: fit-content;

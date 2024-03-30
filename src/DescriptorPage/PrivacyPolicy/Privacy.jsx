@@ -17,7 +17,7 @@ export default function Privacy() {
   };
 
   return (
-    <div id='privacy' className='flex items-center justify-center flex-col p-2 bg-black text-white m-4 mt-8'>
+    <div id='privacy' className='flex items-center justify-center flex-col bg-black text-white'>
       <motion.div
         ref={ref}
         variants={containerVariants}
@@ -27,7 +27,7 @@ export default function Privacy() {
         <h1 className='text-3xl font-bold'>Privacy Policy</h1>
       </motion.div>
 
-      <div className='flex items-center justify-between m-4' id='policy-container'>
+      <div className='flex items-center justify-between m-2' id='policy-container'>
         {privacyConstants.map((section, index) => (
           <motion.div
             ref={ref}

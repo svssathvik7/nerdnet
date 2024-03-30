@@ -2,6 +2,7 @@ import React from 'react';
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import "./Revenue.css";
+import DFooter from '../DFooter/DFooter';
 
 export default function Revenue() {
   const ref = useRef(null);
@@ -28,8 +29,8 @@ export default function Revenue() {
       </div>
 
       <div className='mt-4 text-white'>
-        <h2 className='text-2xl font-semibold mb-2'>Explore Exciting Opportunities</h2>
-        <p className='mb-2'>
+        <h2 className='text-xl font-semibold mb-2'>Explore Exciting Opportunities</h2>
+        <p className='mb-2 text-sm'>
           At Nerd.net, we believe in fostering a diverse and talented team. Join us on our journey to create innovative solutions and shape the future of technology. Check out the various job opportunities below:
         </p>
 
@@ -41,14 +42,15 @@ export default function Revenue() {
           {/* Add more job types as needed */}
         </ul>
 
-        <p className='mt-4'>
+        <p className='mt-4 text-sm'>
           If you're passionate about technology, enjoy solving complex problems, and want to be part of an exciting team, we'd love to hear from you.
         </p>
 
-        <p className='mt-4'>
+        <p className='mt-4 text-sm'>
           <strong>Note:</strong> Currently, there are no available openings. However, we encourage you to check back regularly for updates or submit your resume for future consideration.
         </p>
       </div>
+      <DFooter/>
     </motion.div>
   );
 }

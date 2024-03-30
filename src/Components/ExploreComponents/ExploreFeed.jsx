@@ -49,7 +49,10 @@ export default function ExploreFeed() {
         <div id='explore-feed-scroller' className='flex items-center justify-start flex-wrap'>
           {posts.map((post, i) => (
             <div className='single-feed flex-wrap flex items-center justify-start rounded-lg post-container relative' key={i} onClick={()=>{setSelectedPost(post)}}>
-              <p className='absolute bg-yellow-500 text-black rounded-md bottom-0 right-4 px-1'>{post?.userPosted?.username}</p>
+              <div className='absolute bottom-0 right-4 flex items-center justify-around bg-yellow-500 text-black rounded-md p-1'>
+                <img alt='dp' src={post?.userPosted?.dp} className='w-6 aspect-square object-cover mx-1'/>
+                <p className=''>{post?.userPosted?.username}</p>
+              </div>
               {
                 post?.isMultimedia ? 
                 <img className='trans100 img-post-preview m-1 object-contain object-center select-none cursor-pointer rounded-lg p-2 bg-white' alt='post' src={post.postData}/>

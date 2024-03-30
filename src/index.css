@@ -5,7 +5,8 @@
 html{
     width: 100dvw;
     height: fit-content!important;
-    display: inline;
+    display: flex!important;
+    overflow-y: hidden!important;
 }
 *{
     margin: 0;
