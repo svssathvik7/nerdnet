@@ -10,7 +10,8 @@ import AsideBar from "../Partials/AsideBar";
 import { socketContextProvider } from "../Context/socketContext";
 import { userContextProvider } from "../Context/userContext";
 import TokenValidity from "../Utilities/TokenValidity";
-import "./Pages.css"
+import "./Pages.css";
+import axios from "axios";
 export default function AdminStatistics() {
   const { admin_need } = useParams();
   const [users, setUsers] = useState([]);
@@ -63,7 +64,7 @@ export default function AdminStatistics() {
     };
     getStats();
     getUsers();
-  }, [users, triggerFetch]);
+  }, [triggerFetch]);
   const ShowAllUsers = () => {
     return (
       <div className="flex flex-col items-center justify-center">
@@ -282,11 +283,62 @@ export default function AdminStatistics() {
     );
   };
   const AddOrRemoveAdmins = () => {
+    const AddAdmins = () => {
+      const [grantReceiver,setGrantReceiever] = useState('');
+      const [note,setNote] = useState(
+        {
+          message: '',
+          success : true
+        }
+      );
+      const handleAddAdmin = async()=>{
+        console.log("sub")
+        try {
+          const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/admins/add-admins",{
+            admin : user._id,
+            receiver_mail : grantReceiver
+          })).data;
+          if(response.status){
+            setNote({
+              message : `Invite has been sent to ${grantReceiver}`,
+              status:true
+            });
+            setGrantReceiever('');
+          }
+        } catch (error) {
+          console.log(error);
+          setNote({
+            message : `Invite failed!`,
+            status:false
+          });
+          setGrantReceiever('');
+        }
+      }
+      return (
+        <div className="bg-white text-black w-1/3 h-fit">
+          <div className="flex flex-col items-center justify-center p-2">
+            <input
+              type="email"
+              name="admin-grant"
+              id="admin-grant"
+              className="w-full m-2 focus:outline-none border-b-2 border-black"
+              placeholder="Enter Mail to invite admin!"
+              onChange={(e)=>{setGrantReceiever(e.target.value)}}
+              value={grantReceiver}
+            />
+            <p className={`text-xs ${note?.success ? " text-black  " : " text-red-600 "}`}>{note?.message}</p>
+            <button onClick={handleAddAdmin} className="bg-[#facc15] p-2 select-none text-xs rounded-md cursor-pointer">
+              Grant Previlage
+            </button>
+          </div>
+        </div>
+      );
+    };
     return (
-      <div className="bg-white">
-
-      </div>
-    )
+      <>
+        <AddAdmins />
+      </>
+    );
   };
   const { isLoading } = useContext(loaderContextProvider);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -301,7 +353,10 @@ export default function AdminStatistics() {
     });
   }, []);
   return (
-    <div id="admin-page" className="text-white flex flex-col item-center justify-start h-fit w-screen">
+    <div
+      id="admin-page"
+      className="text-white flex flex-col item-center justify-start h-fit w-screen"
+    >
       {isLoading && <Loading />}
       <Header />
       <div className="flex items-center justify-start">
