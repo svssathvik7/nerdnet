@@ -29,7 +29,7 @@ export default function AboutLanding() {
           onClick={() => {
             setAboutNavigator(0);
           }}
-          className={`${aboutNavigator === 0 ? " ml-2 scale-105 text-base underline bg-slate-400 rounded-md p-1 px-2 " : "  "} cursor-pointer trans100 text-sm`}
+          className={`${aboutNavigator === 0 ? " opacity-100 ml-2 scale-105 text-base underline bg-slate-400 rounded-md p-1 px-2 " : " opacity-70 "} cursor-pointer trans100 text-sm`}
         >
           NerdNet - An Intro
         </p>
@@ -37,7 +37,7 @@ export default function AboutLanding() {
           onClick={() => {
             setAboutNavigator(1);
           }}
-          className={`${aboutNavigator === 1 ? " scale-105 ml-2 text-base underline bg-slate-400 rounded-md p-1 px-2 " : "  "} cursor-pointer text-sm trans100`}
+          className={`${aboutNavigator === 1 ? " opacity-100 scale-105 ml-2 text-base underline bg-slate-400 rounded-md p-1 px-2 " : " opacity-70 "} cursor-pointer text-sm trans100`}
         >
           Developer's Note
         </p>
@@ -45,7 +45,7 @@ export default function AboutLanding() {
           onClick={() => {
             setAboutNavigator(2);
           }}
-          className={`${aboutNavigator === 2 ? " scale-105 ml-2 text-base underline bg-slate-400 rounded-md p-1 px-2 " : "  "} cursor-pointer text-sm trans100`}
+          className={`${aboutNavigator === 2 ? " opacity-100 scale-105 ml-2 text-base underline bg-slate-400 rounded-md p-1 px-2 " : " opacity-70 "} cursor-pointer text-sm trans100`}
         >
           Our Privacy Policy
         </p>
@@ -53,7 +53,7 @@ export default function AboutLanding() {
           onClick={() => {
             setAboutNavigator(3);
           }}
-          className={`${aboutNavigator === 3 ? " scale-105 ml-2 underline text-base bg-slate-400 rounded-md p-1 px-2 " : "  "} cursor-pointer trans100 text-sm`}
+          className={`${aboutNavigator === 3 ? " opacity-100 scale-105 ml-2 underline text-base bg-slate-400 rounded-md p-1 px-2 " : " opacity-70 "} cursor-pointer trans100 text-sm`}
         >
           The revenue model
         </p>
