@@ -292,7 +292,6 @@ export default function AdminStatistics() {
         }
       );
       const handleAddAdmin = async()=>{
-        console.log("sub")
         try {
           const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/admins/add-admins",{
             admin : user._id,
@@ -315,7 +314,7 @@ export default function AdminStatistics() {
         }
       }
       return (
-        <div className="bg-white text-black w-1/3 h-fit">
+        <div className="bg-white text-black w-1/3 h-fit rounded-md">
           <div className="flex flex-col items-center justify-center p-2">
             <input
               type="email"
@@ -327,17 +326,67 @@ export default function AdminStatistics() {
               value={grantReceiver}
             />
             <p className={`text-xs ${note?.success ? " text-black  " : " text-red-600 "}`}>{note?.message}</p>
-            <button onClick={handleAddAdmin} className="bg-[#facc15] p-2 select-none text-xs rounded-md cursor-pointer">
+            <button onClick={handleAddAdmin} className="bg-[#facc15] p-2 select-none text-xs rounded-md cursor-pointer hover:scale-105 trans hover:bg-black hover:text-yellow-400">
               Grant Previlage
             </button>
           </div>
         </div>
       );
     };
+    const PendingInvites = ()=>{
+      const [page,setPage] = useState(1);
+      const [pendingInvites,setPendingInvites] = useState([]);
+      const [totalPages,setTotalPages] = useState(1);
+      useEffect(
+        ()=>{
+          const getPendingInvites = async()=>{
+            try {
+              const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/admins/get-pending-invites",{
+                admin : user._id,
+                pageNum : page
+              })).data;
+              if(response.status){
+                setPendingInvites(response.pending_invites);
+                setTotalPages(response.total_pages);
+              }
+            } catch (error) {
+              console.log(error);
+            }
+          }
+          getPendingInvites();
+        }
+      ,[page]);
+      return (
+        <div className="bg-white h-72 w-72 overflow-y-scroll rounded-md text-black flex flex-col items-center justify-start p-2">
+            <h6>Pending Invites</h6>
+            <div className="flex flex-col items-center justify-start w-full h-52 border-2 border-slate-600 m-2 p-2">
+              {pendingInvites?.map((mem,i)=>(
+                <div key={i} className="flex items-center justify-start">
+                  <img alt="dp" src={mem?.dp} className="w-8 rounded-full aspect-square object-cover"/>
+                  <p>{mem?.username}</p>
+                </div>
+              ))}
+            </div>
+            <div id="invite-pagination" className="w-full flex items-center justify-center">
+              <button onClick={()=>{
+                if(page!==1){
+                  setPage(page-1);
+                }
+              }} className={`${page===1 ? " pointer-events-none opacity-50 " : " opacity-100 "} w-1/2`}>Prev</button>
+              <button onClick={()=>{
+                if(page!==totalPages){
+                  setPage(page+1);
+                }
+              }} className={`${page===1 ? " pointer-events-none opacity-50 " : " opacity-100 "} w-1/2`}>Next</button>
+            </div>
+        </div>
+      )
+    }
     return (
-      <>
+      <div className="flex items-center justify-around w-full">
         <AddAdmins />
-      </>
+        <PendingInvites/>
+      </div>
     );
   };
   const { isLoading } = useContext(loaderContextProvider);

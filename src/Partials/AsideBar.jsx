@@ -224,7 +224,7 @@ export default function AsideBar() {
       <TrendingTopicsDiv />
       <TrendingPostsDiv />
       <MySpaces />
-      {user?.isAdmin ? (
+      {(user?.isAdmin == "true") ? (
         <div
           className="flex flex-wrap flex-col my-4 rounded-full text-black"
           id="aside-bar-admin"
