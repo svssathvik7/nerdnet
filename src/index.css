@@ -22,6 +22,8 @@ html{
 body{
     overflow-x: hidden;
     background-color: #000;
+    overflow-y: hidden!important;
+    height: 100dvh!important;
 }
 *::-webkit-scrollbar{
     display: none!important;

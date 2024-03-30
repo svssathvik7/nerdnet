@@ -42,7 +42,7 @@ export default function HomeFeed() {
   return (
     <div
       id="home-feed-scroller"
-      className="flex flex-col items-center justify-start flex-1 p-2"
+      className="flex flex-col items-center justify-start p-2"
     >
       <InfiniteScroll
         dataLength={homeFeed?.length}
