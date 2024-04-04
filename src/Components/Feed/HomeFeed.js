@@ -15,28 +15,24 @@ export default function HomeFeed() {
   const { homeFeed, recommendHomeFeed, totalPostsLength } = useContext(
     homeFeedContextProvider
   );
-  const {user} = useContext(userContextProvider);
+  const { user } = useContext(userContextProvider);
   const fetchMoreData = async () => {
-    console.log("fetch more data")
-      setPageNum(pageNum + 1);
-      setIsLoading(true);
-      setTimeout(
-        ()=>{
-          recommendHomeFeed(pageNum); // Fetch the next page of data
-          setIsLoading(false);
-        }
-      ,3000)// Fetch the next page of data
+    console.log("fetch more data");
+    setPageNum(pageNum + 1);
+    setIsLoading(true);
+    setTimeout(() => {
+      recommendHomeFeed(pageNum); // Fetch the next page of data
+      setIsLoading(false);
+    }, 3000); // Fetch the next page of data
   };
   useEffect(() => {
     if (homeFeed?.length === 0) {
       setIsLoading(true);
       setPageNum(1);
-      setTimeout(
-        async()=>{
-          recommendHomeFeed(1);
-          setIsLoading(false);
-        }
-      ,3000);
+      setTimeout(async () => {
+        recommendHomeFeed(1);
+        setIsLoading(false);
+      }, 3000);
     }
   }, [user]);
   return (
@@ -63,6 +59,19 @@ export default function HomeFeed() {
             <Post {...post} />
           </div>
         ))}
+        {homeFeed?.length == 0 && (
+          <div
+            id="feed-covered-message"
+            className="flex items-center justify-center text-center"
+          >
+            <h1 className="text-5xl font-bold text-white">Feed got covered!</h1>
+            <Lottie
+              animationData={DoneAnimation}
+              className="w-64 h-fit p-0"
+              loop={true}
+            />
+          </div>
+        )}
       </InfiniteScroll>
     </div>
   );
