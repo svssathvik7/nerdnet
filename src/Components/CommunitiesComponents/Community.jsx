@@ -26,6 +26,13 @@ const CommunityDetailsBar = (props) => {
   const [founder, setFounder] = useState({});
   const [editMode, setEditMode] = useState(false);
   const path = useLocation();
+  const handleCommunityEditChange = async (e) => {
+    e.stopPropagation();
+    setEditedCommunityData({
+      ...editedCommunityData,
+      [e.target.name]: e.target.value,
+    });
+  };
   useEffect(() => {
     const fetchCommunityDetails = async () => {
       try {
@@ -37,6 +44,7 @@ const CommunityDetailsBar = (props) => {
           (response) => {
             if (response.status) {
               setCommunityInfo(response?.community_info);
+              setIsAdmin(communityInfo?.admins?.includes(user?._id));
             } else {
               console.log("error getting community data");
             }
@@ -46,6 +54,13 @@ const CommunityDetailsBar = (props) => {
         console.log(error);
       }
     };
+    fetchCommunityDetails();
+
+    return () => {
+      socket.off("get-community-details");
+    };
+  }, [path.pathname]);
+  useEffect(() => {
     const getFounderDetails = async () => {
       try {
         socket.emit(
@@ -56,6 +71,7 @@ const CommunityDetailsBar = (props) => {
           (founderData) => {
             if (founderData.status) {
               setFounder(founderData.user);
+              setIsAdmin(communityInfo?.admins?.includes(user?._id));
             } else {
               setFounder({});
             }
@@ -67,16 +83,10 @@ const CommunityDetailsBar = (props) => {
       }
     };
     getFounderDetails();
-    fetchCommunityDetails();
-
-    return ()=>{
+    return () => {
       socket.off("get-community-founder");
-      socket.off("get-community-details");
-    }
-  }, [path.pathname, communityInfo, founder]);
-  useEffect(() => {
-    setIsAdmin(communityInfo?.admins?.includes(user?._id));
-  }, [communityInfo, user]);
+    };
+  }, [communityInfo]);
   const FormDiv = () => {
     return (
       <div className="text-white flex items-center justify-center flex-col my-1 w-full">
@@ -141,15 +151,25 @@ const CommunityDetailsBar = (props) => {
     coverPic: "",
     description: "",
   });
-  const EditForm = () => {
-    const handleCommunityEditChange = useCallback((e) => {
-      setEditedCommunityData({
-        ...editedCommunityData,
-        [e.target.name]: e.target.value,
-      });
-    }, [editedCommunityData]);  
-    return (
-      <div className="w-full">
+  return (
+    <div className="community-aside p-2 w-fit flex items-center justify-start flex-col overflow-y-scroll">
+      <div className="img-holder flex items-end justify-end flex-col">
+        <div className="community-cover p-1 rounded-lg bg-white opacity-60 hover:opacity-100">
+          <img alt="cover" src={communityInfo.coverPic} />
+        </div>
+        <div className="community-dp p-1 m-2 absolute bg-white rounded-full">
+          <img
+            className="rounded-full object-contain"
+            alt="dp"
+            src={communityInfo.dp}
+          />
+        </div>
+      </div>
+      <FormDiv />
+      <MetricsDiv />
+      <AdminsDiv />
+      {isAdmin && (
+        <div className="w-full">
         {editMode ? (
           <div className="flex flex-col items-center justify-start w-full">
             <div className="flex flex-col items-center justify-start flex-wrap m-2 w-full gap-2 text-white font-bold">
@@ -159,7 +179,6 @@ const CommunityDetailsBar = (props) => {
                 onChange={handleCommunityEditChange}
                 className="community-input bg-transparent trans100 w-full"
                 placeholder="Enter DP"
-                onChang={(e) => e.stopPropagation()}
                 key={"dp-input"}
               />
               <input
@@ -168,7 +187,6 @@ const CommunityDetailsBar = (props) => {
                 onChange={handleCommunityEditChange}
                 className="community-input bg-transparent trans100 w-full"
                 placeholder="Enter cover pic"
-                onClick={(e) => e.stopPropagation()}
                 key={"coverpic-input"}
               />
               <input
@@ -177,7 +195,6 @@ const CommunityDetailsBar = (props) => {
                 onChange={handleCommunityEditChange}
                 className="community-input bg-transparent trans100 w-full"
                 placeholder="Enter Description"
-                onClick={(e) => e.stopPropagation()}
                 key={"description-input"}
               />
             </div>
@@ -208,26 +225,7 @@ const CommunityDetailsBar = (props) => {
           </div>
         )}
       </div>
-    );
-  };
-  return (
-    <div className="community-aside p-2 w-fit flex items-center justify-start flex-col overflow-y-scroll">
-      <div className="img-holder flex items-end justify-end flex-col">
-        <div className="community-cover p-1 rounded-lg bg-white opacity-60 hover:opacity-100">
-          <img alt="cover" src={communityInfo.coverPic} />
-        </div>
-        <div className="community-dp p-1 m-2 absolute bg-white rounded-full">
-          <img
-            className="rounded-full object-contain"
-            alt="dp"
-            src={communityInfo.dp}
-          />
-        </div>
-      </div>
-      <FormDiv />
-      <MetricsDiv />
-      <AdminsDiv />
-      {isAdmin && <EditForm />}
+      )}
     </div>
   );
 };
@@ -250,7 +248,7 @@ export default function Community() {
           (response) => {
             if (response.status) {
               setCommunityPosts(response.community_info.posts);
-              setContentReady(true)
+              setContentReady(true);
             } else {
               setCommunityPosts([]);
             }
@@ -259,7 +257,7 @@ export default function Community() {
       } catch (error) {
         console.log(error);
         setCommunityPosts([]);
-        setContentReady(false)
+        setContentReady(false);
       }
     };
     const hasSubscribed = async () => {
@@ -268,10 +266,10 @@ export default function Community() {
           "check-community-subscription",
           {
             community_id: community_id,
-            user_id: user._id,
+            user_id: user?._id,
           },
           (response) => {
-            setIsAFollower(response?.subscriptionStatus??false);
+            setIsAFollower(response?.subscriptionStatus ?? false);
           }
         );
       } catch (error) {
@@ -282,10 +280,10 @@ export default function Community() {
     hasSubscribed();
     GetCommunityPosts();
 
-    return ()=>{
+    return () => {
       socket.off("check-community-subscription");
       socket.off("get-community-details");
-    }
+    };
   }, []);
   const [contentReady, setContentReady] = useState(false);
   return (
@@ -295,7 +293,7 @@ export default function Community() {
       {isMobile ? <MiniNavBar /> : null}
       <div className="flex items-center justify-start">
         <CommunityDetailsBar community_id={community_id} />
-        {(contentReady && isAFollower) ? (
+        {contentReady && isAFollower ? (
           <div
             id="community-feed-scroller"
             className="flex-1 flex flex-col items-center justify-center"
