@@ -15,7 +15,7 @@ const NotificationComponent = (props) => {
   const handleNotificationResult = async(action)=>{
     try {
       const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/admins/respond-admin-invite",{
-        admin : props.from,
+        admin : props.from.id,
         responder : props.to,
         action : action,
         notification_id : props._id

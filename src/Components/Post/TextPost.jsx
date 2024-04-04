@@ -149,6 +149,16 @@ export default function TextPost(props) {
   });
   const handleShareClick = ()=>{
     navigator.clipboard.writeText(process.env.REACT_APP_FRONTEND_HOST+"/posts/"+props._id);
+    toast.success('Link copied to clipboard!', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      });
   }
   const handlePostSave = async ()=>{
     try{
