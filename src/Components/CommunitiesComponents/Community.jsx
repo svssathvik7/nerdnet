@@ -10,6 +10,8 @@ import AddPostBtn from "../AddPost/AddPostBtn";
 import Post from "../Post/Post";
 import { socketContextProvider } from "../../Context/socketContext";
 import { HashLoader } from "react-spinners";
+import axios from "axios";
+import { toast } from "react-toastify";
 const CommunityDetailsBar = (props) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const { socket } = useContext(socketContextProvider);
@@ -26,12 +28,59 @@ const CommunityDetailsBar = (props) => {
   const [founder, setFounder] = useState({});
   const [editMode, setEditMode] = useState(false);
   const path = useLocation();
+  const [trigger, setTrigger] = useState(false);
   const handleCommunityEditChange = async (e) => {
     e.stopPropagation();
     setEditedCommunityData({
       ...editedCommunityData,
       [e.target.name]: e.target.value,
     });
+  };
+  const handleCommunityEditSubmit = async (e) => {
+    try {
+      const response = (
+        await axios.post(
+          process.env.REACT_APP_BACKEND_URL + "/community/edit-community-info",
+          {
+            dp: editedCommunityData.dp,
+            coverPic: editedCommunityData.coverPic,
+            description: editedCommunityData.description,
+            community_id: props.community_id,
+          }
+        )
+      ).data;
+      if (response.status) {
+        console.log("Community info edited");
+        setEditedCommunityData({
+          dp: "",
+          coverPic: "",
+          description: "",
+        });
+        toast.success("Community updated successfully!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        setTrigger(!trigger);
+      }
+    } catch (error) {
+      toast.error("Error updating data!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      console.log(error);
+    }
   };
   useEffect(() => {
     const fetchCommunityDetails = async () => {
@@ -59,7 +108,7 @@ const CommunityDetailsBar = (props) => {
     return () => {
       socket.off("get-community-details");
     };
-  }, [path.pathname]);
+  }, [path.pathname, trigger]);
   useEffect(() => {
     const getFounderDetails = async () => {
       try {
@@ -170,61 +219,64 @@ const CommunityDetailsBar = (props) => {
       <AdminsDiv />
       {isAdmin && (
         <div className="w-full">
-        {editMode ? (
-          <div className="flex flex-col items-center justify-start w-full">
-            <div className="flex flex-col items-center justify-start flex-wrap m-2 w-full gap-2 text-white font-bold">
-              <input
-                name="dp"
-                value={editedCommunityData.dp}
-                onChange={handleCommunityEditChange}
-                className="community-input bg-transparent trans100 w-full"
-                placeholder="Enter DP"
-                key={"dp-input"}
-              />
-              <input
-                name="coverPic"
-                value={editedCommunityData.coverPic}
-                onChange={handleCommunityEditChange}
-                className="community-input bg-transparent trans100 w-full"
-                placeholder="Enter cover pic"
-                key={"coverpic-input"}
-              />
-              <input
-                name="description"
-                value={editedCommunityData.description}
-                onChange={handleCommunityEditChange}
-                className="community-input bg-transparent trans100 w-full"
-                placeholder="Enter Description"
-                key={"description-input"}
-              />
+          {editMode ? (
+            <div className="flex flex-col items-center justify-start w-full">
+              <div className="flex flex-col items-center justify-start flex-wrap m-2 w-full gap-2 text-white font-bold">
+                <input
+                  name="dp"
+                  value={editedCommunityData.dp}
+                  onChange={handleCommunityEditChange}
+                  className="community-input bg-transparent trans100 w-full"
+                  placeholder="Enter DP"
+                  key={"dp-input"}
+                />
+                <input
+                  name="coverPic"
+                  value={editedCommunityData.coverPic}
+                  onChange={handleCommunityEditChange}
+                  className="community-input bg-transparent trans100 w-full"
+                  placeholder="Enter cover pic"
+                  key={"coverpic-input"}
+                />
+                <input
+                  name="description"
+                  value={editedCommunityData.description}
+                  onChange={handleCommunityEditChange}
+                  className="community-input bg-transparent trans100 w-full"
+                  placeholder="Enter Description"
+                  key={"description-input"}
+                />
+              </div>
+              <div className="flex items-center justify-around w-full gap-2">
+                <button
+                  className="rounded-lg hover:scale-90 trans100  w-20 bg-blue-700 text-white p-1"
+                  onClick={handleCommunityEditSubmit}
+                >
+                  Save
+                </button>
+                <button
+                  className="rounded-lg hover:scale-90 trans100  w-20 bg-blue-700 text-white p-1"
+                  onClick={() => {
+                    setEditMode(false);
+                  }}
+                >
+                  Back
+                </button>
+              </div>
             </div>
-            <div className="flex items-center justify-around w-full gap-2">
-              <button className="rounded-lg hover:scale-90 trans100  w-20 bg-blue-700 text-white p-1">
-                Save
-              </button>
+          ) : (
+            <div className="flex items-center justify-center">
               <button
-                className="rounded-lg hover:scale-90 trans100  w-20 bg-blue-700 text-white p-1"
+                className="rounded-lg hover:scale-90 trans100 w-20 bg-blue-700 text-white p-1"
                 onClick={() => {
-                  setEditMode(false);
+                  setEditMode(true);
                 }}
               >
-                Back
+                Edit
               </button>
             </div>
-          </div>
-        ) : (
-          <div className="flex items-center justify-center">
-            <button
-              className="rounded-lg hover:scale-90 trans100 w-20 bg-blue-700 text-white p-1"
-              onClick={() => {
-                setEditMode(true);
-              }}
-            >
-              Edit
-            </button>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
       )}
     </div>
   );
