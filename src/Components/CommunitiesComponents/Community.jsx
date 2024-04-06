@@ -226,7 +226,7 @@ const CommunityDetailsBar = (props) => {
                   name="dp"
                   value={editedCommunityData.dp}
                   onChange={handleCommunityEditChange}
-                  className="community-input bg-transparent trans100 w-full"
+                  className="community-input outline-none bg-transparent trans100 w-full"
                   placeholder="Enter DP"
                   key={"dp-input"}
                 />
@@ -234,7 +234,7 @@ const CommunityDetailsBar = (props) => {
                   name="coverPic"
                   value={editedCommunityData.coverPic}
                   onChange={handleCommunityEditChange}
-                  className="community-input bg-transparent trans100 w-full"
+                  className="community-input outline-none bg-transparent trans100 w-full"
                   placeholder="Enter cover pic"
                   key={"coverpic-input"}
                 />
@@ -242,20 +242,21 @@ const CommunityDetailsBar = (props) => {
                   name="description"
                   value={editedCommunityData.description}
                   onChange={handleCommunityEditChange}
-                  className="community-input bg-transparent trans100 w-full"
+                  className="community-input bg-transparent trans100 w-full outline-none"
                   placeholder="Enter Description"
                   key={"description-input"}
                 />
               </div>
               <div className="flex items-center justify-around w-full gap-2">
                 <button
-                  className="rounded-lg hover:scale-90 trans100  w-20 bg-blue-700 text-white p-1"
+                  className={`rounded-lg hover:scale-90 trans100  w-20 bg-white text-black font-bold p-1 ${(editedCommunityData.dp.length || editedCommunityData.coverPic.length || editedCommunityData.description.length) ? " opacity-100 " : " opacity-60 pointer-events-none "}`}
+                  disabled = {!(editedCommunityData.dp.length || editedCommunityData.coverPic.length || editedCommunityData.description.length)}
                   onClick={handleCommunityEditSubmit}
                 >
                   Save
                 </button>
                 <button
-                  className="rounded-lg hover:scale-90 trans100  w-20 bg-blue-700 text-white p-1"
+                  className="rounded-lg hover:scale-90 trans100  w-20 bg-white text-black font-bold p-1"
                   onClick={() => {
                     setEditMode(false);
                   }}
@@ -267,7 +268,7 @@ const CommunityDetailsBar = (props) => {
           ) : (
             <div className="flex items-center justify-center">
               <button
-                className="rounded-lg hover:scale-90 trans100 w-20 bg-blue-700 text-white p-1"
+                className="rounded-lg hover:scale-90 trans100 w-20 bg-white text-black font-bold p-1"
                 onClick={() => {
                   setEditMode(true);
                 }}
