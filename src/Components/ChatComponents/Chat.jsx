@@ -75,7 +75,7 @@ const Text = ({message,user,client})=>{
                 <div className='flex items-center justify-start msg-box flex-wrap p-2 bg-slate-500 rounded-lg flex-col message-container'>
                     {(message.isUrl===true)
                     ? 
-                    <a title={`${message?.message}`} target='_blank' href={`${message?.message}`} className='flex-wrap flex items-center justify-center group-hover:scale-110 trans100'>Link<FaLink/></a>
+                    <a title={`${process.env.REACT_APP_FRONTEND_HOST+"/"+message?.message}`} target='_blank' href={`${message?.message}`} className='flex-wrap flex items-center justify-center group-hover:scale-110 trans100'>Link<FaLink/></a>
                      :
                      <p className='flex-wrap'>{message.message}</p>
                     }
@@ -91,7 +91,7 @@ const Text = ({message,user,client})=>{
                 <div className='flex items-center justify-start msg-box flex-wrap p-2 bg-black rounded-lg flex-col group'>
                     {(message.isUrl===true)
                     ? 
-                    <a title={`${message?.message}`} target='_blank' href={`${message?.message}`} className='flex-wrap flex items-center justify-center group-hover:scale-110 trans100'>Link<FaLink/></a>
+                    <a title={`${process.env.REACT_APP_FRONTEND_HOST+"/"+message?.message}`} target='_blank' href={`${message?.message}`} className='flex-wrap flex items-center justify-center group-hover:scale-110 trans100'>Link<FaLink/></a>
                      :
                      <p className='flex-wrap'>{message.message}</p>
                     }
