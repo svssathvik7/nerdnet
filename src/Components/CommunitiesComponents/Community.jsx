@@ -139,7 +139,7 @@ const CommunityDetailsBar = (props) => {
   const FormDiv = () => {
     return (
       <div className="text-white flex items-center justify-center flex-col my-1 w-full">
-        <p className="self-start bg-slate-500 rounded-lg p-1">About</p>
+        <p className="self-start bg-slate-500 rounded-lg p-1 text-xs">About</p>
         <div className="flex items-center justify-center">
           <h4 className="font-bold text-3xl w-fit">{communityInfo.name}</h4>
           <p className="mx-1 w-fit text-sm rounded-lg bg-yellow-400 text-black">
@@ -155,7 +155,7 @@ const CommunityDetailsBar = (props) => {
   const MetricsDiv = () => {
     return (
       <div className="text-white flex flex-col items-center justify-center w-full my-1">
-        <p className="self-start bg-slate-500 rounded-lg p-1">
+        <p className="self-start bg-slate-500 rounded-lg p-1 text-xs">
           Lifetime Metrics
         </p>
         <div className="flex items-center justify-around w-full p-2 flex-wrap">
@@ -172,7 +172,7 @@ const CommunityDetailsBar = (props) => {
   const AdminsDiv = () => {
     return (
       <div className="text-white flex flex-col items-center justify-center w-full my-1">
-        <p className="self-start bg-slate-500 rounded-lg p-1">Created By</p>
+        <p className="self-start bg-slate-500 rounded-lg p-1 text-xs">Created By</p>
         <Link
           to={"/profile/" + founder?.email ?? user?.email}
           className="flex items-center justify-start m-2"
@@ -204,7 +204,7 @@ const CommunityDetailsBar = (props) => {
     <div className="community-aside p-2 w-fit flex items-center justify-start flex-col overflow-y-scroll">
       <div className="img-holder flex items-end justify-end flex-col">
         <div className="community-cover p-1 rounded-lg bg-white opacity-60 hover:opacity-100">
-          <img alt="cover" src={communityInfo.coverPic} />
+          <img alt="cover" className="object-contain" src={communityInfo.coverPic} />
         </div>
         <div className="community-dp p-1 m-2 absolute bg-white rounded-full">
           <img

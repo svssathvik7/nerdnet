@@ -119,15 +119,6 @@ export default function Chat() {
             socket.emit("fetch-chat",{
                 chatId : chatId
             });
-            socket.on("fetched-data/"+chatId,(data)=>{
-                if(data.status === true)
-                {
-                    setMessages(data.data.chats);
-                }
-                else{
-                    setMessages([]);
-                }
-            })
         }
         catch(error){
             console.log(error);
@@ -135,9 +126,26 @@ export default function Chat() {
     }
     useEffect(
         ()=>{
+            const users = [user?._id,client?._id].sort();
+            const chatId = users[0]+users[1];
+            socket.on("fetched-data/"+chatId,(data)=>{
+                console.log("fetch event")
+                if(data.status == true)
+                {
+                    setMessages(data.data.chats);
+                }
+                else{
+                    setMessages([]);
+                }
+            });
+        }
+    ,[]);
+    const [trigger,setTrigger] = useState(false);
+    useEffect(
+        ()=>{
             fetchChat();
         }
-    ,[client,user]);
+    ,[client,user,trigger]);
     const handleSendMessage = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -150,6 +158,7 @@ export default function Chat() {
         });
         setValue('');
         setLoading(false);
+        setTrigger(!trigger);
     };
     const handleEmojiClick = async (emoji)=>{
         setValue(value+emoji.emoji);

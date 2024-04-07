@@ -73,29 +73,6 @@ export default function SearchSection() {
     };
     handleQuery();
   }, [searchQuery, type]);
-  const handleAddChat = async (friendId) => {
-    try {
-      const response = (
-        await axios.post(
-          process.env.REACT_APP_BACKEND_URL + "/chat/add-recent-chats",
-          {
-            userId: user._id,
-            friendId: friendId,
-          }
-        )
-      ).data;
-      if (!response.status) {
-        console.log(response);
-      } else {
-        setUser((user) => ({
-          ...user,
-          chatList: response?.chatList,
-        }));
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
   const [hasSubscibedTempVar, setHasSubsTempVar] = useState(false);
   const handleAddCommunity = async (community) => {
     try {
@@ -165,16 +142,6 @@ export default function SearchSection() {
                     {item.education}
                   </p>
                 </Link>
-                {!((user?.recentChats && [item._id]) == item._id) && ( // Check if recentChatList is empty or item._id is not present
-                  <button
-                    onClick={() => {
-                      handleAddChat(item._id);
-                    }}
-                    className={`bg-slate-500 text-white p-2 text-sm rounded-md hover:rounded-xl trans100`}
-                  >
-                    Add to Chats!
-                  </button>
-                )}
               </div>
             ))
           ) : (

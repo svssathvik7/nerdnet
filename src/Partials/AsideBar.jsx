@@ -155,7 +155,7 @@ const MySpaces = () => {
   return (
     <div className="flex flex-wrap flex-col my-4">
       <div className="flex items-center justify-center">
-        <img title="My Spaces" className="w-8" alt="emoji" src={Home} />
+        <img title="My Spaces" className="w-8 object-contain" alt="emoji" src={Home} />
         <h6 className="font-medium underline text-slate-200 text-center">
           My Spaces
         </h6>
@@ -170,7 +170,7 @@ const MySpaces = () => {
             <img
               alt={space.name}
               src={space.dp}
-              className="w-8 rounded-lg aspect-square"
+              className="w-8 rounded-lg aspect-square object-contain"
             />
           </Link>
         ))}

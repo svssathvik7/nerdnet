@@ -7,7 +7,7 @@ export default function ParticleBackground() {
   };
   return (
     <Particles
-      className="w-screen h-screen z-0"
+      className="w-screen h-screen -z-50"
       options={ParticleConstant}
       particlesLoaded={particlesLoaded}
     ></Particles>
