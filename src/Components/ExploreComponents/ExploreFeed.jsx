@@ -29,7 +29,7 @@ export default function ExploreFeed() {
         socket.off("get-all-posts-explore-feed");
       }
     }
-  ,[posts,location.pathname]);
+  ,[location.pathname]);
   return (
     <div id='explore-feed' className='flex items-center justify-start flex-wrap'>
     {isLoading ? (

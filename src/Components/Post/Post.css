@@ -34,19 +34,19 @@
 }
 @media (max-width:768px) {
     #image-post{
-        width: 90dvw;
+        width: 95dvw;
         height: fit-content;
     }
     #post-data{
-        width: 90dvw;
+        width: 95dvw;
         height: fit-content;
         overflow: hidden;
     }
     #image-post{
-        width: 90dvw;
+        width: 95dvw;
     }
     #text-post{
-        width: 90dvw;
+        width: 95dvw;
         height: fit-content;
     }
 }

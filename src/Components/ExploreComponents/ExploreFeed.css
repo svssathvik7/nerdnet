@@ -31,11 +31,22 @@
         overflow-x: hidden;
         height: 90dvh;
         padding-bottom: 15em;
+        width: 100dvw;
     }
     #feed-covered-message{
         flex-direction: column-reverse;
     }
     .single-feed{
         width: 95%;
+    }
+    .text-post-preview{
+        width: 95dvw;
+        height: 40dvh;
+        display: flex;
+        overflow-y: scroll;
+    }
+    .img-post-preview{
+        width: 95dvw;
+        height: 40dvh;
     }
 }
