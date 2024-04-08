@@ -255,16 +255,16 @@ export default function Chat() {
         >
           <div
             id="chat-header"
-            className="h-1/6 bg-yellow-500 w-full flex items-center justify-between p-1"
+            className="h-fit bg-yellow-500 w-full flex items-center justify-between p-1"
           >
             <Link
               to={"/profile/" + client?.email}
               className="flex items-center justify-start mx-1 cursor-pointer"
             >
-              <img alt="dp" src={client?.dp} className="w-10 h-10" />
-              <div className="mx-1">
-                <p className="font-bold text-xl">{client?.username}</p>
-                <p className="text-xs">{client?.education}</p>
+              <img alt="dp" src={client?.dp} className="w-8 aspect-square object-cover" />
+              <div className="mx-1 flex flex-col items-start justify-center">
+                <p className="font-bold text-md m-0 p-0">{client?.username}</p>
+                <p className="text-xs m-0 p-0">{client?.education}</p>
               </div>
             </Link>
             <IoClose
