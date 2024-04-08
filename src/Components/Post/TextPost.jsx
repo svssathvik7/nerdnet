@@ -220,7 +220,7 @@ export default function TextPost(props) {
               <img
                 alt="dp"
                 src={props.userPosted ? props.userPosted.dp : "#"}
-                className="w-8 mx-2 cursor-pointer select-none"
+                className="w-8 mx-2 cursor-pointer select-none object-cover aspect-square"
               />
             </Link>
             <div className="select-none">

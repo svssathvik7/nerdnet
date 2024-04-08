@@ -183,7 +183,7 @@ export default function ImagePost(props)
     id='image-post' className={`bg-white rounded-lg flex flex-col items-center justify-center trans300 z-10`}>
       <div id='post-meta-data' className={`${props.noAuth ? " pointer-events-none " : "  "} flex items-center justify-between bg-yellow-400 rounded-lg border-b-2 border-black`}>
         <div className='flex items-center justify-center p-2 mx-2'>
-          <Link to={"/profile/"+props.userPosted.email} className='cursor-pointer'><img alt='dp' src={props.userPosted ? props.userPosted.dp : "#"} className='w-8 mx-2 cursor-pointer select-none'/></Link>
+          <Link to={"/profile/"+props.userPosted.email} className='cursor-pointer'><img alt='dp' src={props.userPosted ? props.userPosted.dp : "#"} className='w-8 mx-2 cursor-pointer select-none object-cover aspect-square'/></Link>
           <div className='select-none'>
             <Link to={"/profile/"+props.userPosted.email} className='font-medium text-sm cursor-pointer'>{props.userPosted ? props.userPosted.username : "Nerd"}</Link>
             <p className='text-xs font-light text-slate-600'>{props.userPosted&&props.userPosted.education ? props.userPosted.education : "Enthusiast at Nerd.net"}</p>
