@@ -253,7 +253,7 @@ export default function TextPost(props) {
           </div>
         </div>
         <div id="post">
-          {!showPost ? <h6 className="trans100 font-normal m-2">{props.postData}</h6> : <></>}
+          {!showPost ? <h6 className="trans100 font-normal md:m-2">{props.postData}</h6> : <></>}
         </div>
         <div
           id="post-metrics"

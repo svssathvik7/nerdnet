@@ -42,11 +42,16 @@
         height: fit-content;
         overflow: hidden;
     }
-    #image-post{
+    #post-data img{
         width: 95dvw;
+        height: fit-content;
+        overflow: hidden;
+    }
+    #image-post{
+        width: 95dvw!important;
     }
     #text-post{
-        width: 95dvw;
+        width: 95dvw!important;
         height: fit-content;
     }
 }
