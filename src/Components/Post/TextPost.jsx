@@ -15,7 +15,7 @@ import { userContextProvider } from "../../Context/userContext";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import Lottie from "lottie-react";
-import Reaction from "../../assets/Clicked.json";
+// import Reaction from "../../assets/Clicked.json";
 export default function TextPost(props) {
   const location = useLocation();
   const [validComment, setValidComment] = useState(false);
@@ -271,7 +271,6 @@ export default function TextPost(props) {
               disabled={liked}
             >
               <FaAngleDoubleUp className="active:scale-110 hover:scale-110"/>
-              {clickedUp && <Lottie animationData={Reaction} className="w-16 absolute" loop={false}/>}
             </button>
             <p className="select-none">{upVotes}</p>
             <button

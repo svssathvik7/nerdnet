@@ -29,6 +29,8 @@ const CommunityDetailsBar = (props) => {
   const [editMode, setEditMode] = useState(false);
   const path = useLocation();
   const [trigger, setTrigger] = useState(false);
+  const [showTest, setShowTest] = useState(false);
+  const [navIndex, setNavIndex] = useState(0);
   const handleCommunityEditChange = async (e) => {
     e.stopPropagation();
     setEditedCommunityData({
@@ -172,7 +174,9 @@ const CommunityDetailsBar = (props) => {
   const AdminsDiv = () => {
     return (
       <div className="text-white flex flex-col items-center justify-center w-full my-1">
-        <p className="self-start bg-slate-500 rounded-lg p-1 text-xs">Created By</p>
+        <p className="self-start bg-slate-500 rounded-lg p-1 text-xs">
+          Created By
+        </p>
         <Link
           to={"/profile/" + founder?.email ?? user?.email}
           className="flex items-center justify-start m-2"
@@ -200,11 +204,136 @@ const CommunityDetailsBar = (props) => {
     coverPic: "",
     description: "",
   });
-  return (
+  const [questionsForm, setQuestionsForm] = useState({
+    community : props.community_id,
+    name: "",
+    questions: [
+      {
+        question: "",
+        options: [
+          { value: "", text: "" },
+          { value: "", text: "" },
+          { value: "", text: "" },
+          { value: "", text: "" },
+        ],
+        ans: "",
+      },
+    ],
+  });
+
+  const handleInputChange = (index, field, value, optIndex) => {
+    const updatedQuestions = [...questionsForm.questions];
+    if (field === "option") {
+      updatedQuestions[index].options[optIndex].text = value;
+    } else {
+      updatedQuestions[index][field] = value;
+    }
+    setQuestionsForm({ ...questionsForm, questions: updatedQuestions });
+  };
+
+  const addQuestion = () => {
+    if (questionsForm.questions.length < 5) {
+      // Limit to 5 questions
+      setQuestionsForm({
+        ...questionsForm,
+        questions: [
+          ...questionsForm.questions,
+          {
+            question: "",
+            options: [
+              { value: "", text: "" },
+              { value: "", text: "" },
+              { value: "", text: "" },
+              { value: "", text: "" },
+            ],
+            ans: "",
+          },
+        ],
+      });
+    }
+  };
+
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+    // Validate that all questions are filled out
+    const isFormValid = questionsForm.questions.every(
+      (question) =>
+        question.question && // Ensure question is not empty
+        question.options.every((option) => option.text) && // Ensure all option texts are filled
+        question.ans // Ensure answer is provided
+    );
+
+    if (!isFormValid) {
+      alert("Please fill out all questions, options, and answers.");
+      return;
+    }
+    try {
+      const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/assessments/create-assessment",questionsForm)).data;
+      if(response.status){
+        toast.success('Assingment added!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
+      }
+      else{
+        toast.error("Error creating test", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
+      }
+    } catch (error) {
+      toast.error("Error creating test", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
+    }
+
+    // Reset the form after submission
+    setQuestionsForm({
+      name: "",
+      community : props.community_id,
+      questions: [
+        {
+          question: "",
+          options: [
+            { text: "" },
+            { text: "" },
+            { text: "" },
+            { text: "" },
+          ],
+          ans: "",
+        },
+      ],
+    });
+  };
+
+  return navIndex == 0 ? (
     <div className="community-aside p-2 w-fit flex items-center justify-start flex-col overflow-y-scroll">
       <div className="img-holder flex items-end justify-end flex-col">
         <div className="community-cover p-1 rounded-lg bg-white opacity-60 hover:opacity-100">
-          <img alt="cover" className="object-contain" src={communityInfo.coverPic} />
+          <img
+            alt="cover"
+            className="object-contain"
+            src={communityInfo.coverPic}
+          />
         </div>
         <div className="community-dp p-1 m-2 absolute bg-white rounded-full">
           <img
@@ -249,8 +378,20 @@ const CommunityDetailsBar = (props) => {
               </div>
               <div className="flex items-center justify-around w-full gap-2">
                 <button
-                  className={`rounded-lg hover:scale-90 trans100  w-20 bg-white text-black font-bold p-1 ${(editedCommunityData.dp.length || editedCommunityData.coverPic.length || editedCommunityData.description.length) ? " opacity-100 " : " opacity-60 pointer-events-none "}`}
-                  disabled = {!(editedCommunityData.dp.length || editedCommunityData.coverPic.length || editedCommunityData.description.length)}
+                  className={`rounded-lg hover:scale-90 trans100  w-20 bg-white text-black font-bold p-1 ${
+                    editedCommunityData.dp.length ||
+                    editedCommunityData.coverPic.length ||
+                    editedCommunityData.description.length
+                      ? " opacity-100 "
+                      : " opacity-60 pointer-events-none "
+                  }`}
+                  disabled={
+                    !(
+                      editedCommunityData.dp.length ||
+                      editedCommunityData.coverPic.length ||
+                      editedCommunityData.description.length
+                    )
+                  }
                   onClick={handleCommunityEditSubmit}
                 >
                   Save
@@ -277,9 +418,98 @@ const CommunityDetailsBar = (props) => {
               </button>
             </div>
           )}
+          <div className="flex w-full items-center justify-start flex-col">
+            <button
+              onClick={() => {
+                setNavIndex(navIndex == 1 ? 0 : 1);
+              }}
+              className="py-0 h-8 w-full bg-white rounded-md hover:scale-95 trans100 m-2"
+            >
+              Add Test
+            </button>
+            <button
+              onClick={() => {
+                setNavIndex(navIndex == 2 ? 0 : 2);
+              }}
+              className="py-0 h-8 bg-white rounded-md hover:scale-95 trans100 m-2 w-full"
+            >
+              Scores
+            </button>
+          </div>
         </div>
       )}
     </div>
+  ) : navIndex == 1 ? (
+    <div className="community-aside p-2 w-fit flex items-center justify-start flex-col overflow-y-scroll text-white">
+      <h2 className="w-full text-center">Create Quiz</h2>
+      <form onSubmit={handleSubmit} className="test-form">
+        <input
+          type="text"
+          value={questionsForm.name}
+          onChange={(e) =>
+            setQuestionsForm({ ...questionsForm, name: e.target.value })
+          }
+          className="bg-white text-black font-bold"
+          placeholder="Enter assessment name"
+          required
+        />
+        {questionsForm.questions.map((question, index) => (
+          <div key={index}>
+            <input
+              type="text"
+              value={question.question}
+              onChange={(e) =>
+                handleInputChange(index, "question", e.target.value)
+              }
+              placeholder={`Enter question ${index + 1}`}
+              className="bg-white text-black font-bold"
+              required
+            />
+            {[0, 1, 2, 3].map((optIndex) => (
+              <input
+                key={optIndex}
+                type="text"
+                value={question.options[optIndex].text}
+                onChange={(e) =>
+                  handleInputChange(index, "option", e.target.value, optIndex)
+                }
+                placeholder={`Enter option ${optIndex + 1}`}
+                className="bg-white text-black font-bold"
+                required
+              />
+            ))}
+            <input
+              type="text"
+              value={question.ans}
+              onChange={(e) => handleInputChange(index, "ans", e.target.value)}
+              placeholder={`Enter answer for question ${index + 1}`}
+              className="bg-white text-black font-bold"
+              required
+            />
+          </div>
+        ))}
+        <div className="w-full flex items-center justify-around my-2">
+          {questionsForm.questions.length < 5 && (
+            <button
+              className="bg-white trans100 text-black rounded-md hover:scale-90 mx-1"
+              type="button"
+              onClick={addQuestion}
+            >
+              Add Question
+            </button>
+          )}
+          <button
+            className="bg-yellow-400 trans100 text-black rounded-md hover:scale-90 mx-1"
+            type="submit"
+          >
+            Create Quiz
+          </button>
+          <button className="bg-white trans100 text-black rounded-md hover:scale-90 mx-1" onClick={()=>{setNavIndex(0)}}>Back</button>
+        </div>
+      </form>
+    </div>
+  ) : (
+    <></>
   );
 };
 export default function Community() {
@@ -290,6 +520,10 @@ export default function Community() {
   const [communityPosts, setCommunityPosts] = useState([]);
   const [isAFollower, setIsAFollower] = useState(false);
   const { socket } = useContext(socketContextProvider);
+  const [score, setScore] = useState(0);
+  const [assignmentData,setAssignmentData] = useState(null);
+  const [communityData,setCommunityData] = useState({});
+  const [showTest,setShowTest] = useState(false);
   useEffect(() => {
     const GetCommunityPosts = async () => {
       try {
@@ -299,8 +533,10 @@ export default function Community() {
             id: community_id,
           },
           (response) => {
+            console.log(response)
             if (response.status) {
               setCommunityPosts(response.community_info.posts);
+              setCommunityData(response.community_info);
               setContentReady(true);
             } else {
               setCommunityPosts([]);
@@ -338,7 +574,106 @@ export default function Community() {
       socket.off("get-community-details");
     };
   }, []);
+  const fetchTestData = async(test_id)=>{
+    try {
+      const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/assessments/get-assessment",{
+        assessment_id : test_id
+      })).data;
+      if(response.status){
+        setAssignmentData(response.assessment);
+      }
+      else{
+        toast.error("Error Getting Test data!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Error Getting Test data!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+  }
   const [contentReady, setContentReady] = useState(false);
+  const [userSelections, setUserSelections] = useState(Array(assignmentData?.questions?.length).fill('')); // Array to store user's selected options
+  const handleSelectChange = (index, selectedValue) => {
+    const updatedSelections = [...userSelections];
+    updatedSelections[index] = selectedValue;
+    setUserSelections(updatedSelections);
+  };
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+    // Calculate the score based on user selections
+    assignmentData?.questions?.forEach((q, index) => {
+      if (userSelections[index] === q?.ans) { // Use strict equality (===) for comparison
+        console.log(userSelections[index] === q?.ans)
+        setScore(score+1);
+        console.log('Score incremented:', score);
+      }
+      else{
+
+      }
+    });
+    try {
+      const response = (await axios.post(process.env.REACT_APP_BACKEND_URL+"/assessments/write-score",{
+        user : user._id,
+        assessment_id : assignmentData._id,
+        score : score,
+        outOf : assignmentData.questions.length
+      })).data;
+      if(response.status == true){
+        toast.success(`You got ${score}/${assignmentData?.questions?.length??100}`, {
+          position: "top-right",
+          autoClose: 10000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      }
+      else{
+        toast.error("Error updating test!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      }
+      
+    } catch (error) {
+      console.log(error);
+      toast.error("Error submitting test!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+  }
   return (
     <div className="w-screen h-screen">
       <Header />
@@ -346,7 +681,24 @@ export default function Community() {
       {isMobile ? <MiniNavBar /> : null}
       <div className="flex items-center justify-start">
         <CommunityDetailsBar community_id={community_id} />
-        {contentReady && isAFollower ? (
+        {showTest ? 
+        assignmentData!=null && 
+        <div className="flex flex-col text-white items-center justify-start flex-1">
+          <h6 className="text-2xl text-white p-2 rounded-md">{assignmentData?.name}</h6>
+          <div className="flex items-center justify-center flex-wrap w-1/2">
+          {assignmentData?.questions?.map((q,i)=>(
+            <div className="m-2 p-2 rounded-md bg-slate-500">
+              <p className="text-xl">Q<sub>{i+1}</sub>- {q?.question}</p>
+              <select className="bg-black text-white m-2 outline-none" onChange={(e) => handleSelectChange(i, e.target.value)}>
+                {q?.options.map((opt,j)=>(
+                  <option className="w-full">{opt?.text}</option>
+                ))}
+              </select>
+            </div>
+          ))}
+          </div>
+          <button className="bg-yellow-400 text-black outline-none p-2 rounded-lg" onClick={handleSubmit}>Submit</button>
+        </div> : contentReady && isAFollower ? (
           <div
             id="community-feed-scroller"
             className="flex-1 flex flex-col items-center justify-center"
@@ -364,6 +716,12 @@ export default function Community() {
         )}
       </div>
       <AddPostBtn />
+      {communityData?.assessments?.length && <div className="bg-red absolute top-0 bottom-0 my-auto right-0 test-scroller flex-wrap w-52 text-white flex flex-col items-center justify-start">
+        <h6 className="text-lg">Latest Tests!</h6>
+        {communityData.assessments.map((test,i)=>(
+          <button onClick={()=>{setShowTest(true);fetchTestData(test._id)}} className="text-left w-full">{i+1} - {test.name}</button>
+        ))}
+      </div>}
     </div>
   );
 }

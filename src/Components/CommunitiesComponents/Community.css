@@ -7,8 +7,19 @@
     width: 5dvw!important;
     height: 5dvw!important;
 }
+.test-form input{
+    padding: 2%;
+    margin: 1%;
+    color: white;
+    width: 100%;
+}
 .community-cover img{
     height: 25dvh!important;
+}
+.test-scroller{
+    height: fit-content;
+    max-height: 45dvh;
+    overflow-y: scroll;
 }
 .community-description{
     width: 100%;

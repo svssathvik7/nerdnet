@@ -136,6 +136,12 @@ export default function AdminStatistics() {
     );
   };
   const ShowAllUsersData = () => {
+    useEffect(
+      ()=>{
+        console.log(users)
+        
+      }
+    )
     return (
       <div className="flex flex-col items-center justify-center">
         <div className="flex items-center justify-center flex-wrap m-2">
